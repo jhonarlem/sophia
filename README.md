@@ -1,66 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 🛍️ Sistema POS: SOPHIA
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. Descripción de SOPHIA POS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+El **Sistema POS SOPHIA** es una solución completa para la gestión de ventas, inventarios y reportes en tiendas dedicadas a la venta de productos para el hogar y electrodomésticos. Este sistema facilita el control de stock, la emisión de facturas digitales, la gestión de descuentos y promociones, y el registro de devoluciones y notas de crédito/débito. Además, cuenta con funcionalidades avanzadas para la administración de usuarios y seguridad, generación de informes detallados, y ajustes de configuración general.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+El sistema está diseñado para cumplir con los requisitos normativos y las necesidades comerciales de tiendas en Colombia, brindando una herramienta ágil y escalable para gestionar tanto productos básicos como electrodomésticos, que requieren un tratamiento especial en cuanto a garantías y descuentos.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 2. ✨ Características de SOPHIA
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **🛒 Módulo de Ventas**:
+  - Registro de ventas con soporte para múltiples métodos de pago (efectivo, tarjeta de crédito/débito, transferencias).
+  - Generación automática de recibos y facturas digitales para electrodomésticos.
+  - Aplicación de descuentos y promociones, gestionando márgenes proporcionados por los proveedores para electrodomésticos.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **📦 Módulo de Inventario**:
+  - Actualización automática del stock de productos tras ventas, devoluciones y pérdidas.
+  - Gestión del inventario por secciones, como hogar y electrodomésticos.
+  - Alerta de stock mínimo, permitiendo notificaciones preventivas.
 
-## Laravel Sponsors
+- **♻️ Módulo de Devoluciones y Notas de Crédito/Débito**:
+  - Manejo de devoluciones de productos, con impacto automático en el inventario.
+  - Emisión de notas de crédito y débito previa validación y autorización.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **👤 Módulo de Clientes**:
+  - Registro de información básica de clientes (nombre, contacto).
+  - Historial de compras detallado para cada cliente.
 
-### Premium Partners
+- **🔒 Módulo de Usuarios y Seguridad**:
+  - Gestión de usuarios con diferentes roles (admin, cajero, gerente).
+  - Registro de auditoría de actividades de usuarios y control de accesos jerárquico.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **📊 Módulo de Reportes**:
+  - Generación de informes sobre ventas, márgenes de ganancia, rotación de productos e inventario.
+  - Exportación de reportes en formatos como Excel para análisis externos.
 
-## Contributing
+- **⚙️ Módulo de Configuración General**:
+  - Ajustes de parámetros del sistema como horarios de tienda, categorías de productos.
+  - Integración con dispositivos de hardware como escáneres de código de barras e impresoras.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 3. 🚀 Flujo de Ejecución de la Aplicación
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **🔑 Inicio de Sesión**:
+   - Los usuarios inician sesión según su rol y permisos asignados (administrador, cajero, etc.).
 
-## Security Vulnerabilities
+2. **📝 Gestión de Productos**:
+   - El administrador puede agregar, editar o eliminar productos. Los electrodomésticos tendrán detalles adicionales como marca, modelo y código único.
+   - Se define el stock mínimo para cada producto.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **💳 Gestión de Ventas**:
+   - El cajero puede registrar ventas de productos, seleccionando métodos de pago y aplicando descuentos según corresponda.
+   - Para los electrodomésticos, se generan automáticamente facturas digitales con la información requerida.
 
-## License
+4. **📦 Control de Inventario**:
+   - Tras cada venta, el inventario se actualiza automáticamente.
+   - Si el stock de un producto alcanza el mínimo definido, se genera una alerta de stock bajo.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. **🔄 Devoluciones y Notas de Crédito/Débito**:
+   - En caso de devoluciones, el producto se reincorpora al inventario, y se emite una nota de crédito.
+   - En situaciones específicas, pueden generarse notas de débito para ajustar las cuentas.
+
+6. **📊 Generación de Reportes**:
+   - Los administradores pueden generar informes personalizados de ventas, productos en rotación, inventarios, y márgenes de ganancia.
+   - Los reportes pueden ser exportados en formato Excel.
+
+7. **⚙️ Configuración y Seguridad**:
+   - Los ajustes del sistema pueden modificarse según necesidades específicas del negocio.
+   - La actividad de cada usuario se registra para asegurar la transparencia en las operaciones.
