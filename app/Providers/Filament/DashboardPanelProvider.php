@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -16,7 +17,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class DashboardPanelProvider extends PanelProvider
 {
@@ -40,6 +44,21 @@ class DashboardPanelProvider extends PanelProvider
       ->widgets([
         Widgets\AccountWidget::class,
         Widgets\FilamentInfoWidget::class,
+      ])
+      ->plugins([
+        FilamentEditProfilePlugin::make()
+          ->slug('perfil')
+          ->setTitle('Perfil')
+          ->setIcon('heroicon-o-identification')
+          ->setNavigationLabel('Perfil')
+          ->shouldShowDeleteAccountForm(false)
+          ->shouldRegisterNavigation(false),
+      ])
+      ->userMenuItems([
+        'profile' => MenuItem::make()
+          ->label(fn() => Auth::user()->name)
+          ->url(fn(): string => EditProfilePage::getUrl())
+          ->icon('heroicon-o-user-circle')
       ])
       ->middleware([
         EncryptCookies::class,
