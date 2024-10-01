@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\CheckUserStatus;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -37,6 +38,8 @@ class DashboardPanelProvider extends PanelProvider
       ->font('Poppins')
       ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
       ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+      ->brandLogo(fn() => view('vendor.filament.components.brand'))
+      ->favicon(fn() => asset('favicon.ico'))
       ->pages([
         Pages\Dashboard::class,
       ])
@@ -64,6 +67,7 @@ class DashboardPanelProvider extends PanelProvider
         EncryptCookies::class,
         AddQueuedCookiesToResponse::class,
         StartSession::class,
+        CheckUserStatus::class,
         AuthenticateSession::class,
         ShareErrorsFromSession::class,
         VerifyCsrfToken::class,
