@@ -53,6 +53,7 @@ class CustomerResource extends Resource
             Forms\Components\TextInput::make('document_number')
               ->label('Número de documento')
               ->required()
+              ->autocomplete(false)
               ->numeric()
               ->maxLength(20),
             Forms\Components\TextInput::make('name')
