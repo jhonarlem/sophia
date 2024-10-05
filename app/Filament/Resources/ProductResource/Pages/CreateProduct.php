@@ -45,6 +45,11 @@ class CreateProduct extends CreateRecord
 
       // Validar los datos dependiendo de la categoría
       if ($isAppliance) {
+
+        // Validar si discount_applicable es No y poner discount_amount en 0
+        if ($data['discount_applicable'] == 'No') {
+          $data['discount_amount'] = 0;
+        }
         // Validar los campos de electrodoméstico
         $validatorAppliance = Validator::make($data, [
           'serial_number' => 'required',
@@ -59,6 +64,11 @@ class CreateProduct extends CreateRecord
 
         $validatedAppliance = $validatorAppliance->validate();
       } else {
+
+        // Validar si discount_applicable es No y poner discount_amount en 0
+        if ($data['discount_applicable'] == 'No') {
+          $data['discount_amount'] = 0;
+        }
         // Validar los campos de artículo para el hogar
         $validatorHouseware = Validator::make($data, [
           'brand' => 'required',

@@ -69,22 +69,27 @@ class ProductResource extends Resource
               Forms\Components\TextInput::make('purchase_price')
                 ->label('Precio de compra')
                 ->required()
+                ->autocomplete(false)
                 ->numeric(),
               Forms\Components\TextInput::make('sale_price')
                 ->label('Precio de venta')
                 ->required()
+                ->autocomplete(false)
                 ->numeric(),
               Forms\Components\TextInput::make('iva')
                 ->label('IVA en %')
                 ->required()
+                ->autocomplete(false)
                 ->numeric(),
               Forms\Components\TextInput::make('stock')
                 ->label('Existencias')
                 ->required()
+                ->autocomplete(false)
                 ->numeric(),
               Forms\Components\TextInput::make('min_stock')
                 ->label('Stock mínimo')
                 ->required()
+                ->autocomplete(false)
                 ->numeric(),
               Forms\Components\Select::make('status')
                 ->label('Estado')
@@ -121,10 +126,12 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('color')
                   ->label('Color')
                   ->required()
+                  ->autocomplete(false)
                   ->maxLength(255),
                 Forms\Components\TextInput::make('warranty')
                   ->label('Garantía en meses')
                   ->required()
+                  ->autocomplete(false)
                   ->numeric(),
                 Forms\Components\DatePicker::make('purchase_date')
                   ->label('Fecha de compra'),
@@ -148,6 +155,7 @@ class ProductResource extends Resource
                   ->label('Monto de descuento')
                   ->disabled(fn(callable $get) => $get('discount_applicable') === 'No')
                   ->required()
+                  ->autocomplete(false)
                   ->numeric(),
               ] : [
                 /* Houseware form */
@@ -159,6 +167,7 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('color')
                   ->label('Color')
                   ->required()
+                  ->autocomplete(false)
                   ->maxLength(255),
                 Forms\Components\Select::make('discount_applicable')
                   ->label('Descuento aplicable')
@@ -180,6 +189,7 @@ class ProductResource extends Resource
                   ->label('Monto de descuento')
                   ->disabled(fn(callable $get) => $get('discount_applicable') === 'No')
                   ->required()
+                  ->autocomplete(false)
                   ->numeric(),
               ]
             ),
@@ -218,6 +228,7 @@ class ProductResource extends Resource
           ->numeric()
           ->badge()
           ->color('success')
+          ->icon('heroicon-s-currency-dollar')
           ->sortable(),
         Tables\Columns\TextColumn::make('purchase_price')
           ->label('Precio de compra')
@@ -391,6 +402,7 @@ class ProductResource extends Resource
           ->label('Precio de venta:')
           ->badge()
           ->color('success')
+          ->icon('heroicon-s-currency-dollar')
           ->numeric(),
         TextEntry::make('purchase_price')
           ->label('Precio de compra:')
