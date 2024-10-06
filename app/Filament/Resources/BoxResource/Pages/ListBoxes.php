@@ -22,26 +22,20 @@ class ListBoxes extends ListRecords
 
   protected function getHeaderActions(): array
   {
+    $status = Box::latest()->first()?->status;
+
     return [
-      Action::make('Abrir caja')
+      Action::make('openBox')
         ->label('Abrir caja')
+        ->hidden(fn() => $status === 'Abierta')
         ->requiresConfirmation()
-        ->modalHeading('Abrir caja')
+        ->modalHeading('Apertura de caja')
         ->modalIcon('heroicon-o-lock-open')
-        ->modalDescription('Por favor ingresa los datos necesarios para abrir la caja.')
-        ->modalSubmitActionLabel('Abrir')
+        ->modalDescription('Ingresa el dinero inicial y selecciona la resolución para abrir la caja.')
+        ->modalSubmitActionLabel('Abrir caja')
         ->action(function ($data) {
           // Lógica para abrir la caja
           try {
-            $openBox = Box::where('status', 'Abierta')->first();
-            if ($openBox) {
-              Notification::make()
-                ->title('La caja ya está abierta')
-                ->danger()
-                ->send();
-              return;
-            }
-
             $validatorBox = Validator::make($data, [
               'base_amount' => 'required|numeric',
               'resolution_id' => 'required|exists:resolutions,id',
@@ -63,7 +57,8 @@ class ListBoxes extends ListRecords
               ->icon('heroicon-o-check-circle')
               ->send();
 
-            return $box;
+            // return $box;
+            return redirect()->route('filament.dashboard.resources.caja.index');
           } catch (\Exception $e) {
             Notification::make()
               ->title('Error al abrir caja')
@@ -73,12 +68,6 @@ class ListBoxes extends ListRecords
             // Retirar la excepción para manejo superior si es necesario
             throw $e;
           }
-
-          Notification::make()
-            ->title('Caja abierta')
-            ->success()
-            ->icon('heroicon-o-check-circle')
-            ->send();
         })
         ->form([
           TextInput::make('base_amount')
@@ -95,7 +84,68 @@ class ListBoxes extends ListRecords
             ->preload()
             ->required(),
         ])
-        ->visible(fn() => true), // Cambiado a visible con una función
+        ->visible(fn() => true),
+      Action::make('closeBox')
+        ->label('Cerrar caja')
+        ->color('warning')
+        ->hidden(fn() => $status === 'Cerrada')
+        ->requiresConfirmation()
+        ->modalHeading('Cierre de caja')
+        ->modalIcon('heroicon-o-lock-closed')
+        ->modalDescription('Ingresa el dinero total, incluyendo la base, para completar el cierre de la caja.')
+        ->modalSubmitActionLabel('Cerrar caja')
+        ->action(function ($data) {
+          // Lógica para cerrar la caja
+          try {
+            $validatorBox = Validator::make($data, [
+              'close_amount' => 'required|numeric',
+              'observations' => 'nullable',
+            ]);
+
+            $validatedBox = $validatorBox->validate();
+            // Calcular la diferencia entre cash_payment y close_amount
+            $box = Box::where('status', 'Abierta')->first();
+            $diferencia = $validatedBox['close_amount'] - $box->base_amount;
+
+            $box->update([
+              'real_amount' => $validatedBox['close_amount'],
+              'difference' => $diferencia,
+              'closed_by' => Auth::user()->id,
+              'status' => 'Cerrada',
+              'observations' => $validatedBox['observations'],
+              'closed_at' => now(),
+            ]);
+
+            Notification::make()
+              ->title('Caja cerrada')
+              ->success()
+              ->icon('heroicon-o-check-circle')
+              ->send();
+
+            return $box;
+          } catch (\Exception $e) {
+            Notification::make()
+              ->title('Error al cerrar caja')
+              ->body($e->getMessage())
+              ->danger()
+              ->send();
+            // Retirar la excepción para manejo superior si es necesario
+            throw $e;
+          }
+        })
+        ->form([
+          TextInput::make('close_amount')
+            ->label('Dinero de cierre')
+            ->required()
+            ->autocomplete('off')
+            ->numeric()
+            ->default(0),
+          TextInput::make('observations')
+            ->label('Observaciones')
+            ->autocomplete('off')
+
+        ])
+        ->visible(fn() => true),
     ];
   }
 }
