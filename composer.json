@@ -1,9 +1,20 @@
 {
-    "name": "laravel/laravel",
+    "name": "sophia/pos",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "description": "SOPHIA POS - Software for Organized Product Handling and Inventory Administration. | Software para el manejo organizado de productos y administración de inventarios. ",
+    "keywords": [
+        "sophia",
+        "pos",
+        "filament",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "JHON ARLEM SILVA ANDRADE",
+            "email": "gosudev@outlook.com"
+        }
+    ],
+    "license": "Proprietary",
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
