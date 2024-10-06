@@ -28,4 +28,9 @@ class Resolution extends Model
   /**
    * Relations with other models.
    */
+
+  public function boxes()
+  {
+    return $this->hasMany(Box::class);
+  }
 }
