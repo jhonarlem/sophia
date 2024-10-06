@@ -124,8 +124,6 @@ class CreateProduct extends CreateRecord
         //->body($e->getMessage())
         ->danger()
         ->send();
-      // HACER DUMP DEL ERROR
-      dd($e);
       // Retirar la excepción para manejo superior si es necesario
       throw $e;
     }
