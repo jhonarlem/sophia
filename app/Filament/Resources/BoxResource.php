@@ -246,6 +246,9 @@ class BoxResource extends Resource
           ->numeric(),
         TextEntry::make('difference')
           ->label('$ Diferencia:')
+          ->badge()
+          ->color('warning')
+          ->icon('heroicon-s-currency-dollar')
           ->numeric(),
         TextEntry::make('openedBy.name')
           ->label('Abierta por:'),
