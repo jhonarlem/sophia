@@ -46,4 +46,13 @@ class User extends Authenticatable
       'password' => 'hashed',
     ];
   }
+
+  /**
+   * Relations with other models.
+   */
+
+  public function boxes()
+  {
+    return $this->hasMany(Box::class);
+  }
 }
