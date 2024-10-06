@@ -23,7 +23,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Auth;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Notifications\Actions\Action as NotificationAction;
 
 class UserResource extends Resource
 {
@@ -164,11 +166,29 @@ class UserResource extends Resource
             ->form([
               TextInput::make('password')
                 ->password()
+                ->revealable()
                 ->required()
                 ->label('Nueva contraseña'),
             ])
             ->action(function ($record, $data) {
               try {
+                // Verificar si es mi usuario para no actualizar la contraseña
+                if ($record->id === Auth::id()) {
+                  Notification::make()
+                    ->title('Cambia tu contraseña desde tu perfil')
+                    ->info()
+                    ->icon('heroicon-o-information-circle')
+                    ->persistent()
+                    ->actions([
+                      NotificationAction::make('Ir a mi perfil')
+                        ->button()
+                        ->url(route('filament.dashboard.pages.perfil')),
+
+                    ])
+                    ->send();
+                  return;
+                }
+
                 $record->password = bcrypt($data['password']);
                 $record->save();
 
