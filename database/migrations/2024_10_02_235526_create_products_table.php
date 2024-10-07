@@ -18,7 +18,7 @@ return new class extends Migration
       $table->string('category');
       $table->decimal('purchase_price', 10, 2);
       $table->decimal('sale_price', 10, 2);
-      $table->decimal('iva', 10, 2);
+      $table->integer('iva');
       $table->integer('stock');
       $table->integer('min_stock');
       $table->string('status')->default('Disponible');
