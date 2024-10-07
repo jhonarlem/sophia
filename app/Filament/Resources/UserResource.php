@@ -88,6 +88,7 @@ class UserResource extends Resource
               ->password()
               ->required()
               ->maxLength(255)
+              ->revealable()
               ->hidden(fn($context) => $context === 'edit' || $context === 'view'),
           ])
       ]);
