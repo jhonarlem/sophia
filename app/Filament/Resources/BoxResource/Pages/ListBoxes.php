@@ -88,7 +88,7 @@ class ListBoxes extends ListRecords
       Action::make('closeBox')
         ->label('Cerrar caja')
         ->color('warning')
-        ->hidden(fn() => $status === 'Cerrada')
+        ->hidden(fn() => $status === 'Cerrada' || $status === null)
         ->requiresConfirmation()
         ->modalHeading('Cierre de caja')
         ->modalIcon('heroicon-o-lock-closed')
