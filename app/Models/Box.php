@@ -52,4 +52,9 @@ class Box extends Model
   {
     return $this->belongsTo(User::class, 'closed_by');
   }
+
+  public function sales()
+  {
+    return $this->hasMany(Sale::class);
+  }
 }

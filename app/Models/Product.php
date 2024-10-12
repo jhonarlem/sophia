@@ -38,4 +38,8 @@ class Product extends Model
   /**
    * Relations with other models.
    */
+  public function sales()
+  {
+    return $this->hasMany(Sale::class);
+  }
 }
