@@ -28,58 +28,63 @@ class CustomerResource extends Resource
   protected static ?string $pluralLabel = 'clientes';
   protected static ?string $slug = 'clientes';
 
+  public static function customerFormSchema(): array
+  {
+    return [
+      Section::make('Información del cliente')
+        ->columns(2)
+        ->schema([
+
+          Forms\Components\Select::make('document_type')
+            ->label('Tipo de documento')
+            ->options([
+              'CC' => 'Cédula',
+              'NIT' => 'NIT',
+              'CE' => 'Cédula de extranjería',
+              'PA' => 'Pasaporte',
+              'PEP' => 'Permiso especial de permanencia',
+              'DIE' => 'Documento de identificación extranjero',
+            ])
+            ->placeholder('Selecciona un tipo de documento')
+            ->searchable()
+            ->preload()
+            ->required(),
+          Forms\Components\TextInput::make('document_number')
+            ->label('Número de documento')
+            ->required()
+            ->autocomplete(false)
+            ->numeric()
+            ->maxLength(20),
+          Forms\Components\TextInput::make('name')
+            ->label('Nombres')
+            ->autocomplete(false)
+            ->required()
+            ->maxLength(255),
+          Forms\Components\TextInput::make('email')
+            ->label('Correo electrónico')
+            ->email()
+            ->required()
+            ->maxLength(255)
+            ->autocomplete(false),
+          Forms\Components\TextInput::make('cellphone')
+            ->label('Celular')
+            ->tel()
+            ->maxLength(10)
+            ->minLength(10)
+            ->required()
+            ->autocomplete(false),
+          Forms\Components\TextInput::make('street')
+            ->label('Dirección')
+            ->autocomplete(false)
+            ->maxLength(255),
+        ])
+    ];
+  }
+
   public static function form(Form $form): Form
   {
     return $form
-      ->schema([
-        Section::make('Información del cliente')
-          ->columns(2)
-          ->schema([
-
-            Forms\Components\Select::make('document_type')
-              ->label('Tipo de documento')
-              ->options([
-                'CC' => 'Cédula',
-                'NIT' => 'NIT',
-                'CE' => 'Cédula de extranjería',
-                'PA' => 'Pasaporte',
-                'PEP' => 'Permiso especial de permanencia',
-                'DIE' => 'Documento de identificación extranjero',
-              ])
-              ->placeholder('Selecciona un tipo de documento')
-              ->searchable()
-              ->preload()
-              ->required(),
-            Forms\Components\TextInput::make('document_number')
-              ->label('Número de documento')
-              ->required()
-              ->autocomplete(false)
-              ->numeric()
-              ->maxLength(20),
-            Forms\Components\TextInput::make('name')
-              ->label('Nombres')
-              ->autocomplete(false)
-              ->required()
-              ->maxLength(255),
-            Forms\Components\TextInput::make('email')
-              ->label('Correo electrónico')
-              ->email()
-              ->required()
-              ->maxLength(255)
-              ->autocomplete(false),
-            Forms\Components\TextInput::make('cellphone')
-              ->label('Celular')
-              ->tel()
-              ->maxLength(10)
-              ->minLength(10)
-              ->required()
-              ->autocomplete(false),
-            Forms\Components\TextInput::make('street')
-              ->label('Dirección')
-              ->autocomplete(false)
-              ->maxLength(255),
-          ])
-      ]);
+      ->schema(self::customerFormSchema());
   }
 
   public static function table(Table $table): Table
