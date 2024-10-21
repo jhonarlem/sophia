@@ -24,34 +24,12 @@ class Sale extends Model
     'total_iva',
     'total_discount',
     'payment_method',
+    'received',
+    'exchange',
     'status',
     'sale_date',
   ];
 
-
-  public static function getNextInvoiceNumber()
-  {
-    $latestSale = self::latest()->first();
-    $resolution = Resolution::find($latestSale->resolution_id);
-
-    if ($latestSale) {
-      $nextInvoiceNumber = (int) $latestSale->invoice_number + 1;
-    } else {
-      $nextInvoiceNumber = (int) $resolution->start_invoice_number;
-    }
-
-    if ($nextInvoiceNumber > (int) $resolution->end_invoice_number) {
-      // throw new \Exception('Se ha alcanzado el número máximo de facturas para esta resolución.');
-      Notification::make()
-        ->title('Número de factura máximo alcanzado')
-        ->message('Se ha alcanzado el número máximo de facturas para esta resolución.')
-        ->error()
-        ->icon('heroicon-o-exclamation')
-        ->send();
-    }
-
-    return $resolution->prefix . '-' . $nextInvoiceNumber;
-  }
 
   public static function generateInvoiceNumber()
   {
@@ -70,9 +48,15 @@ class Sale extends Model
     $endInvoiceNumber = (int) $resolution->end_invoice_number;
 
     // 4. Obtener el último número de factura asociado a esa resolución
+    /* $lastInvoiceNumber = Sale::whereHas('box', function ($query) use ($openBox) {
+      $query->where('resolution_id', $openBox->resolution_id);
+    })->orderBy('invoice_number', 'desc')->value('invoice_number'); */
+
     $lastInvoiceNumber = Sale::whereHas('box', function ($query) use ($openBox) {
       $query->where('resolution_id', $openBox->resolution_id);
-    })->orderBy('invoice_number', 'desc')->value('invoice_number');
+    })
+      ->orderBy('id', 'desc')
+      ->value('invoice_number');
 
     if ($lastInvoiceNumber) {
       // Si hay facturas, usar el último número como base
@@ -99,6 +83,65 @@ class Sale extends Model
     $prefix = $resolution->prefix;
     return $prefix . '-' . $newInvoiceNumber;
   }
+
+
+  public static function getBoxAndInvoiceNumber()
+  {
+    // 1. Verificar si hay una caja abierta
+    $openBox = Box::where('status', 'Abierta')->first();
+
+    if (!$openBox) {
+      return [
+        'box_id' => null,
+        'invoice_number' => null,
+      ];
+    }
+
+    // 2. Obtener la resolución asociada a la caja abierta
+    $resolution = $openBox->resolution;
+
+    // 3. Verificar el rango de start_invoice_number y end_invoice_number
+    $startInvoiceNumber = (int) $resolution->start_invoice_number;
+    $endInvoiceNumber = (int) $resolution->end_invoice_number;
+
+    // 4. Obtener el último número de factura asociado a esa resolución
+    $lastInvoiceNumber = Sale::whereHas('box', function ($query) use ($openBox) {
+      $query->where('resolution_id', $openBox->resolution_id);
+    })
+      ->orderBy('id', 'desc')
+      ->value('invoice_number');
+
+    if ($lastInvoiceNumber) {
+      // Si hay facturas, usar el último número como base
+      $lastInvoiceNumber = (int) $lastInvoiceNumber;
+    } else {
+      // Si no hay facturas, comenzar con el número de inicio
+      $lastInvoiceNumber = $startInvoiceNumber - 1;
+    }
+
+    // 5. Verificar si el número de la nueva venta está dentro del rango permitido
+    $newInvoiceNumber = $lastInvoiceNumber + 1;
+
+    if ($newInvoiceNumber > $endInvoiceNumber) {
+      Notification::make()
+        ->title('Número de factura máximo alcanzado')
+        ->message('Se ha alcanzado el número máximo de facturas para esta resolución.')
+        ->error()
+        ->icon('heroicon-o-exclamation')
+        ->send();
+      return [
+        'box_id' => null,
+        'invoice_number' => null,
+      ];
+    }
+
+    // 6. Retornar el id de la caja y el nuevo número de factura sin el prefijo
+    return [
+      'box_id' => $openBox->id,
+      'invoice_number' => $newInvoiceNumber,
+    ];
+  }
+
 
 
   /**
