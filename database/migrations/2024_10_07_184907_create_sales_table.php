@@ -21,6 +21,8 @@ return new class extends Migration
       $table->decimal('total_iva', 10, 2);
       $table->decimal('total_discount', 10, 2);
       $table->string('payment_method');
+      $table->decimal('received', 10, 2);
+      $table->decimal('exchange', 10, 2);
       $table->string('status');
       $table->timestamp('sale_date')->default(now());
       $table->timestamps();
