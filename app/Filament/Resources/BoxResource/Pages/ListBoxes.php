@@ -43,9 +43,10 @@ class ListBoxes extends ListRecords
 
             $validatedBox = $validatorBox->validate();
 
-            $box = Box::create([
+            Box::create([
               'resolution_id' => $validatedBox['resolution_id'],
               'base_amount' => $validatedBox['base_amount'],
+              'total_sales' => $validatedBox['base_amount'],
               'status' => 'Abierta',
               'opened_by' => Auth::user()->id,
               'opened_at' => now(),
@@ -105,7 +106,7 @@ class ListBoxes extends ListRecords
             $validatedBox = $validatorBox->validate();
             // Calcular la diferencia entre cash_payment y close_amount
             $box = Box::where('status', 'Abierta')->first();
-            $diferencia = $validatedBox['close_amount'] - $box->base_amount;
+            $diferencia = $validatedBox['close_amount'] - $box->base_amount - $box->cash_payment;
 
             $box->update([
               'real_amount' => $validatedBox['close_amount'],
