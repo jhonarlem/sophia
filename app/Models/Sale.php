@@ -5,6 +5,7 @@ namespace App\Models;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class Sale extends Model
 {
@@ -48,10 +49,6 @@ class Sale extends Model
     $endInvoiceNumber = (int) $resolution->end_invoice_number;
 
     // 4. Obtener el último número de factura asociado a esa resolución
-    /* $lastInvoiceNumber = Sale::whereHas('box', function ($query) use ($openBox) {
-      $query->where('resolution_id', $openBox->resolution_id);
-    })->orderBy('invoice_number', 'desc')->value('invoice_number'); */
-
     $lastInvoiceNumber = Sale::whereHas('box', function ($query) use ($openBox) {
       $query->where('resolution_id', $openBox->resolution_id);
     })
@@ -70,13 +67,9 @@ class Sale extends Model
     $newInvoiceNumber = $lastInvoiceNumber + 1;
 
     if ($newInvoiceNumber > $endInvoiceNumber) {
-      return
-        Notification::make()
-        ->title('Número de factura máximo alcanzado')
-        ->message('Se ha alcanzado el número máximo de facturas para esta resolución.')
-        ->error()
-        ->icon('heroicon-o-exclamation')
-        ->send();
+      throw ValidationException::withMessages([
+        'message' => 'Se ha alcanzado el número máximo de facturas para esta resolución',
+      ]);
     }
 
     // 6. Retornar el prefijo concatenado con el nuevo número de factura
@@ -123,16 +116,10 @@ class Sale extends Model
     $newInvoiceNumber = $lastInvoiceNumber + 1;
 
     if ($newInvoiceNumber > $endInvoiceNumber) {
-      Notification::make()
-        ->title('Número de factura máximo alcanzado')
-        ->message('Se ha alcanzado el número máximo de facturas para esta resolución.')
-        ->error()
-        ->icon('heroicon-o-exclamation')
-        ->send();
-      return [
-        'box_id' => null,
-        'invoice_number' => null,
-      ];
+
+      throw ValidationException::withMessages([
+        'message' => 'Se ha alcanzado el número máximo de facturas para esta resolución',
+      ]);
     }
 
     // 6. Retornar el id de la caja y el nuevo número de factura sin el prefijo
@@ -166,5 +153,10 @@ class Sale extends Model
   public function products()
   {
     return $this->hasMany(Product::class);
+  }
+
+  public function payments()
+  {
+    return $this->hasMany(Payment::class);
   }
 }

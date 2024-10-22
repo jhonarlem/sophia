@@ -4,8 +4,10 @@ namespace App\Filament\Resources\SaleResource\Pages;
 
 use App\Filament\Resources\SaleResource;
 use App\Models\Box;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\SaleItem;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -13,6 +15,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class CreateSale extends CreateRecord
 {
@@ -117,24 +120,19 @@ class CreateSale extends CreateRecord
       foreach ($validatedProducts['products'] as $product) {
         $productModel = Product::findOrFail($product['product_id']);
         if ($productModel->stock < $product['quantity']) {
-          // throw new \Exception("Sin stock suficiente para el producto {$productModel->name}.");
-          return Notification::make()
-            ->title('Sin stock suficiente')
-            ->body("No hay stock suficiente para el producto {$productModel->name}.")
-            ->error()
-            ->icon('heroicon-o-exclamation')
-            ->send();
+          // Lanzar una excepción para detener la creación
+          throw ValidationException::withMessages([
+            'message' => 'Sin stock suficiente para el producto ' . $productModel->name,
+          ]);
         }
       }
       $boxAndInvoice = Sale::getBoxAndInvoiceNumber();
 
       if (!$boxAndInvoice['box_id'] || !$boxAndInvoice['invoice_number']) {
-        return
-          Notification::make()
-          ->title('No es posible generar la factura')
-          ->error()
-          ->icon('heroicon-o-exclamation')
-          ->send();
+        // Lanzar una excepción para detener la creación
+        throw ValidationException::withMessages([
+          'message' => 'No es posible generar el número de factura',
+        ]);
       }
 
       // Calcular los totales
@@ -145,11 +143,9 @@ class CreateSale extends CreateRecord
 
       // Verificar si el total pagado es menor al total de la factura
       if ($totalPagado < $totales['total_amount']) {
-        return Notification::make()
-          ->title('El valor pagado es menor al total de la factura')
-          ->error()
-          ->icon('heroicon-o-exclamation')
-          ->send();
+        throw ValidationException::withMessages([
+          'message' => 'El valor pagado es menor al total de la factura',
+        ]);
       }
 
       // Establecer el método de pago dinámicamente
@@ -173,43 +169,62 @@ class CreateSale extends CreateRecord
         'status' => 'Pagada',
         'sale_date' => now(),
       ]);
-      /*  $sale = Sale::create([
-        'box_id' => $boxAndInvoice['box_id'],
-        'invoice_number' => $boxAndInvoice['invoice_number'],
-        'customer_id' => $validatedCustomer['customer_id'],
-        'user_id' => Auth::id(),
-        'total_amount' => collect($validatedProducts['products'])->sum('total_price_product'),
-        'total_iva' => collect($validatedProducts['products'])->sum(function ($product) {
-          return ($product['sale_price_product'] * $product['quantity'] * $product['iva']) / 100; // Cambiado a sale_price_product
-        }),
-        'total_discount' => collect($validatedProducts['products'])->sum('discount'),
-        'payment_method' => 'Efectivo', // Considera hacer esto dinámico en el futuro
-        'status' => 'Pagada',
-        'sale_date' => now(),
-      ]); */
 
       // Crear los detalles de la venta y actualizar el stock
-      /*  foreach ($validatedProducts['products'] as $product) {
-        $sale->saleDetails()->create([
+      foreach ($validatedProducts['products'] as $product) {
+        $discountProduct = $product['discount'];
+        $ivaProduct = ($product['sale_price_product'] * $product['quantity'] * $product['iva'] / (100 + $product['iva']));
+        $subtotalProduct = $product['sale_price_product'] * $product['quantity'] - $ivaProduct;
+        $totalProduct = $product['sale_price_product'] * $product['quantity'] - $discountProduct;
+
+        SaleItem::create([
+          'sale_id' => $sale->id,
           'product_id' => $product['product_id'],
           'quantity' => $product['quantity'],
-          'sale_price' => $product['sale_price'],
-          'iva' => $product['iva'],
-          'discount' => $product['discount'],
-          'total' => $product['total'],
+          'unit_price' => $product['sale_price_product'],
+          'discount' => $discountProduct,
+          'iva' => $ivaProduct,
+          'subtotal' => $subtotalProduct,
+          'total' => $totalProduct,
         ]);
 
         // Actualizar el stock del producto
         $productModel = Product::find($product['product_id']);
         $productModel->decrement('stock', $product['quantity']);
-      } */
+      }
+
+      // Crear los pagos
+      foreach ($validatedPayments['payments'] as $payment) {
+        Payment::create([
+          'sale_id' => $sale->id,
+          'amount' => $payment['amount'],
+          'payment_method' => $payment['payment_id'],
+          'reference' => $payment['reference'],
+          'payment_date' => now(),
+        ]);
+
+
+        // Actualizar la caja
+        $box = Box::where('status', 'Abierta')->first();
+        if ($payment['payment_id'] == 'Efectivo') {
+          $cashEntry = $payment['amount'] - $sale->exchange;
+          $box->increment('cash_payment', $cashEntry);
+          $box->increment('total_sales', $cashEntry);
+        } elseif ($payment['payment_id'] == 'Transferencia') {
+          $box->increment('transfer_payment', $payment['amount']);
+          // $box->increment('total_sales', $payment['amount']);
+        } elseif ($payment['payment_id'] == 'Crédito') {
+          $box->increment('credit_sales', $payment['amount']);
+          // $box->increment('total_sales', $payment['amount']);
+        }
+      }
 
       return $sale;
     } catch (\Exception $e) {
       Notification::make()
-        ->title('Error al crear la venta')
-        ->body($e->getMessage())
+        ->title($e->getMessage())
         ->danger()
+        ->color('danger')
         ->send();
       throw $e;
     }

@@ -550,6 +550,7 @@ class SaleResource extends Resource
       'index' => Pages\ListSales::route('/'),
       'create' => Pages\CreateSale::route('/crear'),
       'edit' => Pages\EditSale::route('/editar/{record}'),
+      'view' => Pages\ViewSale::route('/ver/{record}'),
     ];
   }
 }
