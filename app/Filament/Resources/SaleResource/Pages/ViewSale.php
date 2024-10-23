@@ -12,6 +12,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\DB;
 
 class ViewSale extends ViewRecord
 {
@@ -31,17 +32,47 @@ class ViewSale extends ViewRecord
         ->label('Anular venta')
         ->color('danger')
         ->modalHeading('Anular venta ' . $this->record->full_invoice_number)
-        ->modalDescription('¿Estás seguro que deseas anular esta venta? esta acción no se puede deshacer.')
+        ->modalDescription('¿Estás seguro de que deseas anular esta venta? Ten en cuenta que el dinero de la venta no será descontado de la caja y deberás considerarlo al momento de realizar el cierre de la caja. Esta acción no se puede deshacer.')
         ->modalSubmitActionLabel('Anular')
         ->modalCancelActionLabel('Cancelar')
         ->action(
-          fn() =>
-          Notification::make()
-            ->title('Venta anulada')
-            ->body('La venta ' . $this->record->full_invoice_number . ' ha sido anulada')
-            ->success()
-            ->send()
-        ),
+          function () {
+            try {
+              DB::transaction(function () {
+                // Obtener la venta
+                $sale = $this->record;
+
+                // Obtener los productos asociados a la venta
+                $saleItems = DB::table('sale_items')
+                  ->where('sale_id', $sale->id)
+                  ->get();
+
+                // Actualizar el stock de los productos
+                foreach ($saleItems as $item) {
+                  DB::table('products')
+                    ->where('id', $item->product_id)
+                    ->increment('stock', $item->quantity);
+                }
+                // Actualizar el estado de la venta
+                $sale->update(['status' => 'Anulada']);
+              });
+              Notification::make()
+                ->title('Venta anulada')
+                ->body('La venta ' . $this->record->full_invoice_number . ' ha sido anulada y los productos han sido devueltos al inventario.')
+                ->success()
+                ->send();
+            } catch (\Exception $e) {
+              Notification::make()
+                ->title('Error al anular venta')
+                ->body('Ocurrió un error al anular la venta ' . $this->record->full_invoice_number . '. Por favor intenta de nuevo.')
+                ->danger()
+                ->send();
+              throw $e;
+            }
+          }
+        )
+        ->visible(fn() => $this->record->status !== 'Anulada'),
+
       Action::make('generate_pdf')
         ->label('Generar garantia')
         ->color(Color::Purple)
@@ -53,7 +84,8 @@ class ViewSale extends ViewRecord
             ->success()
             ->icon('heroicon-o-document-text')
             ->send()
-        ),
+        )
+        ->visible(fn() => $this->record->status !== 'Anulada'),
       Action::make('print_sale')
         ->label('Imprimir')
         ->color(Color::Lime)
@@ -125,19 +157,27 @@ class ViewSale extends ViewRecord
                   ->inlineLabel(),
                 Placeholder::make('subtotal')
                   ->label('Subtotal:')
-                  ->content(fn($record) => number_format(($record->total_amount - $record->total_discount) ?? 0, 2, '.', ''))
+                  ->content(fn($record) => $record->total_amount && $record->total_discount !== null
+                    ? number_format($record->total_amount - $record->total_discount, 2, ',', '.')
+                    : '')
                   ->inlineLabel(),
                 Placeholder::make('total_iva')
                   ->label('IVA:')
-                  ->content(fn($record) => $record->total_iva ?? '')
+                  ->content(fn($record) => $record->total_iva !== null
+                    ? number_format($record->total_iva, 2, ',', '.')
+                    : '')
                   ->inlineLabel(),
                 Placeholder::make('total_discount')
                   ->label('Descuento:')
-                  ->content(fn($record) => $record->total_discount ?? '')
+                  ->content(fn($record) => $record->total_discount !== null
+                    ? number_format($record->total_discount, 2, ',', '.')
+                    : '')
                   ->inlineLabel(),
                 Placeholder::make('total_amount')
                   ->label('TOTAL:')
-                  ->content(fn($record) => $record->total_amount ?? '')
+                  ->content(fn($record) => $record->total_amount !== null
+                    ? number_format($record->total_amount, 2, ',', '.')
+                    : '')
                   ->inlineLabel(),
                 Placeholder::make('sale_date')
                   ->label('Fecha:')
