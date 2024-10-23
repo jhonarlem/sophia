@@ -33,6 +33,6 @@ class Payment extends Model
 
   public function credit()
   {
-    return $this->belongsTo(Credit::class);
+    return $this->belongsTo(Credit::class, 'sale_id', 'sale_id');
   }
 }
