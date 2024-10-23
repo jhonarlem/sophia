@@ -53,6 +53,19 @@ class ViewSale extends ViewRecord
                     ->where('id', $item->product_id)
                     ->increment('stock', $item->quantity);
                 }
+
+                // Verificar si la venta tiene un crédito asociado y anularlo
+                $creditSale = DB::table('credits')
+                  ->where('sale_id', $sale->id)
+                  ->where('status', 'Pendiente')
+                  ->first();
+
+                if ($creditSale) { // Verifica si existe el registro
+                  DB::table('credits')
+                    ->where('id', $creditSale->id)
+                    ->update(['status' => 'Anulada']);
+                }
+
                 // Actualizar el estado de la venta
                 $sale->update(['status' => 'Anulada']);
               });

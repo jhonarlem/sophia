@@ -4,6 +4,7 @@ namespace App\Filament\Resources\SaleResource\Pages;
 
 use App\Filament\Resources\SaleResource;
 use App\Models\Box;
+use App\Models\Credit;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Sale;
@@ -146,12 +147,8 @@ class CreateSale extends CreateRecord
       // Establecer el método de pago dinámicamente
       $paymentMethod = count($validatedPayments['payments']) > 1 ? 'Mixto' : $validatedPayments['payments'][0]['payment_id'];
 
-      // Verificar si el método de pago es crédito para poner status en Pendiente de pago
-      if ($paymentMethod == 'Crédito') {
-        $statusSale = 'Pendiente';
-      } else {
-        $statusSale = 'Pagada';
-      }
+      // Verificar si en $validatedPayments['payments'] hay un pago con el método de pago 'Crédito'
+      $statusSale = collect($validatedPayments['payments'])->contains('payment_id', 'Crédito') ? 'Pendiente' : 'Pagada';
 
       // Calcular el cambio
       $cambio = $totalPagado - $totales['total_amount'];
@@ -205,6 +202,16 @@ class CreateSale extends CreateRecord
           'payment_date' => now(),
         ]);
 
+        // Crear el crédito si el método de pago es crédito
+        if ($payment['payment_id'] == 'Crédito') {
+          Credit::create([
+            'sale_id' => $sale->id,
+            'user_id' => Auth::id(),
+            'total_credit' => $payment['amount'],
+            'total_pending' => $payment['amount'],
+            'credit_date' => now(),
+          ]);
+        }
 
         // Actualizar la caja
         $box = Box::where('status', 'Abierta')->first();
@@ -214,10 +221,8 @@ class CreateSale extends CreateRecord
           $box->increment('total_sales', $cashEntry);
         } elseif ($payment['payment_id'] == 'Transferencia') {
           $box->increment('transfer_payment', $payment['amount']);
-          // $box->increment('total_sales', $payment['amount']);
         } elseif ($payment['payment_id'] == 'Crédito') {
           $box->increment('credit_sales', $payment['amount']);
-          // $box->increment('total_sales', $payment['amount']);
         }
       }
 
