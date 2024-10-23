@@ -58,6 +58,6 @@ class PaymentsRelationManager extends RelationManager
           ->label('Fecha de pago')
           ->dateTime()
           ->searchable(),
-      ]);
+      ])->defaultSort('created_at', 'desc');
   }
 }
