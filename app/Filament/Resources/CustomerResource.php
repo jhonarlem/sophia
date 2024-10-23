@@ -132,7 +132,7 @@ class CustomerResource extends Resource
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
-      ->recordUrl(null)
+      // ->recordUrl(null)
       ->defaultSort('created_at', 'desc')
       ->filters([
         //
@@ -169,7 +169,7 @@ class CustomerResource extends Resource
   public static function getRelations(): array
   {
     return [
-      //
+      RelationManagers\SalesRelationManager::class,
     ];
   }
 
@@ -179,6 +179,7 @@ class CustomerResource extends Resource
       'index' => Pages\ListCustomers::route('/'),
       'create' => Pages\CreateCustomer::route('/crear'),
       'edit' => Pages\EditCustomer::route('/editar/{record}'),
+      'view' => Pages\ViewCustomer::route('/ver/{record}'),
     ];
   }
 }
