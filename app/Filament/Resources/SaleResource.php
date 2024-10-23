@@ -27,6 +27,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
@@ -39,6 +40,11 @@ class SaleResource extends Resource
   protected static ?string $label = 'venta';
   protected static ?string $pluralLabel = 'ventas';
   protected static ?string $slug = 'ventas';
+
+  public static function getEloquentQuery(): Builder
+  {
+    return parent::getEloquentQuery()->with(['box.resolution']);
+  }
 
   public static function form(Form $form): Form
   {
@@ -294,49 +300,6 @@ class SaleResource extends Resource
                         ->columnSpan(1)->columnSpan(1)
                         ->dehydrated(fn($state) => true)
                         ->dehydrateStateUsing(fn($state) => $state),
-                      /* TextInput::make('discount')
-                        ->label('Descuento')
-                        ->numeric()
-                        ->placeholder(function ($get) {
-                          $discountPlaceholder = $get('discount_placeholder');
-                          $quantity = $get('quantity');
-                          return $discountPlaceholder > 0 ? $discountPlaceholder * $quantity : 0;
-                        })
-                        ->disabled(fn($get) => $get('discount_placeholder') <= 0)
-                        ->live(debounce: 700)
-                        ->afterStateUpdated(function ($state, callable $set, $get) {
-                          $productPrice = $get('sale_price');
-                          $quantity = $get('quantity');
-                          $maxDiscount = $get('discount_placeholder') * $quantity;
-
-                          // Si el descuento está vacío o es null, lo tratamos como 0
-                          $state = $state === null || $state === '' ? 0 : floatval($state);
-
-                          if ($state > $maxDiscount) {
-                            $set('discount', $maxDiscount);
-                            Notification::make()
-                              ->title('Descuento excedido')
-                              ->body('El descuento ingresado es mayor al descuento permitido')
-                              ->danger()
-                              ->send();
-                            $state = $maxDiscount;
-                          }
-
-                          if ($state < 0) {
-                            $set('discount', 0); // Si el descuento es negativo, lo establecemos en 0
-                            Notification::make()
-                              ->title('Descuento negativo')
-                              ->body('El descuento ingresado es negativo')
-                              ->danger()
-                              ->send();
-                            return;
-                          }
-
-                          $total = ($productPrice * $quantity) - $state;
-                          $set('total', $total);
-                          $set('discount', $state); // Aseguramos que el valor del descuento se actualice
-                          $set('total_price_product', $total);
-                        }) */
                       TextInput::make('total')
                         ->label('Total')
                         ->default(0)
@@ -450,6 +413,7 @@ class SaleResource extends Resource
           ->sortable(),
         Tables\Columns\TextColumn::make('invoice_number')
           ->label('Factura')
+          ->formatStateUsing(fn($record) => $record->box->resolution->prefix . '-' . $record->invoice_number)
           ->sortable()
           ->searchable(),
         Tables\Columns\TextColumn::make('status')
@@ -510,7 +474,8 @@ class SaleResource extends Resource
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
-      ])->recordUrl(null)
+      ])
+      // ->recordUrl(null)
       ->defaultSort('created_at', 'desc')
       ->filters([
         SelectFilter::make('status')
@@ -540,7 +505,8 @@ class SaleResource extends Resource
   public static function getRelations(): array
   {
     return [
-      //
+      RelationManagers\SaleItemsRelationManager::class,
+      RelationManagers\PaymentsRelationManager::class,
     ];
   }
 
@@ -549,7 +515,6 @@ class SaleResource extends Resource
     return [
       'index' => Pages\ListSales::route('/'),
       'create' => Pages\CreateSale::route('/crear'),
-      'edit' => Pages\EditSale::route('/editar/{record}'),
       'view' => Pages\ViewSale::route('/ver/{record}'),
     ];
   }

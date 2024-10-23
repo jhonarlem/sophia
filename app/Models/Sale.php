@@ -130,6 +130,12 @@ class Sale extends Model
   }
 
 
+  public function getFullInvoiceNumberAttribute()
+  {
+    return $this->box->resolution->prefix . '-' . $this->invoice_number;
+  }
+
+
 
   /**
    * Relations with other models.
@@ -158,5 +164,10 @@ class Sale extends Model
   public function payments()
   {
     return $this->hasMany(Payment::class);
+  }
+
+  public function saleItems()
+  {
+    return $this->hasMany(SaleItem::class);
   }
 }

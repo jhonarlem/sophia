@@ -21,11 +21,6 @@ class CreateSale extends CreateRecord
 {
   protected static string $resource = SaleResource::class;
 
-  protected function getRedirectUrl(): string
-  {
-    return route('filament.dashboard.resources.ventas.index');
-  }
-
   protected function getCreateFormAction(): Action
   {
     return parent::getCreateFormAction()->extraAttributes(['type' => 'button', 'wire:click' => 'create']);
@@ -151,6 +146,13 @@ class CreateSale extends CreateRecord
       // Establecer el método de pago dinámicamente
       $paymentMethod = count($validatedPayments['payments']) > 1 ? 'Mixto' : $validatedPayments['payments'][0]['payment_id'];
 
+      // Verificar si el método de pago es crédito para poner status en Pendiente de pago
+      if ($paymentMethod == 'Crédito') {
+        $statusSale = 'Pendiente';
+      } else {
+        $statusSale = 'Pagada';
+      }
+
       // Calcular el cambio
       $cambio = $totalPagado - $totales['total_amount'];
 
@@ -166,7 +168,7 @@ class CreateSale extends CreateRecord
         'payment_method' => $paymentMethod,
         'received' => $totalPagado,
         'exchange' => $cambio,
-        'status' => 'Pagada',
+        'status' => $statusSale,
         'sale_date' => now(),
       ]);
 
