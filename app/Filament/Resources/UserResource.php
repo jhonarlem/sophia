@@ -155,7 +155,7 @@ class UserResource extends Resource
       ])
       ->actions([
         ActionGroup::make([
-          Tables\Actions\ViewAction::make()->label('Ver'),
+          Tables\Actions\ViewAction::make()->label('Ver')->color('primary'),
           Tables\Actions\EditAction::make()->color('warning'),
           Action::make('changePassword')
             ->label('Actualizar')

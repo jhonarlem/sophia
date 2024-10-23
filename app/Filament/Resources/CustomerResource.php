@@ -139,7 +139,7 @@ class CustomerResource extends Resource
       ])
       ->actions([
         ActionGroup::make([
-          Tables\Actions\ViewAction::make()->label('Ver'),
+          Tables\Actions\ViewAction::make()->label('Ver')->color('primary'),
           Tables\Actions\EditAction::make()->color('warning'),
           DeleteAction::make()
             ->action(function ($record) {
