@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class PaymentsRelationManager extends RelationManager
 {
   protected static string $relationship = 'payments';
-  protected static ?string $title = 'Métodos de pago';
+  protected static ?string $title = 'Historial de pagos';
 
   // Mostrar los campos de la relación en el formulario
   public function form(Form $form): Form
