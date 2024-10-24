@@ -65,4 +65,9 @@ class User extends Authenticatable
   {
     return $this->hasMany(Credit::class);
   }
+
+  public function losses()
+  {
+    return $this->hasMany(Loss::class);
+  }
 }
