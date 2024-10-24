@@ -12,6 +12,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ViewSale extends ViewRecord
@@ -194,7 +195,7 @@ class ViewSale extends ViewRecord
                   ->inlineLabel(),
                 Placeholder::make('sale_date')
                   ->label('Fecha:')
-                  ->content(fn($record) => $record->sale_date ?? '')
+                  ->content(fn($record) => Carbon::parse($record->sale_date)->locale('es')->isoFormat('D MMM YYYY HH:ss') ?? '')
                   ->inlineLabel(),
                 Placeholder::make('user.name')
                   ->label('Cajero:')

@@ -20,6 +20,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -227,7 +228,7 @@ class ViewCredit extends ViewRecord
                 Placeholder::make('credit_date')
                   ->label('Fecha:')
                   ->content(fn($record) => $record->credit_date !== null
-                    ? $record->credit_date : '')
+                    ? Carbon::parse($record->credit_date)->locale('es')->isoFormat('D MMM YYYY HH:ss') : '')
                   ->inlineLabel(),
               ]),
           ])
