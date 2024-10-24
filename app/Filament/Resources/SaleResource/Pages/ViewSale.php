@@ -195,7 +195,7 @@ class ViewSale extends ViewRecord
                   ->inlineLabel(),
                 Placeholder::make('sale_date')
                   ->label('Fecha:')
-                  ->content(fn($record) => Carbon::parse($record->sale_date)->locale('es')->isoFormat('D MMM YYYY HH:ss') ?? '')
+                  ->content(fn($record) => Carbon::parse($record->sale_date)->locale('es')->isoFormat('MMM D YYYY HH:mm') ?? '')
                   ->inlineLabel(),
                 Placeholder::make('user.name')
                   ->label('Cajero:')

@@ -228,7 +228,7 @@ class ViewCredit extends ViewRecord
                 Placeholder::make('credit_date')
                   ->label('Fecha:')
                   ->content(fn($record) => $record->credit_date !== null
-                    ? Carbon::parse($record->credit_date)->locale('es')->isoFormat('D MMM YYYY HH:ss') : '')
+                    ? Carbon::parse($record->credit_date)->locale('es')->isoFormat('MMM D YYYY HH:mm') : '')
                   ->inlineLabel(),
               ]),
           ])
