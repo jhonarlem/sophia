@@ -19,7 +19,7 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 class CreditResource extends Resource
 {
   protected static ?string $model = Credit::class;
-
+  protected static ?int $navigationSort = 3;
   protected static ?string $navigationIcon = 'heroicon-o-building-library';
   protected static $title = 'Créditos';
   protected static ?string $label = 'crédito';

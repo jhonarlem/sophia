@@ -22,7 +22,7 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 class CustomerResource extends Resource
 {
   protected static ?string $model = Customer::class;
-
+  protected static ?int $navigationSort = 4;
   protected static ?string $navigationIcon = 'heroicon-o-users';
   protected static $title = 'Clientes';
   protected static ?string $label = 'cliente';

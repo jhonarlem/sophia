@@ -24,7 +24,7 @@ class BoxResource extends Resource
   protected static ?string $model = Box::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-calculator';
-  protected static ?int $navigationSort = 1;
+  protected static ?int $navigationSort = 5;
   protected static $title = 'Caja';
   protected static ?string $label = 'caja';
   protected static ?string $pluralLabel = 'caja';

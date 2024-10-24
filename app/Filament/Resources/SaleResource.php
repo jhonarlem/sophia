@@ -34,7 +34,7 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 class SaleResource extends Resource
 {
   protected static ?string $model = Sale::class;
-
+  protected static ?int $navigationSort = 1;
   protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
   protected static $title = 'Ventas';
   protected static ?string $label = 'venta';

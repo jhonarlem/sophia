@@ -28,7 +28,7 @@ use Filament\Tables\Filters\Filter;
 class ProductResource extends Resource
 {
   protected static ?string $model = Product::class;
-
+  protected static ?int $navigationSort = 2;
   protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
   protected static $title = 'Productos';
   protected static ?string $label = 'producto';
