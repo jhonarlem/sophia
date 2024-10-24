@@ -51,7 +51,6 @@ class CreateSale extends CreateRecord
 
   protected function handleRecordCreation(array $data): Model
   {
-    // dd($data);
     try {
       // Validar datos del cliente
       $validatorCustomer = Validator::make($data, [
