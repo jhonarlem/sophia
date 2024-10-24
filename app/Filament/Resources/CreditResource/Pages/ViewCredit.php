@@ -32,7 +32,7 @@ class ViewCredit extends ViewRecord
   {
 
     return [
-      Action::make('pay_credit')
+      Action::make('Pagar')
         ->label('Pagar')
         ->modalHeading('Pagar crédito')
         ->modalDescription('Ingresa los métodos de pago que utilizarás para pagar el crédito.')

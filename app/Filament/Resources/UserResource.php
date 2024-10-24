@@ -157,7 +157,7 @@ class UserResource extends Resource
         ActionGroup::make([
           Tables\Actions\ViewAction::make()->label('Ver')->color('primary'),
           Tables\Actions\EditAction::make()->color('warning'),
-          Action::make('changePassword')
+          Action::make('Cambiar contraseña')
             ->label('Actualizar')
             ->color('primary')
             ->icon('heroicon-o-finger-print')

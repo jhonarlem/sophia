@@ -23,12 +23,12 @@ class ViewSale extends ViewRecord
   {
 
     return [
-      Action::make('new_sale')
+      Action::make('Crear')
         ->label('Crear venta')
         ->action(
           fn() => redirect()->route('filament.dashboard.resources.ventas.create')
         ),
-      Action::make('null_sale')
+      Action::make('Anular')
         ->requiresConfirmation()
         ->label('Anular venta')
         ->color('danger')
@@ -87,7 +87,7 @@ class ViewSale extends ViewRecord
         )
         ->visible(fn() => $this->record->status !== 'Anulada'),
 
-      Action::make('generate_pdf')
+      Action::make('Generar garantia')
         ->label('Generar garantia')
         ->color(Color::Purple)
         ->action(
@@ -100,7 +100,7 @@ class ViewSale extends ViewRecord
             ->send()
         )
         ->visible(fn() => $this->record->status !== 'Anulada'),
-      Action::make('print_sale')
+      Action::make('Imprimir')
         ->label('Imprimir')
         ->color(Color::Lime)
         ->action(

@@ -32,7 +32,7 @@ class CreateSale extends CreateRecord
   public function statusBoxAction(): Action
   {
     $statuxBox = Box::latest()->first()?->status;
-    return Action::make('checkStatusBox')
+    return Action::make('Estado de la caja')
       ->visible(fn() => $statuxBox != 'Abierta')
       ->requiresConfirmation()
       ->closeModalByClickingAway(false)

@@ -25,7 +25,7 @@ class ListBoxes extends ListRecords
     $status = Box::latest()->first()?->status;
 
     return [
-      Action::make('openBox')
+      Action::make('Abrir caja')
         ->label('Abrir caja')
         ->hidden(fn() => $status === 'Abierta')
         ->requiresConfirmation()
@@ -86,7 +86,7 @@ class ListBoxes extends ListRecords
             ->required(),
         ])
         ->visible(fn() => true),
-      Action::make('closeBox')
+      Action::make('Cerrar caja')
         ->label('Cerrar caja')
         ->color('warning')
         ->hidden(fn() => $status === 'Cerrada' || $status === null)
