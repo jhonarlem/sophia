@@ -118,7 +118,10 @@ class SaleResource extends Resource
                     ->schema([
                       Placeholder::make('invoice_number')
                         ->label('Factura:')
-                        ->content(Sale::generateInvoiceNumber())
+                        ->content(
+                          fn($get) => Sale::generateInvoiceNumber() ?? 'Sin numeración'
+
+                        )
                         ->inlineLabel(),
                       Placeholder::make('subtotal')
                         ->label('Subtotal:')
@@ -389,7 +392,6 @@ class SaleResource extends Resource
                     ->reorderable(false),
                 ])
             ]),
-
         ]),
       ]);
   }
