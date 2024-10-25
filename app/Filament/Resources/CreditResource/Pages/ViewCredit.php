@@ -230,6 +230,10 @@ class ViewCredit extends ViewRecord
                   ->content(fn($record) => $record->credit_date !== null
                     ? Carbon::parse($record->credit_date)->locale('es')->isoFormat('MMM D YYYY HH:mm') : '')
                   ->inlineLabel(),
+                Placeholder::make('user.name')
+                  ->label('Cajero:')
+                  ->content(fn($record) => $record->user->name ?? '')
+                  ->inlineLabel(),
               ]),
           ])
           ->columnSpan(12),
