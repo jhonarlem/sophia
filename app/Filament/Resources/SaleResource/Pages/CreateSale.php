@@ -31,22 +31,47 @@ class CreateSale extends CreateRecord
 
   public function statusBoxAction(): Action
   {
-    $statuxBox = Box::latest()->first()?->status;
+    $statusBox = Box::latest()->first()?->status;
+    $invoiceNumber = Sale::generateInvoiceNumber();
+
+    // Si la caja está cerrada
+    if ($statusBox != 'Abierta') {
+      return Action::make('Estado de la caja')
+        ->requiresConfirmation()
+        ->closeModalByClickingAway(false)
+        ->closeModalByEscaping(false)
+        ->modalCloseButton(false)
+        ->color('warning')
+        ->modalIcon('heroicon-o-lock-closed')
+        ->modalHeading('Caja cerrada')
+        ->modalDescription('Actualmente, no es posible registrar una venta ya que la caja se encuentra cerrada. Por favor, abre la caja para poder continuar con el proceso de venta.')
+        ->modalSubmitActionLabel('Abrir caja')
+        ->modalCancelAction(false)
+        ->action(function () {
+          return redirect()->route('filament.dashboard.resources.caja.index');
+        });
+    }
+
+    // Si no hay números de factura disponibles
+    if ($invoiceNumber === null) {
+      return Action::make('Estado de la resolución')
+        ->requiresConfirmation()
+        ->closeModalByClickingAway(false)
+        ->closeModalByEscaping(false)
+        ->modalCloseButton(false)
+        ->color('danger')
+        ->modalIcon('heroicon-o-exclamation-triangle')
+        ->modalHeading('Resolución agotada')
+        ->modalDescription('Se han agotado los números de factura en la resolución actual asociada a la caja. Para continuar con el proceso de venta, debes: 1) Configurar una nueva resolución en el sistema, y 2) Cerrar la caja actual y abrir una nueva caja asociándola a la nueva resolución configurada.')
+        ->modalSubmitActionLabel('Ir a resoluciones')
+        ->modalCancelAction(false)
+        ->action(function () {
+          return redirect()->route('filament.dashboard.resources.resoluciones.index');
+        });
+    }
+
     return Action::make('Estado de la caja')
-      ->visible(fn() => $statuxBox != 'Abierta')
-      ->requiresConfirmation()
-      ->closeModalByClickingAway(false)
-      ->closeModalByEscaping(false)
-      ->modalCloseButton(false)
-      ->color('warning')
-      ->modalIcon('heroicon-o-lock-closed')
-      ->modalHeading('Caja cerrada')
-      ->modalDescription('Actualmente, no es posible registrar una venta ya que la caja se encuentra cerrada. Por favor, abre la caja para poder continuar con el proceso de venta.')
-      ->modalSubmitActionLabel('Abrir caja')
-      ->modalCancelAction(false)
-      ->action(function () {
-        return redirect()->route('filament.dashboard.resources.caja.index');
-      });
+      ->visible(false);
   }
 
   protected function handleRecordCreation(array $data): Model
