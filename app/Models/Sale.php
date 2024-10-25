@@ -67,9 +67,7 @@ class Sale extends Model
     $newInvoiceNumber = $lastInvoiceNumber + 1;
 
     if ($newInvoiceNumber > $endInvoiceNumber) {
-      throw ValidationException::withMessages([
-        'message' => 'Se ha alcanzado el número máximo de facturas para esta resolución',
-      ]);
+      return null;
     }
 
     // 6. Retornar el prefijo concatenado con el nuevo número de factura
