@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ReceiptController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -7,10 +9,5 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard/ventas/recibo/{record}', function () {
-  return view('vendor.filament.resources.sales.receipt');
-})->name('recibo');
-
-Route::get('/dashboard/ventas/factura/{record}', function () {
-  return view('vendor.filament.resources.sales.invoice');
-})->name('factura');
+Route::get('/dashboard/ventas/recibo/{id}', [ReceiptController::class, 'getDataReceipt'])->name('recibo');
+Route::get('/dashboard/ventas/factura/{id}', [InvoiceController::class, 'getDataInvoice'])->name('factura');
