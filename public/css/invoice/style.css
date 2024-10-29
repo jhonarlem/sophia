@@ -8,7 +8,7 @@
 /*--------------------------------------------------------------
 2. Normalize
 ----------------------------------------------------------------*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 *,
 ::after,
@@ -357,7 +357,7 @@ template {
 body,
 html {
   color: #666;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.6em;
@@ -2967,6 +2967,35 @@ hr {
     letter-spacing: 5px;
     font-size: 150px;
     padding: 27px 15px 27px 15px;
+  }
+}
+
+@media print {
+
+  /* Configurar tamaño de página a carta */
+  @page {
+    size: letter;
+    /* Tamaño carta */
+  }
+
+  /* Ajustes del contenido */
+  body {
+    width: auto;
+    /* Permitir que el contenido se ajuste automáticamente al ancho de la página carta */
+    margin: 0;
+    /* Elimina márgenes adicionales en el cuerpo */
+  }
+
+  /* Evitar saltos de página dentro de elementos */
+  * {
+    page-break-inside: avoid;
+    page-break-before: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Ocultar botones y elementos no deseados para impresión */
+  .tm_invoice_btns {
+    display: none;
   }
 }
 

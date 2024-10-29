@@ -122,8 +122,8 @@
                         <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">$ {{$sale->totalIva}}</td>
                       </tr>
                       <tr>
-                        <td class="tm_width_3 tm_danger_color tm_border_none tm_pt0">Descuento</td>
-                        <td class="tm_width_3 tm_danger_color tm_text_right tm_border_none tm_pt0">-$ {{$sale->totalDiscount}}</td>
+                        <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Descuento</td>
+                        <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_pt0">-$ {{$sale->totalDiscount}}</td>
                       </tr>
                       <tr>
                         <td class="tm_width_3 tm_border_top_0 tm_bold tm_f15 tm_primary_color tm_gray_bg tm_radius_6_0_0_6">Total a pagar </td>
