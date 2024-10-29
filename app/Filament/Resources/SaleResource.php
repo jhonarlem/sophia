@@ -173,7 +173,9 @@ class SaleResource extends Resource
                     ->schema([
                       Select::make('product_id')
                         ->label('Producto')
-                        ->relationship('products', 'name')
+                        ->relationship('products', 'name', function ($query) {
+                          $query->where('status', 'Activo'); // Filtra solo productos con estado 'Activo'
+                        })
                         ->required()
                         ->searchable()
                         ->preload()
