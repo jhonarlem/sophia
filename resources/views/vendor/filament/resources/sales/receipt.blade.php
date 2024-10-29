@@ -5,11 +5,12 @@
   <!-- Meta Tags -->
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Laralink">
   <title>Recibo de venta {{$resolution->prefix}}-{{ $sale->invoiceNumber }}</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
 
     *,
     ::after,
@@ -23,7 +24,7 @@
       font-weight: 400;
       line-height: 1.4em;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       background-color: #f5f6fa;
     }
 
@@ -234,6 +235,44 @@
       position: relative;
     }
 
+    @media print {
+      @page {
+        size: 80mm 400mm;
+        margin: 0;
+      }
+
+      body {
+        width: 80mm;
+        margin: 0;
+        padding: 0;
+      }
+
+      .tm_container,
+      .tm_pos_invoice_table,
+      .tm_bill_list,
+      .tm_pos_invoice_wrap {
+        width: 100%;
+        font-size: 8pt;
+        overflow: hidden;
+        padding: 5px;
+      }
+
+      * {
+        page-break-inside: avoid;
+        page-break-before: avoid;
+        page-break-after: avoid;
+      }
+
+      .tm_invoice_btns {
+        display: none;
+      }
+
+      .tm_hide_print {
+        display: none !important;
+      }
+    }
+
+
     @media (min-width: 575px) {
       .tm_invoice_btns {
         display: -webkit-box;
@@ -440,12 +479,6 @@
       }
     }
 
-    @media print {
-      .tm_hide_print {
-        display: none !important;
-      }
-    }
-
     /* End Receipt Section */
   </style>
 </head>
@@ -600,7 +633,8 @@
             <div class="tm_bill_value">{{$sale->status}}</div>
           </div>
         </div>
-        <div class="tm_pos_sample_text">Software: SOPHIA POS <br> Fabricante: JHON ARLEM ANDRADE</div>
+        <div class="tm_pos_invoice_footer">Software: SOPHIA POS <br> Fabricante: JHON ARLEM ANDRADE</div>
+        <div class="tm_pos_invoice_heading"></div>
         <div class="tm_pos_invoice_footer">¡Gracias por su compra!</div>
       </div>
     </div>
