@@ -87,31 +87,17 @@ class ViewSale extends ViewRecord
         )
         ->visible(fn() => $this->record->status !== 'Anulada'),
 
-      Action::make('Generar garantia')
-        ->label('Generar garantia')
+      Action::make('Factura')
+        ->label('Factura')
         ->color(Color::Purple)
-        ->action(
-          fn() =>
-          Notification::make()
-            ->title('Generando garantia')
-            ->body('Generando garantia ' . $this->record->full_invoice_number . ' por favor espera...')
-            ->success()
-            ->icon('heroicon-o-document-text')
-            ->send()
-        )
+        ->url(route('factura', $this->record->id))
+        ->openUrlInNewTab()
         ->visible(fn() => $this->record->status !== 'Anulada'),
-      Action::make('Imprimir')
-        ->label('Imprimir')
+      Action::make('Recibo')
+        ->label('Recibo')
         ->color(Color::Lime)
-        ->action(
-          fn() =>
-          Notification::make()
-            ->title('Imprimiendo factura')
-            ->body('Imprimiendo factura ' . $this->record->full_invoice_number . ' por favor espera...')
-            ->success()
-            ->icon('heroicon-o-printer')
-            ->send()
-        ),
+        ->url(route('recibo', $this->record->id))
+        ->openUrlInNewTab(),
     ];
   }
 
