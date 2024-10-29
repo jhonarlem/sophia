@@ -7,7 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Laralink">
-  <title>Recibo de venta</title>
+  <title>Recibo de venta {{$resolution->prefix}}-{{ $sale->invoiceNumber }}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
@@ -40,7 +40,7 @@
       background-color: #fff;
     }
 
-    .tm_pos_company_logo {
+    /*  .tm_pos_company_logo {
       display: flex;
       justify-content: center;
       margin-bottom: 7px;
@@ -53,6 +53,37 @@
       height: auto;
       max-height: 45px;
     }
+ */
+    .tm_pos_company_logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 7px;
+    }
+
+    .image-wrapper {
+      width: 100%;
+      max-width: 200px;
+      /* Ajusta según tus necesidades */
+      position: relative;
+      padding-bottom: 25%;
+      /* Proporción rectangular */
+      overflow: hidden;
+    }
+
+    .tm_pos_company_logo img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      /* Ajuste para que toda la imagen se muestre sin recortes */
+      vertical-align: middle;
+      border: 0;
+      background-color: white;
+      /* Color de fondo para que los márgenes se vean bien */
+    }
+
 
     .tm_pos_invoice_top {
       text-align: center;
@@ -442,42 +473,50 @@
   <div class="tm_container">
     <div class="tm_pos_invoice_wrap" id="tm_download_section">
       <div class="tm_pos_invoice_top">
-        <div class="tm_pos_company_logo">
+        <!--  <div class="tm_pos_company_logo">
           <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="45" height="45" rx="22.5" transform="matrix(-1 0 0 1 45 0)" fill="#111" />
             <path d="M26.5194 27.7073H18.164L22.3417 21.0726L26.5194 27.7073ZM27.8426 12.3363L37.5209 27.7073H28.0598L23.1117 19.8495L27.8426 12.3363ZM39.875 29L27.8426 9.89042L22.3417 18.6266L16.8408 9.89042L5 28.6953H6.54017L16.8408 12.3363L21.5715 19.8495L15.8099 29H39.875Z" fill="white" />
           </svg>
+        </div> -->
+        <div class="tm_pos_company_logo">
+          <div class="image-wrapper">
+            <img src="{{$company->logo}}" alt="Logo de la empresa" />
+          </div>
         </div>
-        <div class="tm_pos_company_name">SURTIHOGAR RENOVAR</div>
-        <div class="tm_pos_company_address">NIT: 900.124.543-6</div>
-        <div class="tm_pos_company_address">Cl 9 6 - 19 Centro, Santa María, Huila</div>
-        <div class="tm_pos_company_mobile">surtihogar@gmail.com</div>
-        <div class="tm_pos_company_mobile">3124565432</div>
-        <div class="tm_pos_company_mobile">Responsables de IVA</div>
+
+
+        <div class="tm_pos_company_name">{{$company->name}}</div>
+        <div class="tm_pos_company_address">{{$company->legal_representative}}</div>
+        <div class="tm_pos_company_address">{{$company->document_type}}: {{$company->document_number}}</div>
+        <div class="tm_pos_company_address">{{$company->address}}</div>
+        <div class="tm_pos_company_mobile">{{$company->cellphone}}</div>
+        <div class="tm_pos_company_mobile">{{$company->email}}</div>
+        <div class="tm_pos_company_mobile">Responsable de IVA persona naltural</div>
       </div>
 
       <div class="tm_pos_invoice_body">
-        <div class="tm_pos_invoice_heading"><span>Recibo de venta FVD-34</span></div>
+        <div class="tm_pos_invoice_heading"><span>Recibo de venta {{$resolution->prefix}}-{{ $sale->invoiceNumber }}</span></div>
         <!-- Invoice data -->
         <div class="invoice-data">
           <div class="tm_list_title">Resolución DIAN:</div>
-          <div class="tm_list_desc">4567829342342878</div>
+          <div class="tm_list_desc">{{$resolution->number}}</div>
         </div>
         <div class="invoice-data">
           <div class="tm_list_title">Autorizada:</div>
-          <div class="tm_list_desc">27/10/2024</div>
+          <div class="tm_list_desc">{{$resolution->startDate}}</div>
         </div>
         <div class="invoice-data">
           <div class="tm_list_title">Vigencia:</div>
-          <div class="tm_list_desc">6 meses</div>
+          <div class="tm_list_desc">{{$resolution->validMonths}} meses</div>
         </div>
         <div class="invoice-data">
           <div class="tm_list_title">Numeración:</div>
-          <div class="tm_list_desc">1 al 200.000</div>
+          <div class="tm_list_desc">{{$resolution->startInvoice}} al {{$resolution->endInvoice}}</div>
         </div>
         <div class="invoice-data">
           <div class="tm_list_title">Factura POS N°:</div>
-          <div class="tm_list_desc">34</div>
+          <div class="tm_list_desc">{{number_format($sale->invoiceNumber, 0, ',', '.')}}</div>
         </div>
 
         <div class="tm_pos_invoice_heading"></div>
@@ -485,35 +524,39 @@
 
         <div class="invoice-data">
           <div class="tm_list_title">Factura:</div>
-          <div class="tm_list_desc">FVD-34</div>
+          <div class="tm_list_desc">{{$resolution->prefix}}-{{ $sale->invoiceNumber }}</div>
         </div>
         <div class="invoice-data">
           <div class="tm_list_title">Fecha:</div>
-          <div class="tm_list_desc">27/10/2024 10:54:21</div>
+          <div class="tm_list_desc">{{$sale->saleDate}}</div>
         </div>
         <div class="invoice-data">
+          <div class="tm_list_title">Cajero:</div>
+          <div class="tm_list_desc">{{$sale->user}}</div>
+        </div>
+        <div class="invoice-data">
+          <div class="tm_list_title">Caja:</div>
+          <div class="tm_list_desc">{{$sale->box}}</div>
+        </div>
+        <div class="tm_pos_invoice_heading"></div>
+        <div class="invoice-data">
           <div class="tm_list_title">Cliente:</div>
-          <div class="tm_list_desc">CLAUDIA RINCON RODRIGUEZ</div>
+          <div class="tm_list_desc">{{$customer->name}}</div>
         </div>
         <div class="invoice-data">
           <div class="tm_list_title">Documento:</div>
-          <div class="tm_list_desc">CC 1079607162</div>
+          <div class="tm_list_desc">{{$customer->documentType}} {{$customer->documentNumber}}</div>
         </div>
 
         <div class="invoice-data">
           <div class="tm_list_title">Celular:</div>
-          <div class="tm_list_desc">3123123123</div>
+          <div class="tm_list_desc">{{$customer->cellphone}}</div>
         </div>
 
         <div class="invoice-data">
           <div class="tm_list_title">Correo:</div>
-          <div class="tm_list_desc">pato@gmail.com</div>
+          <div class="tm_list_desc">{{$customer->email}}</div>
         </div>
-
-        <!--   <div class="invoice-data">
-          <div class="tm_list_title">Estado:</div>
-          <div class="tm_list_desc">Pagada</div>
-        </div> -->
 
         <table class="tm_pos_invoice_table">
           <thead>
@@ -527,115 +570,57 @@
             </tr>
           </thead>
           <tbody>
+            @foreach($items as $index => $item)
             <tr>
-              <td>1.</td>
-              <td>VASO CRISTAL MEDIANO</td>
-              <td>$3.000</td>
-              <td>3</td>
-              <td>19%</td>
-              <td>$9.000</td>
+              <td>{{ $index + 1 }}.</td>
+              <td>{{ $item->product }}</td>
+              <td>${{ $item->price }}</td>
+              <td>{{ $item->quantity }}</td>
+              <td>{{ $item->iva }}%</td>
+              <td>${{ $item->total }}</td>
             </tr>
-            <tr>
-              <td>2.</td>
-              <td>CUCHARA METALICA</td>
-              <td>$3.000</td>
-              <td>2</td>
-              <td>0%</td>
-              <td>$6.000</td>
-            </tr>
-            <!--    <tr>
-              <td>3.</td>
-              <td>Noluisse</td>
-              <td>$100</td>
-              <td>0%</td>
-              <td>3</td>
-              <td>$300</td>
-            </tr>
-            <tr>
-              <td>4.</td>
-              <td>Zril dicere</td>
-              <td>$7.50</td>
-              <td>6%</td>
-              <td>4</td>
-              <td>$30</td>
-            </tr>
-            <tr>
-              <td>5.</td>
-              <td>Noluisse</td>
-              <td>$100</td>
-              <td>19%</td>
-              <td>3</td>
-              <td>$300</td>
-            </tr>
-            <tr>
-              <td>6.</td>
-              <td>Docendi percipit</td>
-              <td>$70</td>
-              <td>16%</td>
-              <td>1</td>
-              <td>$70</td>
-            </tr>
-            <tr>
-              <td>7.</td>
-              <td>Inani oblique</td>
-              <td>$15</td>
-              <td>19%</td>
-              <td>2</td>
-              <td>$30</td>
-            </tr>
-            <tr>
-              <td>8.</td>
-              <td>Vituperatoribus</td>
-              <td>$100</td>
-              <td>19%</td>
-              <td>1</td>
-              <td>$100</td>
-            </tr>
-            <tr>
-              <td>9.</td>
-              <td>Timeam fuisset</td>
-              <td>$100</td>
-              <td>19%</td>
-              <td>3</td>
-              <td>$300</td>
-            </tr> -->
+            @endforeach
           </tbody>
         </table>
         <div class="tm_bill_list">
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Subtotal:</div>
-            <div class="tm_bill_value">$ 13.290,00</div>
+            <div class="tm_bill_value">$ {{$sale->subtotal}}</div>
           </div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">IVA:</div>
-            <div class="tm_bill_value">$ 1.710,00</div>
+            <div class="tm_bill_value">$ {{$sale->totalIva}}</div>
           </div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Descuento: </div>
-            <div class="tm_bill_value">-$ 0,00</div>
+            <div class="tm_bill_value">-$ {{$sale->totalDiscount}}</div>
           </div>
           <div class="tm_invoice_seperator"></div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title tm_bill_focus">Total a pagar:</div>
-            <div class="tm_bill_value tm_bill_focus">$ 15.000,00</div>
+            <div class="tm_bill_value tm_bill_focus">$ {{$sale->totalAmount}}</div>
           </div>
 
           <div class="tm_invoice_seperator"></div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Método de pago: </div>
-            <div class="tm_bill_value">Efectivo</div>
+            <div class="tm_bill_value">{{$sale->paymentMethod}}</div>
           </div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Recibido:</div>
-            <div class="tm_bill_value">$ 20.000,00</div>
+            <div class="tm_bill_value">$ {{$sale->received}}</div>
           </div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Cambio:</div>
-            <div class="tm_bill_value">$ 5.000,00</div>
+            <div class="tm_bill_value">$ {{$sale->exchange}}</div>
+          </div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Pendiente:</div>
+            <div class="tm_bill_value">$ {{$sale->totalPending}}</div>
           </div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Estado:</div>
-            <div class="tm_bill_value">Pagada</div>
+            <div class="tm_bill_value">{{$sale->status}}</div>
           </div>
         </div>
         <div class="tm_pos_sample_text">Software: SOPHIA POS <br> Fabricante: JHON ARLEM ANDRADE</div>
