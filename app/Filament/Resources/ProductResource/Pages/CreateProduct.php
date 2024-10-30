@@ -11,10 +11,16 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use Filament\Actions\Action;
 
 class CreateProduct extends CreateRecord
 {
   protected static string $resource = ProductResource::class;
+
+  protected function getCreateFormAction(): Action
+  {
+    return parent::getCreateFormAction()->extraAttributes(['type' => 'button', 'wire:click' => 'create']);
+  }
 
   protected function getRedirectUrl(): string
   {
