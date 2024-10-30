@@ -245,8 +245,10 @@ class CreateSale extends CreateRecord
           $box->increment('total_sales', $cashEntry);
         } elseif ($payment['payment_id'] == 'Transferencia') {
           $box->increment('transfer_payment', $payment['amount']);
+          $box->increment('total_sales', $payment['amount']);
         } elseif ($payment['payment_id'] == 'Crédito') {
           $box->increment('credit_sales', $payment['amount']);
+          $box->increment('total_sales', $payment['amount']);
         }
       }
 
