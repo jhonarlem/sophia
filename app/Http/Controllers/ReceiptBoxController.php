@@ -46,7 +46,7 @@ class ReceiptBoxController extends Controller
       'cashPayment' => number_format($box->cash_payment, 2, ',', '.'),
       'transferPayment' => number_format($box->transfer_payment, 2, ',', '.'),
       'creditSales' => number_format($box->credit_sales, 2, ',', '.'),
-      'totalSales' => number_format($box->total_sales, 2, ',', '.'),
+      'totalSales' => number_format($box->total_sales + $box->transfer_payment + $box->credit_sales, 2, ',', '.'),
       'realAmount' => number_format($box->real_amount, 2, ',', '.'),
       'difference' => number_format($box->difference, 2, ',', '.'),
       'status' => $box->status,
