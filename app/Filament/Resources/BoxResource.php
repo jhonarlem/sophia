@@ -6,6 +6,8 @@ use App\Filament\Resources\BoxResource\Pages;
 use App\Filament\Resources\BoxResource\RelationManagers;
 use App\Models\Box;
 use Faker\Provider\ar_EG\Text;
+
+use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
@@ -196,13 +198,18 @@ class BoxResource extends Resource
       ])
       ->actions([
         ActionGroup::make([
-          Tables\Actions\ViewAction::make()->label('Ver')->color('primary')
+          Tables\Actions\ViewAction::make()->label('Ver')->color('primary'),
+          Action::make('Imprimir')
+            ->label('Imprimir')
+            ->icon('heroicon-o-printer')
+            ->color('success')
+            ->url(fn(Tables\Actions\Action $action) => route('recibo-caja', $action->getRecord()->id))
+            ->openUrlInNewTab(),
         ])
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),
-          //Tables\Actions\DeleteBulkAction::make(),
         ]),
       ]);
   }
@@ -285,8 +292,6 @@ class BoxResource extends Resource
   {
     return [
       'index' => Pages\ListBoxes::route('/'),
-      /*  'create' => Pages\CreateBox::route('/crear'),
-      'edit' => Pages\EditBox::route('/editar/{record}'), */
     ];
   }
 }
