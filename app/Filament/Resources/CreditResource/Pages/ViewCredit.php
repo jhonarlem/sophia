@@ -30,7 +30,6 @@ class ViewCredit extends ViewRecord
 
   protected function getHeaderActions(): array
   {
-
     return [
       Action::make('Pagar')
         ->label('Pagar')
@@ -169,7 +168,7 @@ class ViewCredit extends ViewRecord
             }
           }
         )
-        ->visible(fn() => $this->record->status == 'Pendiente'),
+        ->visible(fn() => $this->record->status == 'Pendiente' && Box::latest()->first()?->status == 'Abierta'),
     ];
   }
 
