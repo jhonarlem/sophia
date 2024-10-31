@@ -3,6 +3,7 @@
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReceiptBoxController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\ReceiptCreditController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,4 @@ Route::get('/', function () {
 Route::get('/dashboard/ventas/recibo/{id}', [ReceiptController::class, 'getDataReceipt'])->name('recibo');
 Route::get('/dashboard/ventas/factura/{id}', [InvoiceController::class, 'getDataInvoice'])->name('factura');
 Route::get('/dashboard/caja/recibo/{id}', [ReceiptBoxController::class, 'getDataReceipt'])->name('recibo-caja');
+Route::get('/dashboard/creditos/recibo/{id}', [ReceiptCreditController::class, 'getDataReceipt'])->name('recibo-credito');
