@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\BoxResource\Widgets\BoxWidget;
+use App\Filament\Resources\ProductResource\Widgets\ProductsWidget;
+use App\Filament\Resources\SaleResource\Widgets\SalesWidget;
 use App\Http\Middleware\CheckUserStatus;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -45,8 +48,11 @@ class DashboardPanelProvider extends PanelProvider
       ])
       ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
       ->widgets([
-        Widgets\AccountWidget::class,
+        // Widgets\AccountWidget::class,
         // Widgets\FilamentInfoWidget::class,
+        BoxWidget::class,
+        ProductsWidget::class,
+        SalesWidget::class,
       ])
       ->plugins([
         FilamentEditProfilePlugin::make()
