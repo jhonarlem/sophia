@@ -169,6 +169,11 @@ class ViewCredit extends ViewRecord
           }
         )
         ->visible(fn() => $this->record->status == 'Pendiente' && Box::latest()->first()?->status == 'Abierta'),
+      Action::make('Recibo')
+        ->label('Recibo')
+        ->color(Color::Lime)
+        ->url(route('recibo-credito', $this->record->id))
+        ->openUrlInNewTab(),
     ];
   }
 
