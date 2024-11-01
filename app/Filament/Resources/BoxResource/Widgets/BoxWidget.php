@@ -17,18 +17,35 @@ class BoxWidget extends BaseWidget
   protected function getStats(): array
   {
     $box = Box::latest()->first();
-    $status = $box->status;
-    $user = $status === 'Abierta' ? $box->openedBy->name : $box->closedBy->name;
-    $color = match ($box->status) {
+    $status = $box?->status ?? 'Desconocido';
+    $user = match ($status) {
+      'Abierta' => $box?->openedBy?->name ?? 'Usuario desconocido',
+      'Cerrada' => $box?->closedBy?->name ?? 'Usuario desconocido',
+      default => 'Usuario desconocido',
+    };
+
+    $color = match ($status) {
       'Abierta' => 'success',
       'Cerrada' => 'warning',
+      default => 'secondary',
     };
-    $totalSales = '$ ' . number_format($box->total_sales - $box->base_amount, 0, ',', '.');
-    $totalSalesCount = 'Ventas realizadas: ' . number_format($box->sales->count());
+    $totalSales = $box
+      ? '$ ' . number_format($box->total_sales - $box->base_amount, 0, ',', '.')
+      : '$ 0';
 
-    $credits = Credit::where('status', 'Pendiente')->get()->count();
-    $totalCredit = '$ ' . number_format(Credit::where('status', 'Pendiente')
-      ->sum('total_pending'), 0, ',', '.');
+    $totalSalesCount = $box && $box->sales
+      ? 'Ventas realizadas: ' . number_format($box->sales->count())
+      : 'Ventas realizadas: 0';
+
+    $credits = Credit::where('status', 'Pendiente')->count();
+
+    $totalCredit = '$ ' . number_format(
+      Credit::where('status', 'Pendiente')->sum('total_pending') ?? 0,
+      0,
+      ',',
+      '.'
+    );
+
     $totalCreditPending = 'Créditos pendientes: ' . $credits;
 
     return [
