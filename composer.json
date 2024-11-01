@@ -17,6 +17,7 @@
     "license": "Proprietary",
     "require": {
         "php": "^8.2",
+        "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel-lang/common": "^6.4",
