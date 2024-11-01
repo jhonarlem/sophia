@@ -13,7 +13,7 @@ class SalesWidget extends BaseWidget
 {
   protected static ?string $pollingInterval = null;
   protected int | string | array $columnSpan = 'full';
-  protected static ?string $heading = 'Últimas ventas registradas';
+  protected static ?string $heading = 'Historial de ventas';
 
   public function table(Table $table): Table
   {
