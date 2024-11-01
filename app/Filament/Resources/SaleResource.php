@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\SaleResource\CustomPermissions;
 use App\Filament\Resources\SaleResource\Pages;
 use App\Filament\Resources\SaleResource\RelationManagers;
 use App\Models\Box;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
@@ -31,7 +33,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
-class SaleResource extends Resource
+class SaleResource extends Resource implements HasShieldPermissions
 {
   protected static ?string $model = Sale::class;
   protected static ?int $navigationSort = 1;
@@ -40,6 +42,25 @@ class SaleResource extends Resource
   protected static ?string $label = 'venta';
   protected static ?string $pluralLabel = 'ventas';
   protected static ?string $slug = 'ventas';
+
+  public static function getPermissionPrefixes(): array
+  {
+    return [
+      'view',           // Ver un registro en particular
+      'view_any',       // Ver el listado de registros
+      'create',         // Crear
+      'update',         // Actualizar
+      'cancel',         // Nuestro nuevo permiso de Anular
+      'restore',        // Restaurar un registro en particular
+      'restore_any',    // Restaurar varios registros
+      'replicate',      // Replicar
+      'reorder',        // Reordenar
+      'delete',         // Eliminar un registro en particular
+      'delete_any',     // Eliminar varios registros a la vez
+      'force_delete',   // Forzar eliminación de un registro en particular
+      'force_delete_any', // Forzar eliminación de varios registros
+    ];
+  }
 
   public static function getEloquentQuery(): Builder
   {

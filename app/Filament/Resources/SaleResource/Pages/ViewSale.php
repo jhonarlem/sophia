@@ -14,6 +14,7 @@ use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ViewSale extends ViewRecord
 {
@@ -27,7 +28,8 @@ class ViewSale extends ViewRecord
         ->label('Crear venta')
         ->action(
           fn() => redirect()->route('filament.dashboard.resources.ventas.create')
-        ),
+        )
+        ->visible(fn() => Gate::allows('create', $this->record)),
       Action::make('Anular')
         ->requiresConfirmation()
         ->label('Anular venta')
@@ -85,7 +87,7 @@ class ViewSale extends ViewRecord
             }
           }
         )
-        ->visible(fn() => $this->record->status !== 'Anulada'),
+        ->visible(fn() => $this->record->status !== 'Anulada' &&   Gate::allows('cancel', $this->record)),
 
       Action::make('Factura')
         ->label('Factura')

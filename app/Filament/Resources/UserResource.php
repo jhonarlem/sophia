@@ -74,6 +74,13 @@ class UserResource extends Resource
               ->minLength(10)
               ->required()
               ->autocomplete(false),
+            Forms\Components\Select::make('roles')
+              ->relationship('roles', 'name')
+              ->label('Rol')
+              ->searchable()
+              ->required()
+              ->preload()
+              ->placeholder('Selecciona un rol'),
             Forms\Components\Select::make('status')
               ->label('Estado')
               ->options([
@@ -115,6 +122,12 @@ class UserResource extends Resource
           ->label('Celular')
           ->searchable()
           ->sortable(),
+        Tables\Columns\TextColumn::make('roles.name')
+          ->label('Rol')
+          ->sortable()
+          ->badge()
+          ->color('primary')
+          ->searchable(),
         Tables\Columns\TextColumn::make('status')
           ->label('Estado')
           ->badge()
@@ -239,12 +252,12 @@ class UserResource extends Resource
           ->label('Nombre:'),
         TextEntry::make('email')
           ->label('Correo electrónico:'),
-        // TextEntry::make('roles.name')
-        //   ->label('Rol:')
-        //   ->badge()
-        //   ->color('primary'),
         TextEntry::make('cellphone')
           ->label('Celular:'),
+        TextEntry::make('roles.name')
+          ->label('Rol:')
+          ->badge()
+          ->color('primary'),
         TextEntry::make('status')
           ->label('Estado:')
           ->badge()

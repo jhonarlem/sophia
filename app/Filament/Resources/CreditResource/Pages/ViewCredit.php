@@ -21,6 +21,7 @@ use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -168,7 +169,7 @@ class ViewCredit extends ViewRecord
             }
           }
         )
-        ->visible(fn() => $this->record->status == 'Pendiente' && Box::latest()->first()?->status == 'Abierta'),
+        ->visible(fn() => $this->record->status == 'Pendiente' && Box::latest()->first()?->status == 'Abierta' && Gate::allows('pay', $this->record)),
       Action::make('Recibo')
         ->label('Recibo')
         ->color(Color::Lime)
