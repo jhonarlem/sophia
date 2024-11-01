@@ -8,8 +8,6 @@ use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-use function Filament\Support\format_number;
-
 class BoxWidget extends BaseWidget
 {
   protected static ?string $pollingInterval = null;
