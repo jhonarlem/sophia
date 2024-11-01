@@ -6,6 +6,7 @@ use App\Filament\Resources\BoxResource\Widgets\BoxWidget;
 use App\Filament\Resources\ProductResource\Widgets\ProductsWidget;
 use App\Filament\Resources\SaleResource\Widgets\SalesWidget;
 use App\Http\Middleware\CheckUserStatus;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -62,6 +63,7 @@ class DashboardPanelProvider extends PanelProvider
           ->setNavigationLabel('Perfil')
           ->shouldShowDeleteAccountForm(false)
           ->shouldRegisterNavigation(false),
+        FilamentShieldPlugin::make()
       ])
       ->userMenuItems([
         'profile' => MenuItem::make()
