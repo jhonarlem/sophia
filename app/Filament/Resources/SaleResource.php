@@ -151,7 +151,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                           return '$ ' . number_format(collect($products)->sum(function ($product) {
                             $priceWithoutIva = $product['sale_price'] / (1 + ($product['iva'] / 100));
                             return $priceWithoutIva * $product['quantity'];
-                          }), 2);
+                          }), 2, ',', '.');
                         })
                         ->inlineLabel(),
                       Placeholder::make('total_iva')
@@ -162,14 +162,14 @@ class SaleResource extends Resource implements HasShieldPermissions
                             $priceWithoutIva = $product['sale_price'] / (1 + ($product['iva'] / 100));
                             $ivaAmount = ($product['sale_price'] - $priceWithoutIva) * $product['quantity'];
                             return $ivaAmount;
-                          }), 2);
+                          }), 2, ',', '.');
                         })
                         ->inlineLabel(),
                       Placeholder::make('total_discount')
                         ->label('Descuento:')
                         ->content(function (Get $get) {
                           $products = $get('products') ?? [];
-                          return '$ ' . number_format(collect($products)->sum('discount'), 2);
+                          return '$ ' . number_format(collect($products)->sum('discount'), 2, ',', '.');
                         })
                         ->inlineLabel(),
                       Placeholder::make('total_amount')
@@ -178,7 +178,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                           $products = $get('products') ?? [];
                           return '$ ' . number_format(collect($products)->sum(function ($product) {
                             return ($product['sale_price'] * $product['quantity']) - $product['discount'];
-                          }), 2);
+                          }), 2, ',', '.');
                         })
                         ->inlineLabel(),
                     ])
@@ -352,7 +352,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                           $products = $get('products') ?? [];
                           return '$ ' . number_format(collect($products)->sum(function ($product) {
                             return ($product['sale_price'] * $product['quantity']) - $product['discount'];
-                          }), 2);
+                          }), 2, ',', '.');
                         })
                         ->inlineLabel(),
                       Placeholder::make('change')
@@ -365,7 +365,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                           $totalPaid = collect($payments)->sum(function ($payment) {
                             return is_numeric($payment['amount']) ? $payment['amount'] : 0;
                           });
-                          return '$ ' . number_format($totalPaid - $totalAmount, 2);
+                          return '$ ' . number_format($totalPaid - $totalAmount, 2, ',', '.');
                         })
                         ->inlineLabel(),
                     ]),
