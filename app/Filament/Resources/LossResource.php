@@ -45,7 +45,8 @@ class LossResource extends Resource
               ->searchable()
               ->preload()
               ->placeholder('Selecciona un producto')
-              ->getOptionLabelFromRecordUsing(fn($record) => "{$record->sku} - {$record->name}"),
+              ->placeholder('Selecciona un producto')
+              ->getOptionLabelFromRecordUsing(fn($record) => "{$record->sku} - {$record->name} - " . number_format($record->sale_price, 0, ',', '.')),
             Forms\Components\TextInput::make('quantity')
               ->label('Cantidad')
               ->required()

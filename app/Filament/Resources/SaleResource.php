@@ -201,7 +201,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->searchable()
                         ->preload()
                         ->placeholder('Selecciona un producto')
-                        ->getOptionLabelFromRecordUsing(fn($record) => "{$record->sku} - {$record->name}")
+                        ->getOptionLabelFromRecordUsing(fn($record) => "{$record->sku} - {$record->name} - " . number_format($record->sale_price, 0, ',', '.'))
                         ->reactive()
                         ->afterStateUpdated(function ($state, callable $set) {
                           if (!$state) {
@@ -401,7 +401,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->label('Cantidad')
                         ->numeric()
                         ->required()
-                        ->default(0)
+                        // ->default(0)
                         ->disabled(fn($get) => empty($get('payment_id')))
                         ->live(debounce: 700) // Mismo debounce que usas en productos
                         ->columnSpan(fn($get) => $get('payment_id') === 'Transferencia' ? 1 : 2),
