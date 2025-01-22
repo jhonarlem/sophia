@@ -21,7 +21,7 @@ return new class extends Migration
       $table->integer('iva');
       $table->integer('stock');
       $table->integer('min_stock');
-      $table->string('status')->default('Disponible');
+      $table->string('status')->default('Activo');
       // Campos comunes para appliances y housewares
       $table->string('brand')->nullable();
       $table->string('color')->nullable();
