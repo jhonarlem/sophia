@@ -10,7 +10,7 @@
   <meta name="author" content="Laralink">
   <title>Cierre de caja {{$box->id }}</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
     *,
     ::after,
@@ -19,12 +19,12 @@
     }
 
     body {
-      color: #666;
+      color: #000;
       font-size: 12px;
       font-weight: 400;
       line-height: 1.4em;
       margin: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #f5f6fa;
     }
 
@@ -123,7 +123,7 @@
     }
 
     .tm_list_title {
-      color: #111;
+      color: #000;
       margin-right: 4px;
       font-weight: 500;
     }
@@ -143,7 +143,7 @@
 
     .tm_pos_invoice_table thead th {
       font-weight: 500;
-      color: #111;
+      color: #000;
       text-align: left;
       padding: 8px 3px;
       border-top: 1px dashed #666;
@@ -203,7 +203,7 @@
     .tm_bill_value.tm_bill_focus,
     .tm_bill_title.tm_bill_focus {
       font-weight: 500;
-      color: #111;
+      color: #000;
     }
 
     .tm_pos_invoice_footer {
@@ -221,7 +221,7 @@
 
     .tm_pos_company_name {
       font-weight: 500;
-      color: #111;
+      color: #000;
       font-size: 13px;
       line-height: 1.4em;
     }
@@ -334,7 +334,7 @@
       .tm_invoice_btn .tm_btn_text {
         position: absolute;
         left: 100%;
-        background-color: #111;
+        background-color: #000;
         color: #fff;
         padding: 3px 12px;
         display: inline-block;
@@ -360,7 +360,7 @@
         height: 10px;
         width: 10px;
         position: absolute;
-        background-color: #111;
+        background-color: #000;
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
         left: -3px;

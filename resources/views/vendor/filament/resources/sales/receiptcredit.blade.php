@@ -10,7 +10,7 @@
   <meta name="author" content="Laralink">
   <title>Recibo de crédito {{$credit->id}}</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
     *,
     ::after,
@@ -19,12 +19,12 @@
     }
 
     body {
-      color: #666;
+      color: #000;
       font-size: 12px;
       font-weight: 400;
       line-height: 1.4em;
       margin: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #f5f6fa;
     }
 
@@ -145,7 +145,7 @@
       font-weight: 500;
       color: #111;
       text-align: left;
-      padding: 8px 3px;
+      padding: 8px 0px;
       border-top: 1px dashed #666;
       border-bottom: 1px dashed #666;
     }
@@ -557,7 +557,8 @@
           <div class="tm_list_title">Estado:</div>
           <div class="tm_list_desc">{{$credit->status}}</div>
         </div>
-        <div class="tm_pos_invoice_heading"><span>Historial de pagos</span></div>
+        <div class="tm_pos_invoice_heading"><span>Historial de pagos</span>
+        </div>
         <table class="tm_pos_invoice_table">
           <thead>
             <tr>
