@@ -12,15 +12,16 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Filament\Actions\Action;
+use Illuminate\Validation\ValidationException;
 
 class CreateProduct extends CreateRecord
 {
   protected static string $resource = ProductResource::class;
 
-  protected function getCreateFormAction(): Action
+  /* protected function getCreateFormAction(): Action
   {
     return parent::getCreateFormAction()->extraAttributes(['type' => 'button', 'wire:click' => 'create']);
-  }
+  } */
 
   protected function getRedirectUrl(): string
   {
@@ -42,7 +43,10 @@ class CreateProduct extends CreateRecord
         'stock' => 'required',
         'min_stock' => 'required',
         'status' => 'required',
+      ], [
+        'sku.unique' => 'El SKU ya se encuentra registrado'
       ]);
+
 
       $validatedProduct = $validatorProduct->validate();
 
@@ -86,6 +90,13 @@ class CreateProduct extends CreateRecord
         $validatedHouseware = $validatorHouseware->validate();
       }
 
+      // Verificar que el serial_number no exista
+      if ($isAppliance && Product::where('serial_number', $validatedAppliance['serial_number'])->exists()) {
+        throw ValidationException::withMessages([
+          'message' => 'El serial ya se encuentra registrado',
+        ]);
+      }
+
       // Crear producto
       $productData = [
         'category' => $validatedProduct['category'],
@@ -126,11 +137,10 @@ class CreateProduct extends CreateRecord
       return $product;
     } catch (\Exception $e) {
       Notification::make()
-        ->title('Error al crear')
-        //->body($e->getMessage())
+        ->title($e->getMessage())
         ->danger()
+        ->color('danger')
         ->send();
-      // Retirar la excepción para manejo superior si es necesario
       throw $e;
     }
   }
