@@ -54,7 +54,7 @@ class ViewSale extends ViewRecord
                 foreach ($saleItems as $item) {
                   DB::table('products')
                     ->where('id', $item->product_id)
-                    ->increment('stock', $item->quantity);
+                    ->increment('stock', $item->quantity, ['status' => 'Activo']);
                 }
 
                 // Verificar si la venta tiene un crédito asociado y anularlo

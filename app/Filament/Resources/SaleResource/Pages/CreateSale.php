@@ -214,6 +214,11 @@ class CreateSale extends CreateRecord
         // Actualizar el stock del producto
         $productModel = Product::find($product['product_id']);
         $productModel->decrement('stock', $product['quantity']);
+
+        // Verificar si el stock es 0 y actualizar el estado
+        if ($productModel->stock == 0) {
+          $productModel->update(['status' => 'Inactivo']);
+        }
       }
 
       // Crear los pagos
