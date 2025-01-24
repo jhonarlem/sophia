@@ -15,6 +15,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -206,7 +207,9 @@ class BoxResource extends Resource
             ->url(fn(Tables\Actions\Action $action) => route('recibo-caja', $action->getRecord()->id))
             ->openUrlInNewTab(),
         ])
+          ->icon('heroicon-o-ellipsis-horizontal-circle'),
       ])
+      ->actionsPosition(ActionsPosition::BeforeColumns)
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),

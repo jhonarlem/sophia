@@ -21,6 +21,7 @@ use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Actions\Action as ActionsAction;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -299,7 +300,9 @@ class ExpenseResource extends Resource
             )
             ->visible(fn($record) => $record->status ===  'Pendiente'),
         ])
+          ->icon('heroicon-o-ellipsis-horizontal-circle'),
       ])
+      ->actionsPosition(ActionsPosition::BeforeColumns)
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),

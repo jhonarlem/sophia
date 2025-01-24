@@ -14,6 +14,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -118,7 +119,9 @@ class LossResource extends Resource
         ActionGroup::make([
           Tables\Actions\ViewAction::make()->label('Ver')->color('primary')
         ])
+          ->icon('heroicon-o-ellipsis-horizontal-circle'),
       ])
+      ->actionsPosition(ActionsPosition::BeforeColumns)
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),

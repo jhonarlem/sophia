@@ -23,6 +23,7 @@ use Filament\Tables\Filters\SelectFilter;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
 
 class ProductResource extends Resource
@@ -60,7 +61,8 @@ class ProductResource extends Resource
                 ->label('SKU')
                 ->required()
                 ->autocomplete(false)
-                ->maxLength(255),
+                ->maxLength(255)
+                ->extraAttributes(['wire:keydown.enter.prevent' => true]),
               Forms\Components\TextInput::make('name')
                 ->label('Nombre')
                 ->autocomplete(false)
@@ -236,6 +238,11 @@ class ProductResource extends Resource
           ->numeric()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
+        Tables\Columns\TextColumn::make('stock')
+          ->label('Existencias')
+          ->numeric()
+          ->searchable()
+          ->sortable(),
         Tables\Columns\TextColumn::make('discount_applicable')
           ->label('Descuento')
           ->searchable()
@@ -251,11 +258,6 @@ class ProductResource extends Resource
           ->numeric()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
-        Tables\Columns\TextColumn::make('stock')
-          ->label('Existencias')
-          ->numeric()
-          ->searchable()
-          ->sortable(),
         Tables\Columns\TextColumn::make('min_stock')
           ->label('Stock mínimo')
           ->searchable()
@@ -368,7 +370,9 @@ class ProductResource extends Resource
               }
             }),
         ])
+          ->icon('heroicon-o-ellipsis-horizontal-circle'),
       ])
+      ->actionsPosition(ActionsPosition::BeforeColumns)
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),

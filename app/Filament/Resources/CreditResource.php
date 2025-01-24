@@ -14,6 +14,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\ActionsPosition;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
@@ -127,7 +128,9 @@ class CreditResource extends Resource implements HasShieldPermissions
         ActionGroup::make([
           Tables\Actions\ViewAction::make()->label('Ver')->color('primary')
         ])
+          ->icon('heroicon-o-ellipsis-horizontal-circle'),
       ])
+      ->actionsPosition(ActionsPosition::BeforeColumns)
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),

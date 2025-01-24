@@ -26,6 +26,7 @@ use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Auth;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Notifications\Actions\Action as NotificationAction;
+use Filament\Tables\Enums\ActionsPosition;
 
 class UserResource extends Resource
 {
@@ -233,7 +234,9 @@ class UserResource extends Resource
               }
             }),
         ])
+          ->icon('heroicon-o-ellipsis-horizontal-circle'),
       ])
+      ->actionsPosition(ActionsPosition::BeforeColumns)
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
           ExportBulkAction::make(),
