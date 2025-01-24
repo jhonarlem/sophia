@@ -138,7 +138,7 @@
     .tm_pos_invoice_table {
       width: 100%;
       margin-top: 10px;
-      line-height: 1.3em;
+      line-height: 0.7em;
     }
 
     .tm_pos_invoice_table thead th {
@@ -189,7 +189,7 @@
       display: flex;
       text-align: right;
       justify-content: flex-end;
-      padding: 3px 0;
+      padding: 0px 0;
     }
 
     .tm_bill_title {
@@ -565,7 +565,7 @@
               <th>#</th>
               <th>Método</th>
               <th>Cantidad</th>
-              <th>Referencia</th>
+              <!-- <th>Referencia</th> -->
               <th>Fecha</th>
             </tr>
           </thead>
@@ -575,7 +575,7 @@
               <td>{{ $index + 1 }}.</td>
               <td>{{ $payment->paymentMethod }}</td>
               <td>${{ $payment->amount }}</td>
-              <td>{{ $payment->reference }}</td>
+              <!-- <td>{{ $payment->reference }}</td> -->
               <td>{{ $payment->paymentDate }}</td>
             </tr>
             @endforeach

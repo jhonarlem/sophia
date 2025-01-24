@@ -79,7 +79,7 @@
       text-transform: uppercase;
       font-size: 12px;
       font-weight: 500;
-      margin: 10px 0;
+      margin: 5px 0;
     }
 
     .tm_pos_invoice_heading:before {
@@ -181,7 +181,7 @@
     .tm_bill_list {
       list-style: none;
       margin: 0;
-      padding: 12px 0;
+      padding: 6px 0;
       border-bottom: 1px dashed #666;
     }
 
@@ -189,7 +189,7 @@
       display: flex;
       text-align: right;
       justify-content: flex-end;
-      padding: 3px 0;
+      padding: 0px 0;
     }
 
     .tm_bill_title {

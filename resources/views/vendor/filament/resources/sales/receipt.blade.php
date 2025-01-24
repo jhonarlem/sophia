@@ -138,7 +138,7 @@
     .tm_pos_invoice_table {
       width: 100%;
       margin-top: 10px;
-      line-height: 1.3em;
+      line-height: 1em;
     }
 
     .tm_pos_invoice_table thead th {
@@ -189,7 +189,7 @@
       display: flex;
       text-align: right;
       justify-content: flex-end;
-      padding: 3px 0;
+      padding: 0px 0;
     }
 
     .tm_bill_title {
