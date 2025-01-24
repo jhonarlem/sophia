@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
@@ -314,45 +315,48 @@ class ExpenseResource extends Resource
   {
     return $infolist
       ->schema([
-        TextEntry::make('id')
-          ->label('ID:'),
-        TextEntry::make('service_type')
-          ->label('Tipo de servicio:'),
-        TextEntry::make('payee_name')
-          ->label('Beneficiario:'),
-        TextEntry::make('amount_total')
-          ->label('Total:')
-          ->numeric(),
-        TextEntry::make('amount_paid')
-          ->label('Pagado:')
-          ->numeric(),
-        TextEntry::make('amount_pending')
-          ->label('Pendiente:')
-          ->numeric(),
-        TextEntry::make('status')
-          ->label('Estado:')
-          ->badge()
-          ->color(fn(string $state): string => match ($state) {
-            'Pagada' => 'success',
-            'Pendiente' => 'warning',
-            'Anulada' => 'danger',
-          }),
-        TextEntry::make('due_date')
-          ->label('Fecha de vencimiento:')
-          ->dateTime(),
-        TextEntry::make('paid_at')
-          ->label('Fecha de pago:')
-          ->dateTime(),
-        TextEntry::make('payment_method')
-          ->label('Método de pago:'),
-        TextEntry::make('user.name')
-          ->label('Usuario:'),
-        TextEntry::make('created_at')
-          ->label('Creado:')
-          ->dateTime(),
-        TextEntry::make('updated_at')
-          ->label('Actualizado:')
-          ->dateTime(),
+        Fieldset::make('')
+          ->schema([
+            TextEntry::make('id')
+              ->label('ID:'),
+            TextEntry::make('service_type')
+              ->label('Tipo de servicio:'),
+            TextEntry::make('payee_name')
+              ->label('Beneficiario:'),
+            TextEntry::make('amount_total')
+              ->label('Total:')
+              ->numeric(),
+            TextEntry::make('amount_paid')
+              ->label('Pagado:')
+              ->numeric(),
+            TextEntry::make('amount_pending')
+              ->label('Pendiente:')
+              ->numeric(),
+            TextEntry::make('status')
+              ->label('Estado:')
+              ->badge()
+              ->color(fn(string $state): string => match ($state) {
+                'Pagada' => 'success',
+                'Pendiente' => 'warning',
+                'Anulada' => 'danger',
+              }),
+            TextEntry::make('due_date')
+              ->label('Fecha de vencimiento:')
+              ->dateTime(),
+            TextEntry::make('paid_at')
+              ->label('Fecha de pago:')
+              ->dateTime(),
+            TextEntry::make('payment_method')
+              ->label('Método de pago:'),
+            TextEntry::make('user.name')
+              ->label('Usuario:'),
+            TextEntry::make('created_at')
+              ->label('Creado:')
+              ->dateTime(),
+            TextEntry::make('updated_at')
+              ->label('Actualizado:')
+              ->dateTime(),
+          ]),
       ])
       ->columns(2)
       ->inlineLabel();

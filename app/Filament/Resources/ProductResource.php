@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
@@ -386,79 +387,82 @@ class ProductResource extends Resource
   {
     return $infolist
       ->schema([
-        TextEntry::make('id')
-          ->label('ID:'),
-        TextEntry::make('sku')
-          ->label('SKU:'),
-        TextEntry::make('name')
-          ->label('Nombre:'),
-        TextEntry::make('category')
-          ->label('Categoria:')
-          ->badge()
-          ->color(function ($record) {
-            return match ($record->category) {
-              'Hogar' => 'info',
-              'Electrodoméstico' => 'primary',
-              default => 'gray',
-            };
-          }),
-        TextEntry::make('sale_price')
-          ->label('Precio de venta:')
-          ->badge()
-          ->color('success')
-          ->icon('heroicon-s-currency-dollar')
-          ->numeric(),
-        TextEntry::make('purchase_price')
-          ->label('Precio de compra:')
-          ->numeric(),
-        TextEntry::make('discount_applicable')
-          ->label('Descuento:')
-          ->badge()
-          ->color(function ($record) {
-            return $record->discount_applicable == 'Si' ? 'success' : 'warning';
-          }),
-        TextEntry::make('discount_amount')
-          ->label('Monto de descuento:')
-          ->numeric(),
-        TextEntry::make('iva')
-          ->label('IVA en %:')
-          ->numeric(),
-        TextEntry::make('stock')
-          ->label('Existencias:')
-          ->numeric(),
-        TextEntry::make('min_stock')
-          ->label('Stock mínimo:')
-          ->numeric(),
-        TextEntry::make('serial_number')
-          ->label('Serial:')
-          ->visible(fn($record) => $record->category == 'Electrodoméstico'),
-        TextEntry::make('brand')
-          ->label('Marca:'),
-        TextEntry::make('model')
-          ->label('Modelo:')
-          ->visible(fn($record) => $record->category == 'Electrodoméstico'),
-        TextEntry::make('color')
-          ->label('Color:'),
-        TextEntry::make('warranty')
-          ->label('Garantía en meses:')
-          ->numeric()
-          ->visible(fn($record) => $record->category == 'Electrodoméstico'),
-        TextEntry::make('purchase_date')
-          ->label('Fecha de compra:')
-          ->date()
-          ->visible(fn($record) => $record->category == 'Electrodoméstico'),
-        TextEntry::make('status')
-          ->label('Estado:')
-          ->badge()
-          ->color(function ($record) {
-            return $record->status == 'Activo' ? 'success' : 'warning';
-          }),
-        TextEntry::make('created_at')
-          ->label('Creado:')
-          ->dateTime(),
-        TextEntry::make('updated_at')
-          ->label('Actualizado:')
-          ->dateTime(),
+        Fieldset::make('')
+          ->schema([
+            TextEntry::make('id')
+              ->label('ID:'),
+            TextEntry::make('sku')
+              ->label('SKU:'),
+            TextEntry::make('name')
+              ->label('Nombre:'),
+            TextEntry::make('category')
+              ->label('Categoria:')
+              ->badge()
+              ->color(function ($record) {
+                return match ($record->category) {
+                  'Hogar' => 'info',
+                  'Electrodoméstico' => 'primary',
+                  default => 'gray',
+                };
+              }),
+            TextEntry::make('sale_price')
+              ->label('Precio de venta:')
+              ->badge()
+              ->color('success')
+              ->icon('heroicon-s-currency-dollar')
+              ->numeric(),
+            TextEntry::make('purchase_price')
+              ->label('Precio de compra:')
+              ->numeric(),
+            TextEntry::make('discount_applicable')
+              ->label('Descuento:')
+              ->badge()
+              ->color(function ($record) {
+                return $record->discount_applicable == 'Si' ? 'success' : 'warning';
+              }),
+            TextEntry::make('discount_amount')
+              ->label('Monto de descuento:')
+              ->numeric(),
+            TextEntry::make('iva')
+              ->label('IVA en %:')
+              ->numeric(),
+            TextEntry::make('stock')
+              ->label('Existencias:')
+              ->numeric(),
+            TextEntry::make('min_stock')
+              ->label('Stock mínimo:')
+              ->numeric(),
+            TextEntry::make('serial_number')
+              ->label('Serial:')
+              ->visible(fn($record) => $record->category == 'Electrodoméstico'),
+            TextEntry::make('brand')
+              ->label('Marca:'),
+            TextEntry::make('model')
+              ->label('Modelo:')
+              ->visible(fn($record) => $record->category == 'Electrodoméstico'),
+            TextEntry::make('color')
+              ->label('Color:'),
+            TextEntry::make('warranty')
+              ->label('Garantía en meses:')
+              ->numeric()
+              ->visible(fn($record) => $record->category == 'Electrodoméstico'),
+            TextEntry::make('purchase_date')
+              ->label('Fecha de compra:')
+              ->date()
+              ->visible(fn($record) => $record->category == 'Electrodoméstico'),
+            TextEntry::make('status')
+              ->label('Estado:')
+              ->badge()
+              ->color(function ($record) {
+                return $record->status == 'Activo' ? 'success' : 'warning';
+              }),
+            TextEntry::make('created_at')
+              ->label('Creado:')
+              ->dateTime(),
+            TextEntry::make('updated_at')
+              ->label('Actualizado:')
+              ->dateTime(),
+          ]),
       ])
       ->columns(2)
       ->inlineLabel();

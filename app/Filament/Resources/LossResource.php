@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
@@ -133,29 +134,32 @@ class LossResource extends Resource
   {
     return $infolist
       ->schema([
-        TextEntry::make('id')
-          ->label('ID:'),
-        TextEntry::make('product.name')
-          ->label('Producto:'),
-        TextEntry::make('quantity')
-          ->label('Cantidad:'),
-        TextEntry::make('unit_price')
-          ->label('Precio compra:')
-          ->numeric(),
-        TextEntry::make('total')
-          ->label('Total:')
-          ->numeric(),
-        TextEntry::make('description')
-          ->label('Descripción:'),
-        TextEntry::make('user.name')
-          ->label('Usuario:'),
-        TextEntry::make('created_at')
-          ->label('Creado:')
-          ->dateTime(),
-        TextEntry::make('updated_at')
-          ->label('Actualizado:')
-          ->dateTime(),
+        Fieldset::make('')
+          ->schema([
+            TextEntry::make('id')
+              ->label('ID:'),
+            TextEntry::make('product.name')
+              ->label('Producto:'),
+            TextEntry::make('quantity')
+              ->label('Cantidad:'),
+            TextEntry::make('unit_price')
+              ->label('Precio compra:')
+              ->numeric(),
+            TextEntry::make('total')
+              ->label('Total:')
+              ->numeric(),
+            TextEntry::make('description')
+              ->label('Descripción:'),
+            TextEntry::make('user.name')
+              ->label('Usuario:'),
+            TextEntry::make('created_at')
+              ->label('Creado:')
+              ->dateTime(),
+            TextEntry::make('updated_at')
+              ->label('Actualizado:')
+              ->dateTime(),
 
+          ]),
       ])
       ->columns(2)
       ->inlineLabel();

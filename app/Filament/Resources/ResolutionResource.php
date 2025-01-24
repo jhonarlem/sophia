@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
@@ -189,42 +190,45 @@ class ResolutionResource extends Resource
   {
     return $infolist
       ->schema([
-        TextEntry::make('id')
-          ->label('ID:'),
-        TextEntry::make('prefix')
-          ->label('Prefijo'),
-        TextEntry::make('number')
-          ->label('Número de resolución:'),
-        TextEntry::make('start_invoice_number')
-          ->label('Número de inicio de factura:')
-          ->numeric(),
-        TextEntry::make('end_invoice_number')
-          ->label('Número de fin de factura:')
-          ->numeric(),
-        TextEntry::make('status')
-          ->label('Estado:')
-          ->badge()
-          ->color(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'danger' : 'success')
-          ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
-          ->getStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
-          ->icon(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'heroicon-s-x-circle' : 'heroicon-s-check-badge'),
-        TextEntry::make('start_date')
-          ->label('Fecha de inicio de vigencia:')
-          ->date(),
-        TextEntry::make('end_date')
-          ->label('Fecha de fin de vigencia:')
-          ->date(),
-        TextEntry::make('valid_months')
-          ->label('Meses de validez:')
-          ->formatStateUsing(fn($record) => $record->valid_months . ' meses'),
-        TextEntry::make('description')
-          ->label('Descripción:'),
-        TextEntry::make('created_at')
-          ->label('Creado:')
-          ->dateTime(),
-        TextEntry::make('updated_at')
-          ->label('Actualizado:')
-          ->dateTime(),
+        Fieldset::make('')
+          ->schema([
+            TextEntry::make('id')
+              ->label('ID:'),
+            TextEntry::make('prefix')
+              ->label('Prefijo'),
+            TextEntry::make('number')
+              ->label('Número de resolución:'),
+            TextEntry::make('start_invoice_number')
+              ->label('Número de inicio de factura:')
+              ->numeric(),
+            TextEntry::make('end_invoice_number')
+              ->label('Número de fin de factura:')
+              ->numeric(),
+            TextEntry::make('status')
+              ->label('Estado:')
+              ->badge()
+              ->color(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'danger' : 'success')
+              ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
+              ->getStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
+              ->icon(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'heroicon-s-x-circle' : 'heroicon-s-check-badge'),
+            TextEntry::make('start_date')
+              ->label('Fecha de inicio de vigencia:')
+              ->date(),
+            TextEntry::make('end_date')
+              ->label('Fecha de fin de vigencia:')
+              ->date(),
+            TextEntry::make('valid_months')
+              ->label('Meses de validez:')
+              ->formatStateUsing(fn($record) => $record->valid_months . ' meses'),
+            TextEntry::make('description')
+              ->label('Descripción:'),
+            TextEntry::make('created_at')
+              ->label('Creado:')
+              ->dateTime(),
+            TextEntry::make('updated_at')
+              ->label('Actualizado:')
+              ->dateTime(),
+          ]),
       ])
       ->columns(2)
       ->inlineLabel();

@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
@@ -249,34 +250,37 @@ class UserResource extends Resource
   {
     return $infolist
       ->schema([
-        TextEntry::make('id')
-          ->label('ID:'),
-        TextEntry::make('name')
-          ->label('Nombre:'),
-        TextEntry::make('email')
-          ->label('Correo electrónico:'),
-        TextEntry::make('cellphone')
-          ->label('Celular:'),
-        TextEntry::make('roles.name')
-          ->label('Rol:')
-          ->badge()
-          ->color('primary'),
-        TextEntry::make('status')
-          ->label('Estado:')
-          ->badge()
-          ->color(fn(string $state): string => match ($state) {
-            'Activo' => 'success',
-            'Inactivo' => 'warning',
-          }),
-        TextEntry::make('email_verified_at')
-          ->label('Correo verificado:')
-          ->dateTime(),
-        TextEntry::make('created_at')
-          ->label('Creado:')
-          ->dateTime(),
-        TextEntry::make('updated_at')
-          ->label('Actualizado:')
-          ->dateTime(),
+        Fieldset::make('')
+          ->schema([
+            TextEntry::make('id')
+              ->label('ID:'),
+            TextEntry::make('name')
+              ->label('Nombre:'),
+            TextEntry::make('email')
+              ->label('Correo electrónico:'),
+            TextEntry::make('cellphone')
+              ->label('Celular:'),
+            TextEntry::make('roles.name')
+              ->label('Rol:')
+              ->badge()
+              ->color('primary'),
+            TextEntry::make('status')
+              ->label('Estado:')
+              ->badge()
+              ->color(fn(string $state): string => match ($state) {
+                'Activo' => 'success',
+                'Inactivo' => 'warning',
+              }),
+            TextEntry::make('email_verified_at')
+              ->label('Correo verificado:')
+              ->dateTime(),
+            TextEntry::make('created_at')
+              ->label('Creado:')
+              ->dateTime(),
+            TextEntry::make('updated_at')
+              ->label('Actualizado:')
+              ->dateTime(),
+          ]),
       ])
       ->columns(2)
       ->inlineLabel();
