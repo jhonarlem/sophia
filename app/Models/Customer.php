@@ -32,6 +32,7 @@ class Customer extends Model
       'document_number' => $customer->document_number,
       'name' => $customer->name,
       'cellphone' => $customer->cellphone,
+      'email' => $customer->email,
     ];
   }
 
