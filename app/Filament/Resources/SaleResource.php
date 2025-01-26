@@ -88,6 +88,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->relationship('customer', 'name')
                         ->required()
                         ->searchable()
+                        ->default(1)
                         ->preload()
                         ->placeholder('Selecciona un cliente')
                         ->createOptionForm(CustomerResource::customerFormSchema())
@@ -105,31 +106,37 @@ class SaleResource extends Resource implements HasShieldPermissions
                               $set('document_number', $customer['document_number']);
                               $set('name', $customer['name']);
                               $set('cellphone', $customer['cellphone']);
+                              $set('email', $customer['email']);
                             }
                           } else {
                             $set('document_type', '');
                             $set('document_number', '');
                             $set('name', '');
                             $set('cellphone', '');
+                            $set('email', '');
                           }
                         }),
                       Grid::make(2)
                         ->schema([
                           Placeholder::make('document_type')
                             ->label('Documento:')
-                            ->content(fn($get) => $get('document_type') ?? '')
+                            ->content(fn($get) => $get('document_type') ?? 'CC')
                             ->inlineLabel(),
                           Placeholder::make('document_number')
                             ->label('Número:')
-                            ->content(fn($get) => $get('document_number') ?? '')
+                            ->content(fn($get) => $get('document_number') ?? '22222222222')
                             ->inlineLabel(),
                           Placeholder::make('name')
                             ->label('Nombres:')
-                            ->content(fn($get) => $get('name') ?? '')
+                            ->content(fn($get) => $get('name') ?? 'PÚBLICO GENERAL')
                             ->inlineLabel(),
                           Placeholder::make('cellphone')
                             ->label('Celular:')
-                            ->content(fn($get) => $get('cellphone') ?? '')
+                            ->content(fn($get) => $get('cellphone') ?? '0000000000')
+                            ->inlineLabel(),
+                          Placeholder::make('email')
+                            ->label('Correo:')
+                            ->content(fn($get) => $get('email') ?? 'notiene@notiene.com')
                             ->inlineLabel(),
                         ])
                     ])
