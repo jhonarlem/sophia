@@ -142,6 +142,10 @@ class ViewSale extends ViewRecord
               ->label('Celular:')
               ->content(fn($record) => $record->customer->cellphone ?? '')
               ->inlineLabel(),
+            Placeholder::make('email')
+              ->label('Correo:')
+              ->content(fn($record) => $record->customer->email ?? '')
+              ->inlineLabel(),
           ])
           ->columnSpan(5),
         Section::make('Detalles de la factura')
@@ -149,10 +153,6 @@ class ViewSale extends ViewRecord
           ->schema([
             Grid::make(2)
               ->schema([
-                Placeholder::make('status')
-                  ->label('Estado:')
-                  ->content(fn($record) => $record->status ?? '')
-                  ->inlineLabel(),
                 Placeholder::make('invoice_number')
                   ->label('Factura:')
                   ->content(fn($record) => $record->full_invoice_number)
@@ -160,7 +160,7 @@ class ViewSale extends ViewRecord
                 Placeholder::make('subtotal')
                   ->label('Subtotal:')
                   ->content(fn($record) => $record->total_amount && $record->total_discount !== null
-                    ? number_format($record->total_amount - $record->total_discount, 2, ',', '.')
+                    ? number_format($record->total_amount + $record->total_discount - $record->total_iva, 2, ',', '.')
                     : '')
                   ->inlineLabel(),
                 Placeholder::make('total_iva')
@@ -181,9 +181,25 @@ class ViewSale extends ViewRecord
                     ? number_format($record->total_amount, 2, ',', '.')
                     : '')
                   ->inlineLabel(),
+                Placeholder::make('received')
+                  ->label('Recibido:')
+                  ->content(fn($record) => $record->received !== null
+                    ? number_format($record->received, 2, ',', '.')
+                    : '')
+                  ->inlineLabel(),
+                Placeholder::make('exchange')
+                  ->label('Cambio:')
+                  ->content(fn($record) => $record->exchange !== null
+                    ? number_format($record->exchange, 2, ',', '.')
+                    : '')
+                  ->inlineLabel(),
                 Placeholder::make('sale_date')
                   ->label('Fecha:')
                   ->content(fn($record) => Carbon::parse($record->sale_date)->locale('es')->isoFormat('MMM D YYYY HH:mm') ?? '')
+                  ->inlineLabel(),
+                Placeholder::make('status')
+                  ->label('Estado:')
+                  ->content(fn($record) => $record->status ?? '')
                   ->inlineLabel(),
                 Placeholder::make('user.name')
                   ->label('Cajero:')
