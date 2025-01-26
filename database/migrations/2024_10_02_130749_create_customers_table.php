@@ -29,7 +29,7 @@ return new class extends Migration
       'document_number' => '22222222222',
       'name' => 'PÚBLICO GENERAL',
       'email' => 'notiene@notiene.com',
-      'cellphone' => null,
+      'cellphone' => '0000000000',
       'street' => null,
       'created_at' => now(),
       'updated_at' => now(),
