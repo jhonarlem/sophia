@@ -66,6 +66,7 @@ class CustomerResource extends Resource
             ->label('Correo electrónico')
             ->email()
             ->required()
+            ->default("notiene@notiene.com")
             ->maxLength(255)
             ->autocomplete(false),
           Forms\Components\TextInput::make('cellphone')
