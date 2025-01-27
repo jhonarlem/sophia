@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\SaleResource\Pages;
 
 use App\Filament\Resources\SaleResource;
+use App\Models\Box;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions;
 use Filament\Actions\Action;
@@ -35,7 +36,7 @@ class ViewSale extends ViewRecord
         ->label('Anular venta')
         ->color('danger')
         ->modalHeading('Anular venta ' . $this->record->full_invoice_number)
-        ->modalDescription('¿Estás seguro de que deseas anular esta venta? Ten en cuenta que el dinero de la venta no será descontado de la caja y deberás considerarlo al momento de realizar el cierre de la caja. Esta acción no se puede deshacer.')
+        ->modalDescription('¿Estás seguro de que deseas anular esta venta? Al confirmar, el monto de la venta se descontará de la caja actual y los productos se devolverán al inventario. Ten en cuenta que esta acción es irreversible.')
         ->modalSubmitActionLabel('Anular')
         ->modalCancelActionLabel('Cancelar')
         ->action(
@@ -69,12 +70,29 @@ class ViewSale extends ViewRecord
                     ->update(['status' => 'Anulada']);
                 }
 
+                // Descontar el monto de la venta de la caja
+                $box = Box::where('status', 'Abierta')->first();
+                $payments = $sale->payments;
+                foreach ($payments as $payment) {
+                  if ($payment->payment_method === 'Efectivo') {
+                    $cashEntry = $payment->amount - $sale->exchange;
+                    $box->decrement('cash_payment', $cashEntry);
+                    $box->decrement('total_sales', $cashEntry);
+                  } elseif ($payment->payment_method === 'Transferencia') {
+                    $box->decrement('transfer_payment', $payment->amount);
+                    $box->decrement('total_sales', $payment->amount);
+                  } elseif ($payment->payment_method === 'Crédito') {
+                    $box->decrement('credit_sales', $payment->amount);
+                    $box->decrement('total_sales', $payment->amount);
+                  }
+                }
+
                 // Actualizar el estado de la venta
                 $sale->update(['status' => 'Anulada']);
               });
               Notification::make()
                 ->title('Venta anulada')
-                ->body('La venta ' . $this->record->full_invoice_number . ' ha sido anulada y los productos han sido devueltos al inventario.')
+                // ->body('La venta ' . $this->record->full_invoice_number . ' ha sido anulada')
                 ->success()
                 ->send();
             } catch (\Exception $e) {
