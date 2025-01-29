@@ -1,75 +1,182 @@
+# 🏪 SOPHIA POS
 
-# 🛍️ Sistema POS: SOPHIA
+![PHP](https://img.shields.io/badge/PHP-^8.2-777BB4.svg?logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-^11.9-FF2D20.svg?logo=laravel&logoColor=white)
+![Filament](https://img.shields.io/badge/FilamentPHP-v3.2-gold.svg?logo=filament)
+![Shield](https://img.shields.io/badge/FilamentShield-^3.2-gold.svg)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)
+![License](https://img.shields.io/badge/License-Proprietary-red.svg)
+
+## 🎯 Acerca de SOPHIA
+
+**SOPHIA** (Software for Organized Product Handling and Inventory Administration) es una solución POS avanzada diseñada específicamente para el mercado colombiano. Optimizada para la gestión integral de negocios minoristas, especialmente en el sector de electrodomésticos y productos para el hogar.
+
+## 🛠️ Características Principales
+
+### Interfaz y Usabilidad
+- ✨ Interfaz moderna y responsiva con FilamentPHP
+- 🔒 Sistema robusto de permisos y roles
+- 📱 Diseño adaptable para diferentes dispositivos
+- 🎨 Tema personalizado y optimizado para uso prolongado
+- 🚀 Navegación intuitiva y rápida
+
+### Gestión de Ventas y Facturación
+- 🧾 Emisión de facturas en formato voucher (80mm)
+- 📄 Facturación digital POS
+- 🔢 Control de numeración según resolución POS electrónico
+- 💳 Múltiples métodos de pago
+- 🏷️ Gestión de precios y descuentos
+- 📱 Vista de facturación optimizada multiples dispositivos
+
+### Inventario y Control
+- 📦 Control avanzado de stock en tiempo real
+- ⚠️ Registro y gestión de pérdidas de productos
+- 🔍 Búsqueda y filtrado avanzado de productos
+- 💰 Control de caja con apertura y cierre
+- 📝 Registro detallado de movimientos
+- 🏷️ Gestión de categorías
+- 📊 Control de productos en stock mínimo
+
+### Sistema de Crédito
+- 👥 Gestión de créditos por cliente
+- 💵 Múltiples métodos de pago para créditos
+- 📅 Control de pagos
+- 📊 Historial crediticio detallado
+- ⏰ Alertas de vencimientos
+- 📝 Registro de garantías
+
+### Reportes y Análisis
+- 📈 Reportes personalizables con exportación a Excel
+- 📊 Análisis de ventas e inventario
+- 💰 Reportes de caja y movimientos
+- 📉 Análisis de tendencias
+- 🎯 Métricas de rendimiento
+- 📧 Envío programado de reportes
+- 🔄 Generación de notas crédito/débito
+
+### Seguridad y Configuración
+- 🔐 Control granular de permisos
+- 👥 Gestión avanzada de usuarios y roles
+- 📝 Registro de auditoría detallado
+- ⚙️ Configuraciones personalizables
+- 🔒 Protección contra accesos no autorizados
+
+## 📸 Capturas de Pantalla
+
+### Panel de Control
+
+#### Modo oscuro
+![Dashboard](https://i.postimg.cc/x17nP6xS/postspark-export-2025-01-29-01-24-43.png)
+
+#### Modo claro
+![Dashboard](https://i.postimg.cc/jdST0pBb/postspark-export-2025-01-29-01-31-49.webp)
+
+### Gestión de Ventas
+![Sales Management](/screenshots/sales.png)
+*Interfaz de gestión de ventas y facturación*
+
+### Inventario
+![Inventory](/screenshots/inventory.png)
+*Sistema de control de inventario*
+
+### Créditos
+![Credits](/screenshots/credits.png)
+*Gestión de créditos y pagos*
+
+## ⚠️ AVISO LEGAL IMPORTANTE
+
+Este software está protegido por derechos de autor y es de uso privativo. Queda estrictamente prohibido:
+- La reproducción total o parcial del software
+- La distribución no autorizada
+- El uso sin licencia válida
+- La modificación del código fuente
+- La ingeniería inversa
+
+El incumplimiento de estas restricciones está sujeto a acciones legales según la legislación colombiana sobre propiedad intelectual y derechos de autor.
+
+**Para obtener autorización de uso, contacte al desarrollador.**
+
+## 🚀 Instalación
+
+### Prerequisitos
+
+- PHP 8.2 o superior
+- Composer
+- MariaDB/MySQL
+- Node.js y NPM
+
+### Pasos de Instalación
+
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/gotsudev/sophia.git
+cd sophia
+```
+
+2. **Instalar dependencias**
+```bash
+composer install
+```
+
+3. **Configurar el entorno**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+4. **Configurar la base de datos**
+
+Modifica el archivo `.env` con tus credenciales:
+```env
+DB_CONNECTION=mariadb
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sophia
+DB_USERNAME=sophia
+DB_PASSWORD=
+```
+
+5. **Ejecutar migraciones**
+```bash
+php artisan migrate
+```
+
+6. **Crear usuario administrador**
+```bash
+php artisan make:filament-user
+```
+
+7. **Instalar Shield (Sistema de permisos)**
+```bash
+php artisan shield:install
+```
+
+> ⚠️ **¡ADVERTENCIA IMPORTANTE!**
+> 
+> El comando `shield:install` sobrescribe las políticas por defecto, afectando específicamente a:
+> - `SalePolicy.php`
+> - `CreditPolicy.php`
+> 
+> Para restaurar las políticas personalizadas, es necesario hacer un pull desde el repositorio después de la instalación de Shield.
+
+### Optimización y Configuración Final
+
+1. **Optimizar Filament para producción**
+```bash
+php artisan filament:optimize
+```
+
+2. **Crear enlace simbólico para almacenamiento**
+```bash
+php artisan storage:link
+```
+## 💡 Soporte
+
+Para soporte técnico y consultas sobre licenciamiento, contacte directamente al desarrollador.
+
+## 📄 Licencia
+
+Este software está protegido por derechos de autor. Todos los derechos reservados. El uso no autorizado está prohibido y será perseguido legalmente según las leyes colombianas.
 
 ---
-
-## 1. Descripción de SOPHIA POS
-
-El **Sistema POS SOPHIA** es una solución completa para la gestión de ventas, inventarios y reportes en tiendas dedicadas a la venta de productos para el hogar y electrodomésticos. Este sistema facilita el control de stock, la emisión de facturas digitales, la gestión de descuentos y promociones, y el registro de devoluciones y notas de crédito/débito. Además, cuenta con funcionalidades avanzadas para la administración de usuarios y seguridad, generación de informes detallados, y ajustes de configuración general.
-
-El sistema está diseñado para cumplir con los requisitos normativos y las necesidades comerciales de tiendas en Colombia, brindando una herramienta ágil y escalable para gestionar tanto productos básicos como electrodomésticos, que requieren un tratamiento especial en cuanto a garantías y descuentos.
-
----
-
-## 2. ✨ Características de SOPHIA
-
-- **🛒 Módulo de Ventas**:
-  - Registro de ventas con soporte para múltiples métodos de pago (efectivo, tarjeta de crédito/débito, transferencias).
-  - Generación automática de recibos y facturas digitales para electrodomésticos.
-  - Aplicación de descuentos y promociones, gestionando márgenes proporcionados por los proveedores para electrodomésticos.
-
-- **📦 Módulo de Inventario**:
-  - Actualización automática del stock de productos tras ventas, devoluciones y pérdidas.
-  - Gestión del inventario por secciones, como hogar y electrodomésticos.
-  - Alerta de stock mínimo, permitiendo notificaciones preventivas.
-
-- **♻️ Módulo de Devoluciones y Notas de Crédito/Débito**:
-  - Manejo de devoluciones de productos, con impacto automático en el inventario.
-  - Emisión de notas de crédito y débito previa validación y autorización.
-
-- **👤 Módulo de Clientes**:
-  - Registro de información básica de clientes (nombre, contacto).
-  - Historial de compras detallado para cada cliente.
-
-- **🔒 Módulo de Usuarios y Seguridad**:
-  - Gestión de usuarios con diferentes roles (admin, cajero, gerente).
-  - Registro de auditoría de actividades de usuarios y control de accesos jerárquico.
-
-- **📊 Módulo de Reportes**:
-  - Generación de informes sobre ventas, márgenes de ganancia, rotación de productos e inventario.
-  - Exportación de reportes en formatos como Excel para análisis externos.
-
-- **⚙️ Módulo de Configuración General**:
-  - Ajustes de parámetros del sistema como horarios de tienda, categorías de productos.
-  - Integración con dispositivos de hardware como escáneres de código de barras e impresoras.
-
----
-
-## 3. 🚀 Flujo de Ejecución de la Aplicación
-
-1. **🔑 Inicio de Sesión**:
-   - Los usuarios inician sesión según su rol y permisos asignados (administrador, cajero, etc.).
-
-2. **📝 Gestión de Productos**:
-   - El administrador puede agregar, editar o eliminar productos. Los electrodomésticos tendrán detalles adicionales como marca, modelo y código único.
-   - Se define el stock mínimo para cada producto.
-
-3. **💳 Gestión de Ventas**:
-   - El cajero puede registrar ventas de productos, seleccionando métodos de pago y aplicando descuentos según corresponda.
-   - Para los electrodomésticos, se generan automáticamente facturas digitales con la información requerida.
-
-4. **📦 Control de Inventario**:
-   - Tras cada venta, el inventario se actualiza automáticamente.
-   - Si el stock de un producto alcanza el mínimo definido, se genera una alerta de stock bajo.
-
-5. **🔄 Devoluciones y Notas de Crédito/Débito**:
-   - En caso de devoluciones, el producto se reincorpora al inventario, y se emite una nota de crédito.
-   - En situaciones específicas, pueden generarse notas de débito para ajustar las cuentas.
-
-6. **📊 Generación de Reportes**:
-   - Los administradores pueden generar informes personalizados de ventas, productos en rotación, inventarios, y márgenes de ganancia.
-   - Los reportes pueden ser exportados en formato Excel.
-
-7. **⚙️ Configuración y Seguridad**:
-   - Los ajustes del sistema pueden modificarse según necesidades específicas del negocio.
-   - La actividad de cada usuario se registra para asegurar la transparencia en las operaciones.
+Desarrollado con ❤️ para el comercio Colombiano
