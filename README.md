@@ -63,37 +63,47 @@
 
 ## 📸 Capturas de Pantalla
 
-### Panel de Control
+### Escritorio
 
-#### Modo oscuro
-![Dashboard](https://i.postimg.cc/x17nP6xS/postspark-export-2025-01-29-01-24-43.png)
+- Modo oscuro
+[![Escritorio.png](https://i.postimg.cc/Gh1TZ1Fp/Escritorio.png)](https://postimg.cc/4nB39qFC)
 
-#### Modo claro
-![Dashboard](https://i.postimg.cc/jdST0pBb/postspark-export-2025-01-29-01-31-49.webp)
+- Modo claro
+[![Escritorio-Claro.png](https://i.postimg.cc/Y9qbNWSJ/Escritorio-Claro.png)](https://postimg.cc/B8kT4tHg)
 
-### Gestión de Ventas
-![Sales Management](/screenshots/sales.png)
-*Interfaz de gestión de ventas y facturación*
+### Módulo de Ventas
+
+- Listado de Ventas
+[![Listado-Ventas.png](https://i.postimg.cc/yxNRrh4z/Listado-Ventas.png)](https://postimg.cc/bDKdZtw6)
+
+- Detalles de Venta
+[![Ver-Venta.png](https://i.postimg.cc/ZqZCMPpD/Ver-Venta.png)](https://postimg.cc/v4qY1VPW)
 
 ### Inventario
-![Inventory](/screenshots/inventory.png)
-*Sistema de control de inventario*
 
-### Créditos
-![Credits](/screenshots/credits.png)
-*Gestión de créditos y pagos*
+- Listado de Ventas
+[![Productos.png](https://i.postimg.cc/xdTbdy8N/Productos.png)](https://postimg.cc/k2z51Sx7)
 
-## ⚠️ AVISO LEGAL IMPORTANTE
+### Clientes
+- Formulario de registro
+[![Registro-Cliente.png](https://i.postimg.cc/5081dDJB/Registro-Cliente.png)](https://postimg.cc/0M5h7Wbj)
 
-Este software está protegido por derechos de autor y es de uso privativo. Queda estrictamente prohibido:
-- La reproducción total o parcial del software
-- La distribución no autorizada
-- El uso sin licencia válida
-- La modificación del código fuente
-- La ingeniería inversa
+### Inicio de sesión
+- Formulario de ingreso
+[![Login.png](https://i.postimg.cc/pL3gWkqq/Login.png)](https://postimg.cc/18cWM0xq)
 
-El incumplimiento de estas restricciones está sujeto a acciones legales según la legislación colombiana sobre propiedad intelectual y derechos de autor.
+> [!CAUTION]
+> ## AVISO LEGAL IMPORTANTE
+> Este software está protegido por derechos de autor y es de uso privativo. Queda estrictamente prohibido:
+> - La reproducción total o parcial del software
+> - La distribución no autorizada
+> - El uso sin licencia válida
+> - La modificación del código fuente
+> - La ingeniería inversa
+> 
+> El incumplimiento de estas restricciones está sujeto a acciones legales según la legislación colombiana sobre propiedad intelectual y derechos de autor.
 
+>[!NOTE]
 **Para obtener autorización de uso, contacte al desarrollador.**
 
 ## 🚀 Instalación
@@ -150,7 +160,7 @@ php artisan make:filament-user
 ```bash
 php artisan shield:install
 ```
-
+> [!WARNING]
 > ⚠️ **¡ADVERTENCIA IMPORTANTE!**
 > 
 > El comando `shield:install` sobrescribe las políticas por defecto, afectando específicamente a:
