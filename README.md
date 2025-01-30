@@ -42,7 +42,6 @@
 - 💵 Múltiples métodos de pago para créditos
 - 📅 Control de pagos
 - 📊 Historial crediticio detallado
-- ⏰ Alertas de vencimientos
 - 📝 Registro de garantías
 
 ### Reportes y Análisis
@@ -51,7 +50,6 @@
 - 💰 Reportes de caja y movimientos
 - 📉 Análisis de tendencias
 - 🎯 Métricas de rendimiento
-- 📧 Envío programado de reportes
 - 🔄 Generación de notas crédito/débito
 
 ### Seguridad y Configuración
