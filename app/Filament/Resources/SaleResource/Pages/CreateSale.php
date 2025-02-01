@@ -177,6 +177,13 @@ class CreateSale extends CreateRecord
       // Calcular el cambio
       $cambio = $totalPagado - $totales['total_amount'];
 
+      // Verificar si el cliente es PÚBLICO GENERAL y se está realizando una venta a crédito
+      if (collect($validatedPayments['payments'])->contains('payment_id', 'Crédito') && $validatedCustomer['customer_id'] == 1) {
+        throw ValidationException::withMessages([
+          'message' => 'No es posible realizar ventas a crédito a PÚBLICO GENERAL',
+        ]);
+      }
+
       // Crear la venta
       $sale = Sale::create([
         'box_id' => $boxAndInvoice['box_id'],
