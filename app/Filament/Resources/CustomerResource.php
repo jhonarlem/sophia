@@ -54,9 +54,19 @@ class CustomerResource extends Resource
           Forms\Components\TextInput::make('document_number')
             ->label('Número de documento')
             ->required()
+            ->unique(ignoreRecord: true)
             ->autocomplete(false)
             ->numeric()
-            ->maxLength(20),
+            ->maxLength(20)->reactive()
+            ->afterStateUpdated(function ($state, $set, $get) {
+              $customer = Customer::where('document_number', $state)->first();
+              if ($customer && $get('id') !== $customer->id) {
+                Notification::make()
+                  ->title('Documento ya registrado')
+                  ->warning()
+                  ->send();
+              }
+            }),
           Forms\Components\TextInput::make('name')
             ->label('Nombres')
             ->autocomplete(false)
