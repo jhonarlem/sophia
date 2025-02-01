@@ -80,9 +80,8 @@ class UserResource extends Resource
             Forms\Components\Select::make('roles')
               ->relationship('roles', 'name')
               ->label('Rol')
-              ->searchable()
               ->required()
-              ->preload()
+              ->native(false)
               ->placeholder('Selecciona un rol'),
             Forms\Components\Select::make('status')
               ->label('Estado')
@@ -91,8 +90,7 @@ class UserResource extends Resource
                 'Inactivo' => 'Inactivo',
               ])
               ->default('Activo')
-              ->searchable()
-              ->preload()
+              ->native(false)
               ->required(),
             Forms\Components\TextInput::make('password')
               ->password()

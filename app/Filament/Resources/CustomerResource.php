@@ -48,8 +48,7 @@ class CustomerResource extends Resource
               'DIE' => 'Documento de identificación extranjero',
             ])
             ->placeholder('Selecciona un tipo de documento')
-            ->searchable()
-            ->preload()
+            ->native(false)
             ->required(),
           Forms\Components\TextInput::make('document_number')
             ->label('Número de documento')

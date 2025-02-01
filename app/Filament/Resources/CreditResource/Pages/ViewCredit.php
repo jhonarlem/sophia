@@ -49,8 +49,7 @@ class ViewCredit extends ViewRecord
                   'Transferencia' => 'Transferencia',
                 ])
                 ->placeholder('Selecciona un método de pago')
-                ->searchable()
-                ->preload()
+                ->native(false)
                 ->required()
                 ->reactive() // Cambiamos a reactive como en la sección de productos
                 ->afterStateUpdated(function ($state, callable $set) {

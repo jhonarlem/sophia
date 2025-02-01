@@ -88,9 +88,11 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->relationship('customer', 'name')
                         ->required()
                         ->searchable()
+                        ->native(false)
                         ->default(1)
                         ->preload()
                         ->placeholder('Selecciona un cliente')
+                        ->getOptionLabelFromRecordUsing(fn($record) => "{$record->name} - {$record->document_number}")
                         ->createOptionForm(CustomerResource::customerFormSchema())
                         ->createOptionAction(function (Action $action) {
                           return $action
@@ -208,6 +210,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->required()
                         ->searchable()
                         ->preload()
+                        ->native(false)
                         ->placeholder('Selecciona un producto')
                         ->getOptionLabelFromRecordUsing(fn($record) => "{$record->sku} - {$record->name} - " . number_format($record->sale_price, 0, ',', '.'))
                         ->reactive()
@@ -389,8 +392,7 @@ class SaleResource extends Resource implements HasShieldPermissions
                           'Crédito' => 'Crédito',
                         ])
                         ->placeholder('Selecciona un método de pago')
-                        ->searchable()
-                        ->preload()
+                        ->native(false)
                         ->required()
                         ->reactive() // Cambiamos a reactive como en la sección de productos
                         ->afterStateUpdated(function ($state, callable $set) {

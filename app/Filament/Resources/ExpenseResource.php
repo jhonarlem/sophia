@@ -60,10 +60,10 @@ class ExpenseResource extends Resource
                 'Crédito' => 'Crédito',
                 'Proveedor' => 'Proveedor',
                 'Otro' => 'Otro',
-
               ])
               ->placeholder('Selecciona un tipo de servicio')
               ->searchable()
+              ->native(false)
               ->preload()
               ->required(),
             TextInput::make('payee_name')
@@ -88,7 +88,10 @@ class ExpenseResource extends Resource
               ->numeric(),
             DatePicker::make('due_date')
               ->label('Fecha de vencimiento')
-              ->required(),
+              ->required()
+              ->closeOnDateSelection()
+              ->displayFormat('d/m/Y')
+              ->native(false),
             Select::make('status')
               ->label('Estado')
               ->options([
@@ -96,8 +99,7 @@ class ExpenseResource extends Resource
                 'Pagada' => 'Pagada',
               ])
               ->placeholder('Selecciona un estado')
-              ->searchable()
-              ->preload()
+              ->native(false)
               ->required(),
             Textarea::make('description')
               ->label('Descripción')
@@ -239,8 +241,7 @@ class ExpenseResource extends Resource
                   'Otro' => 'Otro',
                 ])
                 ->placeholder('Selecciona un método de pago')
-                ->searchable()
-                ->preload()
+                ->native(false)
                 ->required(),
               TextInput::make('amount_paid')
                 ->label('Monto a pagar')

@@ -65,10 +65,16 @@ class ResolutionResource extends Resource
               ->numeric(),
             Forms\Components\DatePicker::make('start_date')
               ->label('Fecha de inicio de vigencia')
-              ->required(),
+              ->required()
+              ->closeOnDateSelection()
+              ->displayFormat('d/m/Y')
+              ->native(false),
             Forms\Components\DatePicker::make('end_date')
               ->label('Fecha de fin de vigencia')
-              ->required(),
+              ->required()
+              ->closeOnDateSelection()
+              ->displayFormat('d/m/Y')
+              ->native(false),
             Forms\Components\TextInput::make('valid_months')
               ->label('Meses de validez')
               ->autocomplete(false)

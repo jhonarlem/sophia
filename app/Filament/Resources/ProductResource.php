@@ -53,8 +53,7 @@ class ProductResource extends Resource
                   'Electrodoméstico' => 'Electrodoméstico',
                 ])
                 ->required()
-                ->searchable()
-                ->preload()
+                ->native(false)
                 ->reactive()
                 ->live()
                 ->placeholder('Selecciona una categoria'),
@@ -111,9 +110,9 @@ class ProductResource extends Resource
                   'Activo' => 'Activo',
                   'Inactivo' => 'Inactivo',
                 ])
+                ->default('Activo')
                 ->placeholder('Selecciona el estado')
-                ->preload()
-                ->searchable()
+                ->native(false)
                 ->required(),
             ]),
           Wizard\Step::make('Detalles del producto')
@@ -160,21 +159,23 @@ class ProductResource extends Resource
                   ->autocomplete(false)
                   ->numeric(),
                 Forms\Components\DatePicker::make('purchase_date')
-                  ->label('Fecha de compra'),
+                  ->label('Fecha de compra')
+                  ->closeOnDateSelection()
+                  ->displayFormat('d/m/Y')
+                  ->native(false),
                 Forms\Components\Select::make('discount_applicable')
                   ->label('Descuento aplicable')
                   ->options([
                     'No' => 'No',
                     'Si' => 'Si',
                   ])
-                  ->searchable()
                   ->afterStateUpdated(function ($state, callable $set) {
                     if ($state === 'No') {
                       $set('discount_amount', 0);
                     }
                   })
+                  ->native(false)
                   ->required()
-                  ->preload()
                   ->reactive()
                   ->live(),
                 Forms\Components\TextInput::make('discount_amount')
@@ -201,14 +202,13 @@ class ProductResource extends Resource
                     'No' => 'No',
                     'Si' => 'Si',
                   ])
-                  ->searchable()
                   ->afterStateUpdated(function ($state, callable $set) {
                     if ($state === 'No') {
                       $set('discount_amount', 0);
                     }
                   })
+                  ->native(false)
                   ->required()
-                  ->preload()
                   ->reactive()
                   ->live(),
                 Forms\Components\TextInput::make('discount_amount')
