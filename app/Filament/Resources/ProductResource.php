@@ -61,9 +61,20 @@ class ProductResource extends Resource
               Forms\Components\TextInput::make('sku')
                 ->label('SKU')
                 ->required()
+                ->unique(ignoreRecord: true)
                 ->autocomplete(false)
                 ->maxLength(255)
-                ->extraAttributes(['wire:keydown.enter.prevent' => true]),
+                ->extraAttributes(['wire:keydown.enter.prevent' => true])
+                ->reactive()
+                ->afterStateUpdated(function ($state, $set, $get) {
+                  $product = Product::where('sku', $state)->first();
+                  if ($product && $get('id') !== $product->id) {
+                    Notification::make()
+                      ->title('SKU ya registrado')
+                      ->warning()
+                      ->send();
+                  }
+                }),
               Forms\Components\TextInput::make('name')
                 ->label('Nombre')
                 ->autocomplete(false)
@@ -114,8 +125,20 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('serial_number')
                   ->label('Serial')
                   ->required()
+                  ->unique(ignoreRecord: true)
                   ->autocomplete(false)
-                  ->maxLength(255),
+                  ->maxLength(255)
+                  ->extraAttributes(['wire:keydown.enter.prevent' => true])
+                  ->reactive()
+                  ->afterStateUpdated(function ($state, $set, $get) {
+                    $product = Product::where('serial_number', $state)->first();
+                    if ($product && $get('id') !== $product->id) {
+                      Notification::make()
+                        ->title('Serial ya registrado')
+                        ->warning()
+                        ->send();
+                    }
+                  }),
                 Forms\Components\TextInput::make('brand')
                   ->label('Marca')
                   ->autocomplete(false)
