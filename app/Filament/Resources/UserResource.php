@@ -62,9 +62,10 @@ class UserResource extends Resource
               ->unique(ignoreRecord: true)
               ->reactive()
               ->afterStateUpdated(function ($state, $set, $get) {
-                if (User::where('email', $state)->exists()) {
+                $user = User::where('email', $state)->first();
+                if ($user && $get('id') !== $user->id) {
                   Notification::make()
-                    ->title('Correo en uso')
+                    ->title('Correo ya registrado')
                     ->warning()
                     ->send();
                 }
