@@ -162,6 +162,7 @@ class ProductResource extends Resource
                   ->label('Fecha de compra')
                   ->closeOnDateSelection()
                   ->displayFormat('d/m/Y')
+                  ->firstDayOfWeek(7)
                   ->native(false),
                 Forms\Components\Select::make('discount_applicable')
                   ->label('Descuento aplicable')

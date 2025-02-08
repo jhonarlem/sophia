@@ -91,6 +91,7 @@ class ExpenseResource extends Resource
               ->required()
               ->closeOnDateSelection()
               ->displayFormat('d/m/Y')
+              ->firstDayOfWeek(7)
               ->native(false),
             Select::make('status')
               ->label('Estado')

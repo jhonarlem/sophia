@@ -68,12 +68,14 @@ class ResolutionResource extends Resource
               ->required()
               ->closeOnDateSelection()
               ->displayFormat('d/m/Y')
+              ->firstDayOfWeek(7)
               ->native(false),
             Forms\Components\DatePicker::make('end_date')
               ->label('Fecha de fin de vigencia')
               ->required()
               ->closeOnDateSelection()
               ->displayFormat('d/m/Y')
+              ->firstDayOfWeek(7)
               ->native(false),
             Forms\Components\TextInput::make('valid_months')
               ->label('Meses de validez')
