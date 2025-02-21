@@ -211,7 +211,7 @@ class ViewCredit extends ViewRecord
               ->label('Factura')
               ->icon('heroicon-o-document-text'),
             TextEntry::make('customer.name')
-              ->label('Cliente:')
+              ->label('Cliente')
               ->icon('heroicon-o-user'),
             TextEntry::make('status')
               ->label('Estado')
