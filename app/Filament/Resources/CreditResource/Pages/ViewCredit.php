@@ -11,12 +11,14 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
@@ -24,6 +26,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Filament\Infolists\Components\Section;
 
 class ViewCredit extends ViewRecord
 {
@@ -169,11 +172,17 @@ class ViewCredit extends ViewRecord
           }
         )
         ->visible(fn() => $this->record->status == 'Pendiente' && Box::latest()->first()?->status == 'Abierta' && Gate::allows('pay', $this->record)),
+      Action::make('Ver venta')
+        ->label('Ver venta')
+        ->color(Color::Purple)
+        ->url(route('filament.dashboard.resources.ventas.view', $this->record->sale_id)),
+      // ->openUrlInNewTab(),
       Action::make('Recibo')
         ->label('Recibo')
         ->color(Color::Lime)
         ->url(route('recibo-credito', $this->record->id))
         ->openUrlInNewTab(),
+
     ];
   }
 
@@ -191,57 +200,45 @@ class ViewCredit extends ViewRecord
     return [];
   }
 
-  public function form(Form $form): Form
+  public function infolist(Infolist $infolist): Infolist
   {
-    return $form->schema([
-      Grid::make(12)->schema([
+    return $infolist
+      ->schema([
         Section::make('Detalles del crédito')
+          ->columns(4)
           ->schema([
-            Grid::make(2)
-              ->schema([
-                Placeholder::make('sale.invoice_number')
-                  ->label('Factura:')
-                  ->content(fn($record) => $record->sale->invoice_number ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('name')
-                  ->label('Cliente:')
-                  ->content(fn($record) => $record->customer->name ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('status')
-                  ->label('Estado:')
-                  ->content(fn($record) => $record->status ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('total_credit')
-                  ->label('Total crédito:')
-                  ->content(fn($record) => $record->total_credit !== null
-                    ? number_format($record->total_credit, 2, ',', '.')
-                    : '')
-                  ->inlineLabel(),
-                Placeholder::make('total_paid')
-                  ->label('Total pagado:')
-                  ->content(fn($record) => $record->total_paid !== null
-                    ? number_format($record->total_paid, 2, ',', '.')
-                    : '')
-                  ->inlineLabel(),
-                Placeholder::make('total_pending')
-                  ->label('Total pendiente:')
-                  ->content(fn($record) => $record->total_pending !== null
-                    ? number_format($record->total_pending, 2, ',', '.')
-                    : '')
-                  ->inlineLabel(),
-                Placeholder::make('credit_date')
-                  ->label('Fecha:')
-                  ->content(fn($record) => $record->credit_date !== null
-                    ? Carbon::parse($record->credit_date)->locale('es')->isoFormat('MMM D YYYY HH:mm') : '')
-                  ->inlineLabel(),
-                Placeholder::make('user.name')
-                  ->label('Cajero:')
-                  ->content(fn($record) => $record->user->name ?? '')
-                  ->inlineLabel(),
-              ]),
+            TextEntry::make('sale.invoice_number')
+              ->label('Factura')
+              ->icon('heroicon-o-document-text'),
+            TextEntry::make('customer.name')
+              ->label('Cliente:')
+              ->icon('heroicon-o-user'),
+            TextEntry::make('status')
+              ->label('Estado')
+              ->badge()
+              ->color(function ($record) {
+                return $record->status == 'Pagada' ? 'success' : 'warning';
+              }),
+            TextEntry::make('credit_date')
+              ->label('Fecha')
+              ->icon('heroicon-o-calendar-days')
+              ->date('M j, Y h:m a'),
+            TextEntry::make('total_credit')
+              ->label('Total crédito')
+              ->numeric()
+              ->icon('heroicon-o-currency-dollar'),
+            TextEntry::make('total_paid')
+              ->label('Total pagado')
+              ->numeric()
+              ->icon('heroicon-o-banknotes'),
+            TextEntry::make('total_pending')
+              ->label('Total pendiente')
+              ->numeric()
+              ->icon('heroicon-o-banknotes'),
+            TextEntry::make('user.name')
+              ->label('Cajero')
+              ->icon('heroicon-o-user'),
           ])
-          ->columnSpan(12),
-      ])
-    ]);
+      ]);
   }
 }

@@ -106,7 +106,16 @@ class ViewSale extends ViewRecord
           }
         )
         ->visible(fn() => $this->record->status !== 'Anulada' &&   Gate::allows('cancel', $this->record)),
-
+      Action::make('Ver crédito')
+        ->label('Ver crédito')
+        ->color(Color::Amber)
+        ->url(function () {
+          $credit = DB::table('credits')
+            ->where('sale_id', $this->record->id)
+            ->first();
+          return $credit ? route('filament.dashboard.resources.creditos.view', $credit->id) : '#';
+        })
+        ->visible(fn() => $this->record->status == 'Pendiente'),
       Action::make('Factura')
         ->label('Factura')
         ->color(Color::Purple)
