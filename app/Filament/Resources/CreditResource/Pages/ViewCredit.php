@@ -177,6 +177,10 @@ class ViewCredit extends ViewRecord
         ->color(Color::Purple)
         ->url(route('filament.dashboard.resources.ventas.view', $this->record->sale_id)),
       // ->openUrlInNewTab(),
+      Action::make('Ver cliente')
+        ->label('Ver cliente')
+        ->color(Color::Emerald)
+        ->url(route('filament.dashboard.resources.clientes.view', $this->record->sale->customer_id)),
       Action::make('Recibo')
         ->label('Recibo')
         ->color(Color::Lime)
