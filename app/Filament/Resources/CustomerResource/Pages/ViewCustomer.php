@@ -3,19 +3,39 @@
 namespace App\Filament\Resources\CustomerResource\Pages;
 
 use App\Filament\Resources\CustomerResource;
+use App\Filament\Resources\CustomerResource\Widgets\CustomerInfo;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Infolists\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 
 class ViewCustomer extends ViewRecord
 {
   protected static string $resource = CustomerResource::class;
+
+  /**
+   * Mount the component with the given record.
+   *
+   * This method is called when the component is initialized. It calls the parent
+   * mount method with the provided record and stores the record ID in the session
+   * under the key 'customer_id'.
+   *
+   * @param mixed $record The record to mount the component with.
+   *
+   * @return void
+   */
+  public function mount($record): void
+  {
+    parent::mount($record);
+    session()->put('customer_id', $record);
+  }
 
   protected function getHeaderActions(): array
   {
@@ -40,45 +60,39 @@ class ViewCustomer extends ViewRecord
 
   protected function getHeaderWidgets(): array
   {
-    return [];
+    return [
+      CustomerInfo::make(),
+    ];
   }
 
-  public function form(Form $form): Form
+  public function infolist(Infolist $infolist): Infolist
   {
-    return $form->schema([
-      Grid::make(12)->schema([
+    return $infolist
+      ->schema([
         Section::make('Detalles del cliente')
+          ->columns(3)
           ->schema([
-            Grid::make(2)
-              ->schema([
-                Placeholder::make('document_type')
-                  ->label('Documento:')
-                  ->content(fn($record) => $record->document_type ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('document_number')
-                  ->label('Número:')
-                  ->content(fn($record) => $record->document_number ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('name')
-                  ->label('Nombres:')
-                  ->content(fn($record) => $record->name ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('email')
-                  ->label('Correo:')
-                  ->content(fn($record) => $record->email ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('cellphone')
-                  ->label('Celular:')
-                  ->content(fn($record) => $record->cellphone ?? '')
-                  ->inlineLabel(),
-                Placeholder::make('street')
-                  ->label('Dirección:')
-                  ->content(fn($record) => $record->street ?? '')
-                  ->inlineLabel(),
-              ]),
+            TextEntry::make('document_type')
+              ->label('Documento')
+              ->icon('heroicon-o-identification'),
+            TextEntry::make('document_number')
+              ->label('Número')
+              ->numeric()
+              ->icon('heroicon-o-identification'),
+            TextEntry::make('name')
+              ->label('Cliente')
+              ->icon('heroicon-o-user'),
+            TextEntry::make('email')
+              ->label('Correo')
+              ->icon('heroicon-o-envelope'),
+            TextEntry::make('cellphone')
+              ->label('Celular')
+              ->icon('heroicon-o-device-phone-mobile'),
+            TextEntry::make('street')
+              ->label('Dirección')
+              ->numeric()
+              ->icon('heroicon-o-map-pin'),
           ])
-          ->columnSpan(12),
-      ])
-    ]);
+      ]);
   }
 }
