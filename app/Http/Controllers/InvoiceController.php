@@ -82,7 +82,7 @@ class InvoiceController extends Controller
     $infoItems = collect($salesItems)->map(function ($item) {
       return (object) [
         'product' => $item->product->category !== 'Hogar'
-          ? "{$item->product->name} •Serial: {$item->product->serial_number} •Marca: {$item->product->brand} •Modelo: {$item->product->model} •Color: {$item->product->color}"
+          ? "{$item->product->name} - SERIAL: {$item->product->serial_number} - MARCA: {$item->product->brand} - MODELO: {$item->product->model} - COLOR: {$item->product->color}"
           : $item->product->name,
         'quantity' => $item->quantity,
         'price' => number_format($item->unit_price, 0, ',', '.'),
