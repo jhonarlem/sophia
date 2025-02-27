@@ -68,7 +68,7 @@ class CustomerInfo extends BaseWidget
         ->descriptionIcon('heroicon-o-calendar-days', IconPosition::Before)
         ->chart([7, 2, 10, 3, 15, 4, 17])
         ->color('primary'),
-      Stat::make('Saldo pendiente por pagar', $saldoPendiente)
+      Stat::make('Saldo pendiente por pagar', '$' .  $saldoPendiente)
         ->description('Créditos pendientes: ' . $totalCredits)
         ->descriptionIcon('heroicon-o-building-library', IconPosition::Before)
         ->chart([2, 10, 3, 15, 4, 17, 7])

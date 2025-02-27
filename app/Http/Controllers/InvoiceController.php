@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceMail;
 use App\Models\Configuration;
 use App\Models\Credit;
 use App\Models\Sale;
 use App\Models\SaleItem;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 
 class InvoiceController extends Controller
 {
@@ -23,10 +27,80 @@ class InvoiceController extends Controller
       abort(404);
     }
 
+    $data = $this->prepareInvoiceData($id);
+
+    // Generar el PDF con los datos
+    $pdf = app(DomPDFPDF::class)->loadView('vendor.filament.resources.sales.invoice', $data)
+      ->setOption([
+        'fontDir' => public_path('/fonts'),
+        'fontCache' => public_path('/fonts'),
+        'defaultFont' => 'Sora',
+        'isHtml5ParserEnabled' => true,
+        'isRemoteEnabled' => true,
+        'isPhpEnabled' => false,
+      ])->stream('Factura-' . $data['resolution']->prefix . '-' . $data['sale']->invoiceNumber . '.pdf');
+
+    return $pdf;
+  }
+
+  public function sendInvoiceEmail($id)
+  {
+    // Verificar si hay usuario autenticado
+    if (!Auth::check()) {
+      return redirect()->route('filament.dashboard.auth.login');
+    }
+    // Verificar si el id es numérico
+    if (!is_numeric($id)) {
+      abort(404);
+    }
+
+    $data = $this->prepareInvoiceData($id);
+
+    // Verificar si el cliente tiene el id 1 (Cliente genérico) mandar error para que el try catch lo capture
+    if ($data['customer']->id === 1) {
+      throw ValidationException::withMessages([
+        'message' => 'No es posible enviar la factura al cliente PÚBLICO GENERAL',
+      ]);
+    }
+
+    // Verificar que el correo del cliente no sea no termine en @notiene.com
+    if (strpos($data['customer']->email, '@notiene.com') !== false) {
+      throw ValidationException::withMessages([
+        'message' => 'El correo electrónico del cliente no es válido',
+      ]);
+    }
+
+    // Generar el PDF con los datos
+    $pdf = app(DomPDFPDF::class)->loadView('vendor.filament.resources.sales.invoice', $data)
+      ->setOption([
+        'fontDir' => public_path('/fonts'),
+        'fontCache' => public_path('/fonts'),
+        'defaultFont' => 'Sora',
+        'isHtml5ParserEnabled' => true,
+        'isRemoteEnabled' => true,
+        'isPhpEnabled' => false,
+      ])->output();
+
+    // Enviar el correo adjuntando el PDF
+    Mail::to($data['customer']->email)->send(new InvoiceMail($data, $pdf));
+    return;
+  }
+
+  private function prepareInvoiceData($id)
+  {
     $sale = Sale::findOrFail($id);
     $company = Configuration::first();
     $salesItems = SaleItem::where('sale_id', $id)->get();
     $credit = Credit::where('sale_id', $id)->first();
+
+    // Obtener la ruta completa de la imagen
+    $logoPath = storage_path('app/public/' . $company->image);
+
+    // Convertir la imagen a Base64 si existe
+    $logoBase64 = null;
+    if ($company->image && file_exists($logoPath)) {
+      $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+    }
 
     // Información de la empresa
     $infoCompany = (object) [
@@ -37,7 +111,7 @@ class InvoiceController extends Controller
       'email' => $company->email,
       'cellphone' => $company->cellphone,
       'address' => $company->address,
-      'logo' => $company->image ? asset('storage/' . $company->image) : null,
+      'logo' => $logoBase64,
       'slogan' => $company->slogan,
     ];
 
@@ -53,6 +127,7 @@ class InvoiceController extends Controller
 
     // Información del cliente
     $infoCustomer = (object) [
+      'id' => $sale->customer->id,
       'documentType' => $sale->customer->document_type,
       'documentNumber' => $sale->customer->document_number,
       'name' => $sale->customer->name,
@@ -82,7 +157,7 @@ class InvoiceController extends Controller
     $infoItems = collect($salesItems)->map(function ($item) {
       return (object) [
         'product' => $item->product->category !== 'Hogar'
-          ? "{$item->product->name} •Serial: {$item->product->serial_number} •Marca: {$item->product->brand} •Modelo: {$item->product->model} •Color: {$item->product->color}"
+          ? "{$item->product->name} - SERIAL: {$item->product->serial_number} - MARCA: {$item->product->brand} - MODELO: {$item->product->model} - COLOR: {$item->product->color}"
           : $item->product->name,
         'quantity' => $item->quantity,
         'price' => number_format($item->unit_price, 0, ',', '.'),
@@ -93,14 +168,12 @@ class InvoiceController extends Controller
       ];
     });
 
-
-    // Retornar la vista con los datos
-    return view('vendor.filament.resources.sales.invoice', [
+    return [
       'company' => $infoCompany,
       'resolution' => $resolutionInfo,
       'customer' => $infoCustomer,
       'sale' => $infoSale,
       'items' => $infoItems,
-    ]);
+    ];
   }
 }

@@ -19,3 +19,7 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+public/fonts/*
+!public/fonts/Sora.ttf
+storage/fonts/*
+
