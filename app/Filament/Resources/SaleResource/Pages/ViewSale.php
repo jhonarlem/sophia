@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\SaleResource\Pages;
 
 use App\Filament\Resources\SaleResource;
+use App\Http\Controllers\InvoiceController;
 use App\Models\Box;
 use Filament\Resources\Pages\ViewRecord;
+use App\Http\Controllers\SaleController;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Grid;
@@ -27,13 +29,15 @@ class ViewSale extends ViewRecord
     return [
       Action::make('Crear')
         ->label('Crear venta')
+        ->tooltip('Crear nueva venta')
         ->action(
           fn() => redirect()->route('filament.dashboard.resources.ventas.create')
         )
         ->visible(fn() => Gate::allows('create', $this->record)),
       Action::make('Anular')
         ->requiresConfirmation()
-        ->label('Anular venta')
+        ->label('Anular')
+        ->tooltip('Anular venta')
         ->color('danger')
         ->modalHeading('Anular venta ' . $this->record->full_invoice_number)
         ->modalDescription('¿Estás seguro de que deseas anular esta venta? Al confirmar, el monto de la venta se descontará de la caja actual y los productos se devolverán al inventario. Ten en cuenta que esta acción es irreversible.')
@@ -107,7 +111,8 @@ class ViewSale extends ViewRecord
         )
         ->visible(fn() => $this->record->status !== 'Anulada' &&   Gate::allows('cancel', $this->record)),
       Action::make('Ver crédito')
-        ->label('Ver crédito')
+        ->label('Crédito')
+        ->tooltip('Ver crédito')
         ->color(Color::Amber)
         ->url(function () {
           $credit = DB::table('credits')
@@ -116,14 +121,46 @@ class ViewSale extends ViewRecord
           return $credit ? route('filament.dashboard.resources.creditos.view', $credit->id) : '#';
         })
         ->visible(fn() => $this->record->status == 'Pendiente'),
+      Action::make('EnviarFactura')
+        ->label('Enviar')
+        ->tooltip('Enviar factura')
+        ->color(Color::Green)
+        ->requiresConfirmation()
+        ->modalHeading('Enviar factura de venta ' . $this->record->full_invoice_number)
+        ->modalDescription('¿Estás seguro de que deseas enviar esta factura al correo del cliente?')
+        ->modalIcon('heroicon-o-envelope')
+        ->modalSubmitActionLabel('Enviar')
+        ->modalCancelActionLabel('Cancelar')
+        ->action(
+          function () {
+            try {
+              resolve(InvoiceController::class)->sendInvoiceEmail($this->record->id);
+              Notification::make()
+                ->title('Factura enviada')
+                ->body('La factura ' . $this->record->full_invoice_number . ' ha sido enviada al correo del cliente')
+                ->success()
+                ->send();
+            } catch (\Exception $e) {
+              Notification::make()
+                ->title('Error al enviar factura')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              return false;
+            }
+          }
+        )
+        ->visible(fn() => $this->record->status !== 'Anulada'),
       Action::make('Factura')
         ->label('Factura')
+        ->tooltip('Ver factura')
         ->color(Color::Purple)
         ->url(route('factura', $this->record->id))
         ->openUrlInNewTab()
         ->visible(fn() => $this->record->status !== 'Anulada'),
       Action::make('Recibo')
         ->label('Recibo')
+        ->tooltip('Ver recibo')
         ->color(Color::Lime)
         ->url(route('recibo', $this->record->id))
         ->openUrlInNewTab(),
