@@ -7,9 +7,9 @@
 ![Version](https://img.shields.io/badge/Version-1.1.2-blue.svg)
 ![License](https://img.shields.io/badge/License-Proprietary-red.svg)
 
-## 🎯 Acerca de SOPHIA
+## 🎯 Acerca de SOPHIA POS
 
-**SOPHIA** (Software for Organized Product Handling and Inventory Administration) es una solución POS avanzada diseñada específicamente para el mercado colombiano. Optimizada para la gestión integral de negocios minoristas, especialmente en el sector de electrodomésticos y productos para el hogar.
+**SOPHIA POS** (Software for Organized Product Handling and Inventory Administration) es una solución POS avanzada diseñada específicamente para el mercado colombiano. Optimizada para la gestión integral de negocios minoristas, especialmente en el sector de electrodomésticos y productos para el hogar.
 
 ## 🛠️ Características Principales
 
