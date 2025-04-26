@@ -120,10 +120,10 @@ class ResolutionResource extends Resource
         Tables\Columns\TextColumn::make('status')
           ->label('Estado')
           ->badge()
-          ->color(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'danger' : 'success')
-          ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
-          ->getStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
-          ->icon(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'heroicon-s-x-circle' : 'heroicon-s-check-badge')
+          ->color(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'danger' : 'success')
+          ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'No Vigente' : 'Vigente')
+          ->getStateUsing(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'No Vigente' : 'Vigente')
+          ->icon(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'heroicon-s-x-circle' : 'heroicon-s-check-badge')
           ->searchable()
           ->sortable(),
         Tables\Columns\TextColumn::make('start_date')
@@ -215,10 +215,10 @@ class ResolutionResource extends Resource
             TextEntry::make('status')
               ->label('Estado:')
               ->badge()
-              ->color(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'danger' : 'success')
-              ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
-              ->getStateUsing(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'No Vigente' : 'Vigente')
-              ->icon(fn($record) => Carbon::parse($record->end_date)->isPast() ? 'heroicon-s-x-circle' : 'heroicon-s-check-badge'),
+              ->color(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'danger' : 'success')
+              ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'No Vigente' : 'Vigente')
+              ->getStateUsing(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'No Vigente' : 'Vigente')
+              ->icon(fn($record) => Carbon::parse($record->end_date)->endOfDay()->isPast() ? 'heroicon-s-x-circle' : 'heroicon-s-check-badge'),
             TextEntry::make('start_date')
               ->label('Fecha de inicio de vigencia:')
               ->date(),
