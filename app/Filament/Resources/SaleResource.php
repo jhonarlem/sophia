@@ -25,6 +25,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
@@ -374,7 +375,18 @@ class SaleResource extends Resource implements HasShieldPermissions
                             return ($product['sale_price'] * $product['quantity']) - $product['discount'];
                           });
                           $totalPaid = collect($payments)->sum(function ($payment) {
-                            return is_numeric($payment['amount']) ? $payment['amount'] : 0;
+                            // Convertir el valor a número, independientemente del formato
+                            if (isset($payment['amount'])) {
+                              $amount = $payment['amount'];
+                              if (is_string($amount)) {
+                                // Quitar puntos de miles y cambiar coma por punto para decimales
+                                $amount = str_replace('.', '', $amount);
+                                $amount = str_replace(',', '.', $amount);
+                                return (float) $amount;
+                              }
+                              return is_numeric($amount) ? (float)$amount : 0;
+                            }
+                            return 0;
                           });
                           return '$ ' . number_format($totalPaid - $totalAmount, 2, ',', '.');
                         })
@@ -411,6 +423,8 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->label('Cantidad')
                         ->numeric()
                         ->required()
+                        ->mask(RawJs::make('$money($input, \',\', \'.\')'))
+                        ->stripCharacters('.')
                         // ->default(0)
                         ->disabled(fn($get) => empty($get('payment_id')))
                         ->live(debounce: 700) // Mismo debounce que usas en productos

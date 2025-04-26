@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Filament\Infolists\Components\Section;
+use Filament\Support\RawJs;
 
 class ViewCredit extends ViewRecord
 {
@@ -71,6 +72,8 @@ class ViewCredit extends ViewRecord
                 ->label('Cantidad')
                 ->numeric()
                 ->required()
+                ->mask(RawJs::make('$money($input, \',\', \'.\')'))
+                ->stripCharacters('.')
                 // ->default(0)
                 ->disabled(fn($get) => empty($get('payment_id')))
                 ->live(debounce: 700) // Mismo debounce que usas en productos
