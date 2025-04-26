@@ -78,7 +78,7 @@ class ListBoxes extends ListRecords
             ->default(0),
           Select::make('resolution_id')
             ->label('Resolución')
-            ->relationship('resolution', 'number', fn(Builder $query) => $query->where('end_date', '>=', now()))
+            ->relationship('resolution', 'number', fn(Builder $query) => $query->whereDate('end_date', '>=', now()))
             ->placeholder('Selecciona una resolución')
             ->getOptionLabelFromRecordUsing(fn($record) => "{$record->number} - Prefijo: {$record->prefix} - Vence: " . Carbon::parse($record->end_date)->locale('es')->isoFormat('D MMM YYYY'))
             ->native(false)
