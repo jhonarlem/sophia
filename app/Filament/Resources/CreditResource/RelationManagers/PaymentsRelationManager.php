@@ -52,7 +52,9 @@ class PaymentsRelationManager extends RelationManager
           ->searchable(),
         Tables\Columns\TextColumn::make('amount')
           ->label('Monto')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->searchable(),
         Tables\Columns\TextColumn::make('payment_date')
           ->label('Fecha de pago')

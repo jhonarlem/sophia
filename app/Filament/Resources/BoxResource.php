@@ -113,38 +113,52 @@ class BoxResource extends Resource
         Tables\Columns\TextColumn::make('base_amount')
           ->label('$ Base')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('cash_payment')
           ->label('$ Efectivo')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('transfer_payment')
           ->label('$ Transferencia')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('credit_sales')
           ->label('$ Crédito')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('total_sales')
           ->label('$ Total')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('real_amount')
           ->label('$ Real')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
         Tables\Columns\TextColumn::make('difference')
           ->label('$ Diferencia')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
         Tables\Columns\TextColumn::make('openedBy.name')

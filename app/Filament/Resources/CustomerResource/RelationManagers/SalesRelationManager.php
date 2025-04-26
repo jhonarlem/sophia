@@ -28,7 +28,6 @@ class SalesRelationManager extends RelationManager
           ->sortable(),
         Tables\Columns\TextColumn::make('box.name')
           ->label('Caja')
-          ->numeric()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
         Tables\Columns\TextColumn::make('customer.name')
@@ -53,17 +52,23 @@ class SalesRelationManager extends RelationManager
         Tables\Columns\TextColumn::make('total_amount')
           ->label('Total')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('total_iva')
           ->label('IVA')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('total_discount')
           ->label('Descuento')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('payment_method')
           ->label('Método de pago')
@@ -72,12 +77,16 @@ class SalesRelationManager extends RelationManager
         Tables\Columns\TextColumn::make('received')
           ->label('Recibido')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('exchange')
           ->label('Cambio')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('sale_date')
           ->label('Fecha')

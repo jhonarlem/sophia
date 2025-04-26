@@ -252,15 +252,18 @@ class ProductResource extends Resource
           ->sortable(),
         Tables\Columns\TextColumn::make('sale_price')
           ->label('Precio de venta')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->badge()
           ->color('success')
-          ->icon('heroicon-s-currency-dollar')
           ->sortable(),
         Tables\Columns\TextColumn::make('purchase_price')
           ->label('Precio de compra')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
         Tables\Columns\TextColumn::make('stock')
@@ -275,7 +278,9 @@ class ProductResource extends Resource
         Tables\Columns\TextColumn::make('discount_amount')
           ->label('$ Descuento')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('iva')
           ->label('IVA en %')

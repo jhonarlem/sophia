@@ -86,12 +86,16 @@ class LossResource extends Resource
         Tables\Columns\TextColumn::make('unit_price')
           ->label('Precio compra')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('total')
           ->label('Total')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('description')
           ->label('Descripción')

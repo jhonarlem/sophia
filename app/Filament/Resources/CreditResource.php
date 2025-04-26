@@ -81,17 +81,23 @@ class CreditResource extends Resource implements HasShieldPermissions
         Tables\Columns\TextColumn::make('total_credit')
           ->label('Total crédito')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('total_paid')
           ->label('Pagado')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('total_pending')
           ->label('Pendiente')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('credit_date')
           ->label('Fecha:')

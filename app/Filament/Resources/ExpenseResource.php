@@ -130,17 +130,23 @@ class ExpenseResource extends Resource
         Tables\Columns\TextColumn::make('amount_total')
           ->label('Total')
           ->searchable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('amount_paid')
           ->label('Pagado')
           ->sortable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('amount_pending')
           ->label('Pendiente')
           ->sortable()
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->sortable(),
         Tables\Columns\TextColumn::make('status')
           ->label('Estado')

@@ -34,23 +34,33 @@ class SaleItemsRelationManager extends RelationManager
           ->searchable(),
         Tables\Columns\TextColumn::make('unit_price')
           ->label('Precio unitario')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->searchable(),
         Tables\Columns\TextColumn::make('iva')
           ->label('IVA')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->searchable(),
         Tables\Columns\TextColumn::make('discount')
           ->label('Descuento')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->searchable(),
         Tables\Columns\TextColumn::make('subtotal')
           ->label('Subtotal')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->searchable(),
         Tables\Columns\TextColumn::make('total')
           ->label('Total')
-          ->numeric()
+          ->formatStateUsing(function ($state) {
+            return '$ ' . number_format($state, 2, ',', '.');
+          })
           ->searchable(),
       ]);
   }
