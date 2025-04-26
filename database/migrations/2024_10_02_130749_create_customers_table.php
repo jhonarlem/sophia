@@ -26,8 +26,8 @@ return new class extends Migration
     // Insert default customer "PÚBLICO GENERAL"
     DB::table('customers')->insert([
       'document_type' => 'CC',
-      'document_number' => '22222222222',
-      'name' => 'PÚBLICO GENERAL',
+      'document_number' => '222222222222',
+      'name' => 'CONSUMIDOR FINAL',
       'email' => 'notiene@notiene.com',
       'cellphone' => '0000000000',
       'street' => null,
