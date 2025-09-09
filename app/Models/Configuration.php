@@ -19,13 +19,17 @@ class Configuration extends Model
   protected $fillable = [
     'document_type',
     'document_number',
+    'dv',
+    'company',
     'legal_representative',
-    'name',
     'email',
     'cellphone',
-    'address',
-    'image',
+    'street',
+    'city',
+    'department',
+    'regime',
     'slogan',
+    'image',
   ];
 
   protected static function boot()
@@ -37,5 +41,52 @@ class Configuration extends Model
         Storage::disk('public')->delete($model->image);
       }
     });
+  }
+
+
+  /**
+   * Attributes that must be mutated before saving.
+   *
+   * @var array<string>
+   */
+
+  public function setCompanyAttribute($value)
+  {
+    $this->attributes['company'] = strtoupper($value);
+  }
+
+  public function setLegalRepresentativeAttribute($value)
+  {
+    $this->attributes['legal_representative'] = strtoupper($value);
+  }
+
+  public function setEmailAttribute($value)
+  {
+    $this->attributes['email'] = strtolower($value);
+  }
+
+  public function setStreetAttribute($value)
+  {
+    $this->attributes['street'] = strtoupper($value);
+  }
+
+  public function setCityAttribute($value)
+  {
+    $this->attributes['city'] = strtoupper($value);
+  }
+
+  public function setDepartmentAttribute($value)
+  {
+    $this->attributes['department'] = strtoupper($value);
+  }
+
+  /* public function setRegimeAttribute($value)
+  {
+    $this->attributes['regime'] = strtoupper($value);
+  } */
+
+  public function setSloganAttribute($value)
+  {
+    $this->attributes['slogan'] = strtoupper($value);
   }
 }
