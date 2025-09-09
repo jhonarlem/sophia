@@ -498,11 +498,11 @@
 
         <div class="tm_pos_company_name">{{$company->name}}</div>
         <div class="tm_pos_company_address">{{$company->legal_representative}}</div>
-        <div class="tm_pos_company_address">{{$company->document_type}}: {{$company->document_number}}</div>
+        <div class="tm_pos_company_address">{{$company->document_type}}: {{$company->document_number}}-{{$company->dv}}</div>
         <div class="tm_pos_company_address">{{$company->address}}</div>
         <div class="tm_pos_company_mobile">{{$company->cellphone}}</div>
         <div class="tm_pos_company_mobile">{{$company->email}}</div>
-        <div class="tm_pos_company_mobile">Responsable de IVA persona naltural</div>
+        <div class="tm_pos_company_mobile">{{$company->regime}}</div>
       </div>
 
       <div class="tm_pos_invoice_body">

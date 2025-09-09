@@ -32,13 +32,15 @@ class ReceiptCreditController extends Controller
     $infoCompany = (object) [
       'document_type' => $company->document_type,
       'document_number' => $company->document_number,
-      'name' => $company->name,
+      'dv' => $company->dv,
+      'name' => $company->company,
       'legal_representative' => $company->legal_representative,
       'email' => $company->email,
       'cellphone' => $company->cellphone,
       'address' => $company->address,
       'logo' => $company->image ? asset('storage/' . $company->image) : null,
       'slogan' => $company->slogan,
+      'regime' => $company->regime,
     ];
 
     // Información de la resolución

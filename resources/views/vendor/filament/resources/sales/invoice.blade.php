@@ -56,7 +56,7 @@
           <td style="vertical-align: top; width: 50%;">
             <h1 style="margin: 0; font-size: 20px; color: #0a85a0;">{{$company->name}}</h1>
             <p style="margin: 0.5px 0; font-size: 14px; font-weight: 600;"> {{$company->legal_representative}}</p>
-            <p style="margin: 0.5px 0; font-size: 14px; font-weight: 600;">{{$company->document_type}}: {{$company->document_number}}</p>
+            <p style="margin: 0.5px 0; font-size: 14px; font-weight: 600;">{{$company->document_type}}: {{$company->document_number}}-{{$company->dv}}</p>
             <p style="margin: 0.5px 0; font-size: 14px; font-weight: 600;"> {{$company->address}}</p>
             <p style="margin: 0.5px 0; font-size: 14px; font-weight: 600;">{{$company->cellphone}}</p>
             <p style="margin: 0.5px 0; font-size: 14px; font-weight: 600;"> {{$company->email}}</p>
@@ -83,7 +83,7 @@
       <p style="margin: 1px 0;  font-size: 13px;"><strong>Rango autorizado: </strong>
         {{$resolution->startInvoice}} al {{$resolution->endInvoice}}<!-- {{$resolution->prefix}}-{{$resolution->startInvoice}} al {{$resolution->prefix}}-{{$resolution->endInvoice}} -->
       </p>
-      <p style="margin: 1px 0;  font-size: 13px;"><strong>Régimen tributario: </strong>Responsable de IVA - Régimen Ordinario</p>
+      <p style="margin: 1px 0;  font-size: 13px;"><strong>Régimen tributario: </strong>{{$company->regime}}</p>
     </div>
 
     <!-- Información del cliente -->

@@ -101,6 +101,35 @@
       position: relative;
     }
 
+
+    .tm_pos_invoice_heading_lower {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 5px 0;
+    }
+
+    .tm_pos_invoice_heading_lower:before {
+      content: '';
+      position: absolute;
+      height: 0;
+      width: 100%;
+      left: 0;
+      top: 46%;
+      border-top: 1px dashed #666;
+    }
+
+    .tm_pos_invoice_heading_lower span {
+      display: inline-flex;
+      padding: 0 5px;
+      background-color: #fff;
+      z-index: 1;
+      font-weight: 500;
+      position: relative;
+    }
+
     .tm_list.tm_style1 {
       list-style: none;
       padding: 0;
@@ -498,11 +527,11 @@
 
         <div class="tm_pos_company_name">{{$company->name}}</div>
         <div class="tm_pos_company_address">{{$company->legal_representative}}</div>
-        <div class="tm_pos_company_address">{{$company->document_type}}: {{$company->document_number}}</div>
+        <div class="tm_pos_company_address">{{$company->document_type}}: {{$company->document_number}}-{{$company->dv}}</div>
         <div class="tm_pos_company_address">{{$company->address}}</div>
         <div class="tm_pos_company_mobile">{{$company->cellphone}}</div>
         <div class="tm_pos_company_mobile">{{$company->email}}</div>
-        <div class="tm_pos_company_mobile">Responsable de IVA persona naltural</div>
+        <div class="tm_pos_company_mobile">{{$company->regime}}</div>
       </div>
 
       <div class="tm_pos_invoice_body">
@@ -545,33 +574,69 @@
           <div class="tm_list_desc">{{$box->observations}}</div>
         </div>
 
-        <div class="tm_pos_invoice_heading"></div>
+        <div class="tm_pos_invoice_heading_lower"><span> Resumen de ventas</span></div>
 
         <div class="tm_bill_list">
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Ventas en efectivo:</div>
+            <div class="tm_bill_value">$ {{$box->cashPayment}}</div>
+          </div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Ventas a transferencia:</div>
+            <div class="tm_bill_value">$ {{$box->transferPayment}}</div>
+          </div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Ventas a crédito:</div>
+            <div class="tm_bill_value">$ {{$box->creditSales}}</div>
+          </div>
+          <div class="tm_invoice_seperator"></div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title tm_bill_focus">Total:</div>
+            <div class="tm_bill_value tm_bill_focus">$ {{$box->subtotalSales}}</div>
+          </div>
+          <div class="tm_pos_invoice_heading_lower"><span> Otros movimientos</span></div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Recaudos:</div>
+            <div class="tm_bill_value">$ {{$box->creditPayment}}</div>
+          </div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Ingresos:</div>
+            <div class="tm_bill_value">$ {{$box->totalIncome}}</div>
+          </div>
+          <div class="tm_invoice_seperator"></div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title tm_bill_focus">Total:</div>
+            <div class="tm_bill_value tm_bill_focus">$ {{$box->totalOtherIncome}}</div>
+          </div>
+          <div class="tm_pos_invoice_heading_lower"><span> Balance cierre de caja</span></div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Ventas:</div>
+            <div class="tm_bill_value">$ {{$box->subtotalSales}}</div>
+          </div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Ingresos:</div>
+            <div class="tm_bill_value">$ {{$box->totalOtherIncome}}</div>
+          </div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title">Base:</div>
             <div class="tm_bill_value">$ {{$box->baseAmount}}</div>
           </div>
           <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Efectivo:</div>
-            <div class="tm_bill_value">$ {{$box->cashPayment}}</div>
+            <div class="tm_bill_title">Gastos:</div>
+            <div class="tm_bill_value">$ -{{$box->totalExpenses}}</div>
           </div>
-          <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Transferencia:</div>
-            <div class="tm_bill_value">$ {{$box->transferPayment}}</div>
-          </div>
-          <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Crédito:</div>
-            <div class="tm_bill_value">$ {{$box->creditSales}}</div>
-          </div>
-
           <div class="tm_invoice_seperator"></div>
           <div class="tm_bill_list_in">
             <div class="tm_bill_title tm_bill_focus">Total:</div>
-            <div class="tm_bill_value tm_bill_focus">$ {{$box->totalSales}}</div>
+            <div class="tm_bill_value tm_bill_focus">$ {{$box->total}}</div>
+          </div>
+          <div class="tm_invoice_seperator"></div>
+          <div class="tm_bill_list_in">
+            <div class="tm_bill_title">Total efectivo esperado:</div>
+            <div class="tm_bill_value">$ {{$box->realCash}}</div>
           </div>
           <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Dinero real:</div>
+            <div class="tm_bill_title">Efectivo contado en cierre:</div>
             <div class="tm_bill_value">$ {{$box->realAmount}}</div>
           </div>
           <div class="tm_bill_list_in">
