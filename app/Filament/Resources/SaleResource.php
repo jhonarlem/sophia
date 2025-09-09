@@ -14,6 +14,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
@@ -285,13 +286,13 @@ class SaleResource extends Resource implements HasShieldPermissions
                         ->disabled()
                         ->default(0)
                         ->columnSpan(1),
-                      TextInput::make('iva')
-                        ->label('IVA (%)')
-                        ->numeric()
-                        ->disabled()
-                        ->default(0)
-                        ->visible(false)
-                        ->columnSpan(1),
+                      Hidden::make('iva')
+                        // ->label('IVA (%)')
+                        // ->numeric()
+                        // ->disabled()
+                        ->default(0),
+                      // ->visible(false)
+                      // ->columnSpan(1),
                       TextInput::make('discount')
                         ->label('Descuento')
                         ->numeric()

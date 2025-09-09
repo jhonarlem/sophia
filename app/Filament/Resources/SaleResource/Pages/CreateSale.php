@@ -234,7 +234,7 @@ class CreateSale extends CreateRecord
           'sale_id' => $sale->id,
           'amount' => $payment['amount'],
           'payment_method' => $payment['payment_id'],
-          'reference' => $payment['reference'],
+          'reference' => $payment['reference'] ?? null,
           'payment_date' => now(),
         ]);
 
