@@ -12,6 +12,6 @@ class CreateCustomer extends CreateRecord
 
   protected function getRedirectUrl(): string
   {
-    return route('filament.dashboard.resources.clientes.index');
+    return $this->getResource()::getUrl('index');
   }
 }

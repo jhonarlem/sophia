@@ -12,7 +12,7 @@ class EditResolution extends EditRecord
 
   protected function getRedirectUrl(): string
   {
-    return route('filament.dashboard.resources.resoluciones.index');
+    return $this->previousUrl ?? $this->getResource()::getUrl('index');
   }
 
   /*  protected function getHeaderActions(): array

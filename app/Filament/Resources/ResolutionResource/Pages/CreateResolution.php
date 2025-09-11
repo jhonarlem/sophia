@@ -12,6 +12,6 @@ class CreateResolution extends CreateRecord
 
   protected function getRedirectUrl(): string
   {
-    return route('filament.dashboard.resources.resoluciones.index');
+    return $this->getResource()::getUrl('index');
   }
 }

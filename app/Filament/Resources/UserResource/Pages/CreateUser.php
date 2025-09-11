@@ -12,6 +12,6 @@ class CreateUser extends CreateRecord
 
   protected function getRedirectUrl(): string
   {
-    return route('filament.dashboard.resources.usuarios.index');
+    return $this->getResource()::getUrl('index');
   }
 }

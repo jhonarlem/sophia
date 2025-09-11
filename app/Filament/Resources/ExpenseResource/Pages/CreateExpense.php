@@ -18,7 +18,7 @@ class CreateExpense extends CreateRecord
 
   protected function getRedirectUrl(): string
   {
-    return route('filament.dashboard.resources.gastos.index');
+    return $this->getResource()::getUrl('index');
   }
 
   protected function handleRecordCreation(array $data): Model

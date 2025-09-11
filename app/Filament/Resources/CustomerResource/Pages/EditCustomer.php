@@ -12,7 +12,7 @@ class EditCustomer extends EditRecord
 
   protected function getRedirectUrl(): string
   {
-    return route('filament.dashboard.resources.clientes.index');
+    return $this->previousUrl ?? $this->getResource()::getUrl('index');
   }
 
   /*  protected function getHeaderActions(): array
