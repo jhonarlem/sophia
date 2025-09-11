@@ -35,6 +35,25 @@ class Product extends Model
     'purchase_date',
   ];
 
+
+  /**
+   * Attributes that must be mutated after retrieving.
+   */
+  public function getPurchasePriceAttribute($value)
+  {
+    return (int) $value;
+  }
+
+  public function getSalePriceAttribute($value)
+  {
+    return (int) $value;
+  }
+
+  public function getDiscountAmountAttribute($value)
+  {
+    return (int) $value;
+  }
+
   /**
    * Relations with other models.
    */

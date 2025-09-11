@@ -4,28 +4,34 @@ namespace App\Filament\Resources\SaleResource\Pages;
 
 use App\Filament\Resources\SaleResource;
 use App\Models\Box;
-use App\Models\Credit;
-use App\Models\Payment;
-use App\Models\Product;
 use App\Models\Sale;
-use App\Models\SaleItem;
+use App\Services\ElectronicSale\ElectronicSaleManager;
+use App\Services\Sale\SaleFormBuilder;
+use App\Services\Sale\SaleManager;
+use Exception;
 use Filament\Actions;
+use Filament\Facades\Filament;
+use Filament\Notifications\Actions\Action as NotificationAction;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
+use Illuminate\Database\Eloquent\Model;
 
 class CreateSale extends CreateRecord
 {
   protected static string $resource = SaleResource::class;
 
-  protected function getCreateFormAction(): Action
+  // Quitar los botones de create y cancel
+  protected function getFormActions(): array
   {
-    return parent::getCreateFormAction()->extraAttributes(['type' => 'button', 'wire:click' => 'create']);
+    return [];
   }
+
 
   public $defaultAction = 'statusBox';
 
@@ -74,204 +80,254 @@ class CreateSale extends CreateRecord
       ->visible(false);
   }
 
+  /**
+   * Define los listeners para eventos específicos.
+   * En este caso, estamos escuchando el evento 'scanBarcode' para manejar el escaneo de códigos de barras.
+   * Esto permite que el componente reaccione a eventos emitidos desde el frontend, como el escaneo de un código de barras.
+   */
+  protected function getListeners(): array
+  {
+    return [
+      'scanBarcode' => 'handleBarcodeScan',
+    ];
+  }
+
+  /**
+   * Maneja el escaneo de código de barras.
+   * Este método se invoca cuando se recibe el evento 'scanBarcode'.
+   */
+  public function handleBarcodeScan(): void
+  {
+    $state = $this->data['product_code'] ?? '';
+    if (empty($state)) return;
+
+    // Crear funciones compatibles con callable
+    $set = function ($key, $value) {
+      data_set($this->data, $key, $value);
+    };
+
+    $get = function ($key) {
+      return data_get($this->data, $key);
+    };
+
+    SaleFormBuilder::handleBarcodeScan($set, $get, $state);
+
+    // Actualizar el formulario con los nuevos datos
+    $this->form->fill($this->data);
+  }
+
+
   protected function handleRecordCreation(array $data): Model
   {
-    try {
-      // Validar datos del cliente
-      $validatorCustomer = Validator::make($data, [
-        'customer_id' => 'required',
-      ]);
-      $validatedCustomer = $validatorCustomer->validate();
-
-      // Validar datos de los productos
-      $validatorProducts = Validator::make($data, [
-        'products' => 'required|array|min:1',
-        'products.*.product_id' => 'required',
-        'products.*.quantity' => 'required|numeric|min:1',
-        'products.*.sale_price_product' => 'required|numeric|min:0',
-        'products.*.iva' => 'required|numeric|min:0',
-        'products.*.discount' => 'nullable|numeric|min:0',
-      ]);
-      $validatedProducts = $validatorProducts->validate();
-
-      // Si discount es null, se asigna 0
-      foreach ($validatedProducts['products'] as $key => $product) {
-        if ($product['discount'] === null) {
-          $validatedProducts['products'][$key]['discount'] = 0;
-        }
-      }
-
-      $validatorPayments = Validator::make($data, [
-        'payments' => 'required|array|min:1',
-        'payments.*.payment_id' => 'required',
-        'payments.*.amount' => 'required|numeric|min:0',
-        'payments.*.reference' => 'nullable',
-      ]);
-
-      $validatedPayments = $validatorPayments->validate();
-
-      // Calcular los totales de la venta
-      function calcularTotales($products)
-      {
-        $totalAmount = 0;
-        $totalIVA = 0;
-        $totalDiscount = 0;
-
-        foreach ($products as $product) {
-
-          $discountProduct = $product['discount'];
-          $totalProduct = $product['sale_price_product'] * $product['quantity'] - $discountProduct;
-          $ivaProduct = ($product['sale_price_product'] * $product['quantity'] * $product['iva'] / (100 + $product['iva']));
-
-          // Acumular los totales
-          $totalDiscount  += $discountProduct;
-          $totalAmount += $totalProduct;
-          $totalIVA +=  $ivaProduct;
-        }
-
-        return [
-          'total_amount' => round($totalAmount, 2),
-          'total_iva' => round($totalIVA, 2),
-          'total_discount' => round($totalDiscount, 2),
-        ];
-      }
-
-      // Validar si hay existencias suficientes
-      foreach ($validatedProducts['products'] as $product) {
-        $productModel = Product::findOrFail($product['product_id']);
-        if ($productModel->stock < $product['quantity']) {
-          // Lanzar una excepción para detener la creación
-          throw ValidationException::withMessages([
-            'message' => 'Sin stock suficiente para el producto ' . $productModel->name,
-          ]);
-        }
-      }
-      $boxAndInvoice = Sale::getBoxAndInvoiceNumber();
-
-      if (!$boxAndInvoice['box_id'] || !$boxAndInvoice['invoice_number']) {
-        // Lanzar una excepción para detener la creación
-        throw ValidationException::withMessages([
-          'message' => 'No es posible generar el número de factura',
-        ]);
-      }
-
-      // Calcular los totales
-      $totales = calcularTotales($validatedProducts['products']);
-
-      // Calcular el total pagado
-      $totalPagado = collect($validatedPayments['payments'])->sum('amount');
-
-      // Verificar si el total pagado es menor al total de la factura
-      if ($totalPagado < $totales['total_amount']) {
-        throw ValidationException::withMessages([
-          'message' => 'El valor pagado es menor al total de la factura',
-        ]);
-      }
-
-      // Establecer el método de pago dinámicamente
-      $paymentMethod = count($validatedPayments['payments']) > 1 ? 'Mixto' : $validatedPayments['payments'][0]['payment_id'];
-
-      // Verificar si en $validatedPayments['payments'] hay un pago con el método de pago 'Crédito'
-      $statusSale = collect($validatedPayments['payments'])->contains('payment_id', 'Crédito') ? 'Pendiente' : 'Pagada';
-
-      // Calcular el cambio
-      $cambio = $totalPagado - $totales['total_amount'];
-
-      // Verificar si el cliente es PÚBLICO GENERAL y se está realizando una venta a crédito
-      if (collect($validatedPayments['payments'])->contains('payment_id', 'Crédito') && $validatedCustomer['customer_id'] == 1) {
-        throw ValidationException::withMessages([
-          'message' => 'No es posible realizar ventas a crédito a PÚBLICO GENERAL',
-        ]);
-      }
-
-      // Crear la venta
-      $sale = Sale::create([
-        'box_id' => $boxAndInvoice['box_id'],
-        'invoice_number' => $boxAndInvoice['invoice_number'],
-        'customer_id' => $validatedCustomer['customer_id'],
-        'user_id' => Auth::id(),
-        'total_amount' => $totales['total_amount'],
-        'total_iva' => $totales['total_iva'],
-        'total_discount' => $totales['total_discount'],
-        'payment_method' => $paymentMethod,
-        'received' => $totalPagado,
-        'exchange' => $cambio,
-        'status' => $statusSale,
-        'sale_date' => now(),
-      ]);
-
-      // Crear los detalles de la venta y actualizar el stock
-      foreach ($validatedProducts['products'] as $product) {
-        $discountProduct = $product['discount'];
-        $ivaProduct = ($product['sale_price_product'] * $product['quantity'] * $product['iva'] / (100 + $product['iva']));
-        $subtotalProduct = $product['sale_price_product'] * $product['quantity'] - $ivaProduct;
-        $totalProduct = $product['sale_price_product'] * $product['quantity'] - $discountProduct;
-
-        SaleItem::create([
-          'sale_id' => $sale->id,
-          'product_id' => $product['product_id'],
-          'quantity' => $product['quantity'],
-          'unit_price' => $product['sale_price_product'],
-          'discount' => $discountProduct,
-          'iva' => $ivaProduct,
-          'subtotal' => $subtotalProduct,
-          'total' => $totalProduct,
-        ]);
-
-        // Actualizar el stock del producto
-        $productModel = Product::find($product['product_id']);
-        $productModel->decrement('stock', $product['quantity']);
-
-        // Verificar si el stock es 0 y actualizar el estado
-        if ($productModel->stock == 0) {
-          $productModel->update(['status' => 'Inactivo']);
-        }
-      }
-
-      // Crear los pagos
-      foreach ($validatedPayments['payments'] as $payment) {
-        Payment::create([
-          'sale_id' => $sale->id,
-          'amount' => $payment['amount'],
-          'payment_method' => $payment['payment_id'],
-          'reference' => $payment['reference'] ?? null,
-          'payment_date' => now(),
-        ]);
-
-        // Crear el crédito si el método de pago es crédito
-        if ($payment['payment_id'] == 'Crédito') {
-          Credit::create([
-            'sale_id' => $sale->id,
-            'user_id' => Auth::id(),
-            'total_credit' => $payment['amount'],
-            'total_pending' => $payment['amount'],
-            'credit_date' => now(),
-          ]);
-        }
-
-        // Actualizar la caja
-        $box = Box::where('status', 'Abierta')->first();
-        if ($payment['payment_id'] == 'Efectivo') {
-          $cashEntry = $payment['amount'] - $sale->exchange;
-          $box->increment('cash_payment', $cashEntry);
-          $box->increment('total_sales', $cashEntry);
-        } elseif ($payment['payment_id'] == 'Transferencia') {
-          $box->increment('transfer_payment', $payment['amount']);
-          $box->increment('total_sales', $payment['amount']);
-        } elseif ($payment['payment_id'] == 'Crédito') {
-          $box->increment('credit_sales', $payment['amount']);
-          $box->increment('total_sales', $payment['amount']);
-        }
-      }
-
-      return $sale;
-    } catch (\Exception $e) {
+    /* if ($data['invoiceType'] === 'FVE') {
+      $sale = resolve(ElectronicSaleManager::class)->createElectronicSale($data);
+      $this->redirect(route('filament.admin.resources.ventas-electronicas.view', [
+        'record' => $sale->id,
+      ]));
       Notification::make()
-        ->title($e->getMessage())
-        ->danger()
-        ->color('danger')
+        ->title('Venta electrónica creada')
+        ->success()
         ->send();
-      throw $e;
-    }
+    } else {
+      $sale = resolve(SaleManager::class)->createSale($data);
+      $this->redirect(route('filament.admin.resources.ventas.view', [
+        'record' => $sale->id,
+      ]));
+      Notification::make()
+        ->title('Venta creada')
+        ->success()
+        ->send();
+    } */
+    $sale = resolve(SaleManager::class)->createSale($data);
+    $this->redirect(route('filament.dashboard.resources.ventas.view', [
+      'record' => $sale->id,
+    ]));
+    Notification::make()
+      ->title('Venta creada')
+      ->success()
+      ->send();
+    return $sale;
+  }
+
+
+  protected function getHeaderActions(): array
+  {
+    return [
+      Action::make('VentaRapida')
+        ->label('Venta rápida (F4)')
+        ->icon('heroicon-o-bolt')
+        ->color(Color::Sky)
+        ->keyBindings(['f4'])
+        ->tooltip('Venta rápida')
+        ->modalHeading('Crear venta rápida')
+        ->form(SaleFormBuilder::getQuickSaleFormSchema())
+        ->modalSubmitActionLabel('Pagar')
+        ->modalWidth(MaxWidth::ScreenLarge)
+        // ->slideOver()
+        ->closeModalByClickingAway(false)
+        ->action(
+          function ($data, $livewire) {
+            $saleItems = $data['saleItems'] ?? [];
+            $paymentData = [[
+              'payment_id' => 'Efectivo',
+              'amount' => $data['amount'] ?? 0,
+            ]];
+            $customer = $data['customer_id'] ?? 1;
+            $invoiceType = $data['invoice_type'] ?? 'FVD';
+            try {
+              $data = [
+                'saleItems' => $saleItems,
+                'paymentData' => $paymentData,
+                'customer' => $customer,
+                'invoiceType' => $invoiceType,
+              ];
+              $sale = resolve(SaleManager::class)->createSale($data);
+              Notification::make()
+                ->title('Venta rápida creada')
+                ->success()
+                //  ->persistent()
+                ->actions([
+                  NotificationAction::make('Imprimir recibo')
+                    ->button()
+                    ->url(route('recibo', $sale->id))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-printer')
+                    ->color('primary'),
+                ])
+                ->send();
+            } catch (Exception $e) {
+              Notification::make()
+                ->title('Error al crear venta rápida')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              $livewire->halt();
+            }
+          }
+        )
+      /*  ->mountUsing(function (Form $form, $livewire) {
+          // Obtener los items de la venta del estado del formulario principal
+          $saleItems = $this->data['saleItems'];
+          // Calcular el total usando la misma lógica que en el Placeholder 'total' del form principal
+          $total = array_sum(
+            array_map(
+              // Asegúrate que la lógica de parseo sea idéntica a la del placeholder 'total'
+              fn($item) => (float) str_replace(',', '.', str_replace('.', '', $item['subtotal'] ?? '0')),
+              $saleItems
+            )
+          );
+
+          // Formatear el total
+          $formattedTotal = '$ ' . number_format($total, 2, ',', '.');
+
+          // Llenar el estado del formulario del modal con el total calculado
+          $form->fill([
+            'calculated_total_display_quick_sale' => $formattedTotal,
+            'calculated_total_numeric_quick_sale' => $total,
+            'customer_id' => 1,
+            'invoice_type' => 'FVD',
+            'payment' => [
+              [
+                'payment_id' => 'Efectivo',
+                'amount' => 0
+              ]
+            ]
+          ]);
+          $livewire->dispatch('scanBarcode');
+        }) */,
+      Action::make('Pagar')
+        ->label('Pagar (F2)')
+        ->keyBindings(['f2'])
+        ->tooltip('Completar venta')
+        ->disabled(fn(): bool => empty($this->data['saleItems']))
+        ->modalHeading('Pagar venta')
+        ->form(SaleFormBuilder::getSalePaymentForm())
+        ->modalSubmitActionLabel('Pagar')
+        ->modalWidth(MaxWidth::ScreenLarge)
+        // ->slideOver()
+        ->closeModalByClickingAway(false)
+        ->mountUsing(function (Form $form) {
+          // Obtener los items de la venta del estado del formulario principal
+          $saleItems = $this->data['saleItems'];
+          // Calcular el total usando la misma lógica que en el Placeholder 'total' del form principal
+          $total = array_sum(
+            array_map(
+              // Asegúrate que la lógica de parseo sea idéntica a la del placeholder 'total'
+              fn($item) => (float)str_replace(',', '.', str_replace('.', '', $item['subtotal'] ?? '0')),
+              $saleItems
+            )
+          );
+
+          // Formatear el total
+          $formattedTotal = '$ ' . number_format($total, 2, ',', '.');
+
+          // Llenar el estado del formulario del modal con el total calculado
+          $form->fill([
+            'calculated_total_display' => $formattedTotal,
+            'calculated_total_numeric' => $total,
+            'customer_id' => 1,
+            'invoice_type' => 'FVD',
+            'payment' => [
+              [
+                'payment_id' => 'Efectivo',
+                'amount' => null
+              ]
+            ]
+          ]);
+        })
+        ->action(
+          function ($data, $livewire) {
+            $saleItems = $this->data['saleItems'] ?? [];
+            $paymentData = $data['payment'] ?? [];
+            $customer = $data['customer_id'] ?? 1;
+            $invoiceType = $data['invoice_type'] ?? 'FVD';
+            try {
+              // Ejemplo: Validar que el pago cubra el total (necesitarás recalcular el total aquí también)
+              $saleItems = $this->data['saleItems'] ?? [];
+              /*  $totalSale = array_sum(
+                array_map(
+                  fn($item) => (float) str_replace(',', '.', str_replace('.', '', $item['subtotal'] ?? '0')),
+                  $saleItems
+                )
+              ); */
+
+              /*  $totalPaid = 0;
+              foreach ($data['payment'] ?? [] as $paymentItem) {
+                // Asegúrate de parsear correctamente el monto del pago según tu máscara
+                $amount = (float) str_replace(',', '.', str_replace('.', '', $paymentItem['amount'] ?? '0'));
+                $totalPaid += $amount;
+              } */
+
+              /* if ($totalPaid < $totalSale) {
+                throw ValidationException::withMessages([
+                  'message' => 'El monto pagado es menor al total de la venta',
+                ]);
+              } */
+
+              $this->handleRecordCreation([
+                'saleItems' => $saleItems,
+                'paymentData' => $paymentData,
+                'customer' => $customer,
+                'invoiceType' => $invoiceType,
+              ]);
+            } catch (Exception $e) {
+              Notification::make()
+                ->title('Error al crear venta')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              $livewire->halt();
+            }
+          }
+        ),
+    ];
+  }
+
+  // Es buena idea tener el método form definido aunque uses el builder,
+  // para que la página sepa qué formulario manejar.
+  public function form(Form $form): Form
+  {
+    // Llama a tu builder para construir el formulario principal
+    return SaleFormBuilder::form($form);
   }
 }
