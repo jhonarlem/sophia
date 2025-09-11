@@ -677,6 +677,7 @@ class SaleFormBuilder
       ->live()
       ->extraAttributes([
         // Keybinding: F2 o Ctrl/Cmd + K
+        'wire:keydown.enter.prevent' => true,
         'x-on:keydown.window.prevent.f3' => '$el.querySelector("#productQuickCodeInput").focus()',
         'x-on:keydown.window.ctrl.k.prevent' => '$el.querySelector("#productQuickCodeInput").focus()',
         'x-on:keydown.window.meta.k.prevent' => '$el.querySelector("#productQuickCodeInput").focus()',
