@@ -68,6 +68,7 @@ class ReceiptCreditController extends Controller
       'id' => $credit->id,
       'totalCredit' => number_format($credit->total_credit, 2, ',', '.'),
       'totalPaid' => number_format($credit->total_paid, 2, ',', '.'),
+      'paid' => number_format($credit->total_paid, 0, ',', '.'),
       'totalPending' => number_format($credit->total_pending, 2, ',', '.'),
       'status' => $credit->status,
       'creditDate' => Carbon::parse($credit->credit_date)->format('d/m/Y h:i A'),

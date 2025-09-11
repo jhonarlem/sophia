@@ -9,6 +9,7 @@ use App\Models\Box;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Services\Sale\SaleInfoListBuilder;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms;
@@ -24,6 +25,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
@@ -70,7 +72,7 @@ class SaleResource extends Resource implements HasShieldPermissions
     return parent::getEloquentQuery()->with(['box.resolution']);
   }
 
-  public static function form(Form $form): Form
+  /*   public static function form(Form $form): Form
   {
     return $form
       ->columns(1)
@@ -442,7 +444,7 @@ class SaleResource extends Resource implements HasShieldPermissions
             ]),
         ]),
       ]);
-  }
+  } */
 
   public static function table(Table $table): Table
   {
@@ -569,6 +571,17 @@ class SaleResource extends Resource implements HasShieldPermissions
       RelationManagers\SaleItemsRelationManager::class,
       RelationManagers\PaymentsRelationManager::class,
     ];
+  }
+
+  /**
+   * Get the infolist for the resource.
+   * 
+   * @param Infolist $infolist
+   * @return Infolist
+   */
+  public static function infolist(Infolist $infolist): Infolist
+  {
+    return SaleInfoListBuilder::infolist($infolist);
   }
 
   public static function getPages(): array

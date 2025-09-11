@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6301de8dc8538d81f8d0b4e6441c5df2",
+    "content-hash": "1c6d92604952ac1077117e5791f1d477",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2847,6 +2847,87 @@
             "time": "2025-08-22T14:27:06+00:00"
         },
         {
+            "name": "icetalker/filament-table-repeater",
+            "version": "v1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/icetalker/filament-table-repeater.git",
+                "reference": "32317d732afdba86b73f9b43bbdb7fc59a96c5c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/icetalker/filament-table-repeater/zipball/32317d732afdba86b73f9b43bbdb7fc59a96c5c2",
+                "reference": "32317d732afdba86b73f9b43bbdb7fc59a96c5c2",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^3.0",
+                "illuminate/contracts": "^8.6|^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8",
+                "nunomaduro/collision": "^6.0|^8.0",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^7.0|^9.0|^10.0",
+                "pestphp/pest": "^1.21|^2.34|^3.7",
+                "pestphp/pest-plugin-laravel": "^1.1|^2.3|^3.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
+                "phpstan/phpstan-phpunit": "^1.0|^2.0",
+                "phpunit/phpunit": "^9.5|^10.5|^11.5.3",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "FilamentTableRepeater": "Icetalker\\FilamentTableRepeater\\Facades\\FilamentTableRepeater"
+                    },
+                    "providers": [
+                        "Icetalker\\FilamentTableRepeater\\FilamentTableRepeaterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Icetalker\\FilamentTableRepeater\\": "src",
+                    "Icetalker\\FilamentTableRepeater\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Hwang",
+                    "email": "martin.hwang@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is a package for Filament form component. Extends form Repeater, but shows in Table Layout.",
+            "homepage": "https://github.com/icetalker/filament-table-repeater",
+            "keywords": [
+                "filament",
+                "filament-table-repeater",
+                "icetalker",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/icetalker/filament-table-repeater/issues",
+                "source": "https://github.com/icetalker/filament-table-repeater/tree/v1.4"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/termlong",
+                    "type": "custom"
+                }
+            ],
+            "time": "2025-03-05T16:06:45+00:00"
+        },
+        {
             "name": "jaybizzle/crawler-detect",
             "version": "v1.3.5",
             "source": {
@@ -5677,6 +5758,83 @@
                 }
             ],
             "time": "2025-07-17T11:15:13+00:00"
+        },
+        {
+            "name": "marcelweidum/filament-expiration-notice",
+            "version": "v1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MarcelWeidum/filament-expiration-notice.git",
+                "reference": "0b8c70465807056958e1d56b2d1fa23ebe22b704"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MarcelWeidum/filament-expiration-notice/zipball/0b8c70465807056958e1d56b2d1fa23ebe22b704",
+                "reference": "0b8c70465807056958e1d56b2d1fa23ebe22b704",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0|^4.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.22",
+                "nunomaduro/collision": "^7.9",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.1",
+                "pestphp/pest-plugin-arch": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "ExpirationNoticePlugin": "MarcelWeidum\\ExpirationNoticePlugin\\Facades\\ExpirationNoticePlugin"
+                    },
+                    "providers": [
+                        "MarcelWeidum\\ExpirationNoticePlugin\\ExpirationNoticeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarcelWeidum\\ExpirationNoticePlugin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MarcelWeidum",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Customize the livewire expiration notice",
+            "homepage": "https://github.com/marcelweidum/filament-expiration-notice",
+            "keywords": [
+                "MarcelWeidum",
+                "filament-expiration-notice",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/marcelweidum/filament-expiration-notice/issues",
+                "source": "https://github.com/marcelweidum/filament-expiration-notice"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/MarcelWeidum",
+                    "type": "buy_me_a_coffee"
+                }
+            ],
+            "time": "2025-08-18T15:57:23+00:00"
         },
         {
             "name": "markbaker/complex",

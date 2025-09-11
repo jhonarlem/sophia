@@ -564,9 +564,9 @@
             <tr>
               <th>#</th>
               <th>Método</th>
+              <th>Fecha</th>
               <th>Cantidad</th>
               <!-- <th>Referencia</th> -->
-              <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
@@ -574,9 +574,9 @@
             <tr>
               <td>{{ $index + 1 }}.</td>
               <td>{{ $payment->paymentMethod }}</td>
+              <td>{{ $payment->paymentDate }}</td>
               <td>${{ $payment->amount }}</td>
               <!-- <td>{{ $payment->reference }}</td> -->
-              <td>{{ $payment->paymentDate }}</td>
             </tr>
             @endforeach
           </tbody>
@@ -584,20 +584,8 @@
 
         <div class="tm_bill_list">
           <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Método de pago: </div>
-            <div class="tm_bill_value">{{$lastPayment->paymentMethod}}</div>
-          </div>
-          <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Referencia:</div>
-            <div class="tm_bill_value">{{$lastPayment->reference}}</div>
-          </div>
-          <div class="tm_bill_list_in">
-            <div class="tm_bill_title">Fecha:</div>
-            <div class="tm_bill_value">{{$lastPayment->paymentDate}}</div>
-          </div>
-          <div class="tm_bill_list_in">
-            <div class="tm_bill_title tm_bill_focus">Total pagado:</div>
-            <div class="tm_bill_value tm_bill_focus">$ {{$lastPayment->amount}}</div>
+            <div class="tm_bill_title tm_bill_focus">TOTAL PAGADO:</div>
+            <div class="tm_bill_value tm_bill_focus">$ {{$credit->paid}}</div>
           </div>
 
         </div>

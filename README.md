@@ -4,7 +4,7 @@
 ![Laravel](https://img.shields.io/badge/Laravel-^11.9-FF2D20.svg?logo=laravel&logoColor=white)
 ![Filament](https://img.shields.io/badge/FilamentPHP-v3.2-gold.svg?logo=filament)
 ![Shield](https://img.shields.io/badge/FilamentShield-^3.2-gold.svg)
-![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.2.0-blue.svg)
 ![License](https://img.shields.io/badge/License-Proprietary-red.svg)
 
 ## 🎯 Acerca de SOPHIA POS

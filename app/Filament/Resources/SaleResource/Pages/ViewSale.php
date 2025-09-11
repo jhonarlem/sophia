@@ -28,7 +28,8 @@ class ViewSale extends ViewRecord
 
     return [
       Action::make('Crear')
-        ->label('Crear venta')
+        ->label('Crear venta (F4)')
+        ->keyBindings(['f4'])
         ->tooltip('Crear nueva venta')
         ->action(
           fn() => redirect()->route('filament.dashboard.resources.ventas.create')
@@ -183,7 +184,7 @@ class ViewSale extends ViewRecord
     return [];
   }
 
-  public function form(Form $form): Form
+  /*  public function form(Form $form): Form
   {
     return $form->schema([
       Grid::make(12)->schema([
@@ -274,5 +275,5 @@ class ViewSale extends ViewRecord
           ->columnSpan(7),
       ])
     ]);
-  }
+  } */
 }
