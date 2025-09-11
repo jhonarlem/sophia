@@ -38,7 +38,7 @@ class CustomerResource extends Resource
       'Nombres' => $record->name,
       'Documento' => $record->document_type . ' ' . $record->document_number,
       'Celular' => $record->cellphone,
-      'Saldo crédito' => '$ ' . number_format($record->credits()->sum('total_pending'), 0, ',', '.'),
+      'Saldo crédito' => '$ ' . number_format($record->credits()->where('credits.status', '=', 'Pendiente')->sum('total_pending'), 0, ',', '.'),
       'Creditos pendientes' => $record->credits()->where('credits.status', '=', 'Pendiente')->count(),
     ];
   }
