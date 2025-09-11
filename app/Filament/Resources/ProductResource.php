@@ -60,6 +60,10 @@ class ProductResource extends Resource
     return ['sku', 'name'];
   }
 
+  public static function getGlobalSearchResultUrl(Model $record): ?string
+  {
+    return '#';
+  }
 
   public static function form(Form $form): Form
   {
