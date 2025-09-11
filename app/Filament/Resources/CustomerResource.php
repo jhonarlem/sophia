@@ -16,6 +16,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
@@ -29,6 +30,28 @@ class CustomerResource extends Resource
   protected static ?string $label = 'cliente';
   protected static ?string $pluralLabel = 'clientes';
   protected static ?string $slug = 'clientes';
+
+
+  public static function getGlobalSearchResultDetails(Model $record): array
+  {
+    return [
+      'Nombres' => $record->name,
+      'Documento' => $record->document_type . ' ' . $record->document_number,
+      'Celular' => $record->cellphone,
+      'Saldo crédito' => '$ ' . number_format($record->credits()->sum('total_pending'), 0, ',', '.'),
+      'Creditos pendientes' => $record->credits()->where('credits.status', '=', 'Pendiente')->count(),
+    ];
+  }
+
+  public static function getGlobalSearchResultUrl(Model $record): ?string
+  {
+    return CustomerResource::getUrl('view', ['record' => $record]);
+  }
+
+  public static function getGloballySearchableAttributes(): array
+  {
+    return ['document_number', 'name'];
+  }
 
   public static function customerFormSchema(): array
   {

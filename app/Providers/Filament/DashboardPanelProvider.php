@@ -7,6 +7,7 @@ use App\Filament\Resources\ProductResource\Widgets\ProductsWidget;
 use App\Filament\Resources\SaleResource\Widgets\SalesWidget;
 use App\Http\Middleware\CheckUserStatus;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -56,6 +57,9 @@ class DashboardPanelProvider extends PanelProvider
         ProductsWidget::class,
         SalesWidget::class,
       ])
+      ->globalSearchKeyBindings(['f8'])
+      ->globalSearchFieldKeyBindingSuffix()
+
       ->plugins([
         FilamentEditProfilePlugin::make()
           ->slug('perfil')
@@ -64,6 +68,14 @@ class DashboardPanelProvider extends PanelProvider
           ->setNavigationLabel('Perfil')
           ->shouldShowDeleteAccountForm(false)
           ->shouldRegisterNavigation(false),
+        GlobalSearchModalPlugin::make()
+          ->highlightQueryStyles([
+            'font-weight' => 'bold',
+          ])
+          ->RetainRecentIfFavorite(true)
+          ->localStorageMaxItemsAllowed(0)
+          ->keepFooterView(true)
+          ->searchItemTree(false),
         FilamentShieldPlugin::make()
       ])
       ->userMenuItems([

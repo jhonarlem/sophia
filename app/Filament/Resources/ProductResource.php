@@ -26,6 +26,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductResource extends Resource
 {
@@ -36,6 +37,29 @@ class ProductResource extends Resource
   protected static ?string $label = 'producto';
   protected static ?string $pluralLabel = 'productos';
   protected static ?string $slug = 'productos';
+
+  public static function getGlobalSearchResultDetails(Model $record): array
+  {
+    return [
+      'SKU' => $record->sku,
+      'Nombre' => $record->name,
+      'Precio de venta' => '$ ' . number_format($record->sale_price, 0, ',', '.'),
+      'Descuento' => '$ ' . number_format($record->discount_amount, 0, ',', '.'),
+      'Existencias' => $record->stock,
+    ];
+  }
+
+  public static function getGlobalSearchEloquentQuery(): Builder
+  {
+    return static::getEloquentQuery()
+      ->where('status', 'Activo');
+  }
+
+  public static function getGloballySearchableAttributes(): array
+  {
+    return ['sku', 'name'];
+  }
+
 
   public static function form(Form $form): Form
   {
