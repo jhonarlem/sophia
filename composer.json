@@ -1,6 +1,6 @@
 {
     "name": "sophia/pos",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "type": "project",
     "description": "SOPHIA - Software for Organized Product Handling and Inventory Administration | Software para el manejo organizado de productos y administración de inventarios | POS ",
     "keywords": [
@@ -26,6 +26,7 @@
         "laravel-lang/common": "^6.4",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "marcelweidum/filament-expiration-notice": "^1.0",
         "pxlrbt/filament-excel": "^2.3"
     },
     "require-dev": {
