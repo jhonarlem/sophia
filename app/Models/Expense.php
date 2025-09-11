@@ -29,6 +29,22 @@ class Expense extends Model
   ];
 
   /**
+   * Attributes that must be mutated before saving.
+   *
+   * @var array<string>
+   */
+  public function setPayeeNameAttribute($value)
+  {
+    $this->attributes['payee_name'] = strtoupper($value);
+  }
+
+  public function setDescriptionAttribute($value)
+  {
+    $this->attributes['description'] = strtoupper($value);
+  }
+
+
+  /**
    * Relations with other models.
    */
 

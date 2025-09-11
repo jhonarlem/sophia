@@ -37,6 +37,23 @@ class Product extends Model
 
 
   /**
+   * Attributes that must be mutated before saving.
+   *
+   * @var array<string>
+   */
+
+  public function setNameAttribute($value)
+  {
+    $this->attributes['name'] = strtoupper($value);
+  }
+
+  // Borrar los espacios en blanco
+  public function setSkuAttribute($value)
+  {
+    $this->attributes['sku'] = preg_replace('/\s+/', '', $value);
+  }
+
+  /**
    * Attributes that must be mutated after retrieving.
    */
   public function getPurchasePriceAttribute($value)

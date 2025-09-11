@@ -41,6 +41,22 @@ class User extends Authenticatable implements FilamentUser
   ];
 
   /**
+   * Attributes that must be mutated before saving.
+   *
+   * @var array<string>
+   */
+
+  public function setNameAttribute($value)
+  {
+    $this->attributes['name'] = strtoupper($value);
+  }
+
+  public function setEmailAttribute($value)
+  {
+    $this->attributes['email'] = strtolower($value);
+  }
+
+  /**
    * The attributes that should be hidden for serialization.
    *
    * @var array<int, string>

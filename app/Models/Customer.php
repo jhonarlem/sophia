@@ -23,6 +23,32 @@ class Customer extends Model
     'street',
   ];
 
+  /**
+   * Attributes that must be mutated before saving.
+   *
+   * @var array<string>
+   */
+
+  public function setNameAttribute($value)
+  {
+    $this->attributes['name'] = strtoupper($value);
+  }
+
+  public function setEmailAttribute($value)
+  {
+    $this->attributes['email'] = strtolower($value);
+  }
+
+  public function setStreetAttribute($value)
+  {
+    $this->attributes['street'] = strtoupper($value);
+  }
+
+  // Borrar los espacios en blanco
+  public function setDocumentNumberAttribute($value)
+  {
+    $this->attributes['document_number'] = preg_replace('/\s+/', '', $value);
+  }
 
   public static function getInfoCustomer($customer_id)
   {
