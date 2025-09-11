@@ -540,7 +540,7 @@ class SaleFormBuilder
                       ->searchable()
                       ->native(false)
                       ->required()
-                      ->preload()
+                      // ->preload()
                       ->default(1),
                     Select::make('invoice_type')
                       ->label('Tipo de factura')
