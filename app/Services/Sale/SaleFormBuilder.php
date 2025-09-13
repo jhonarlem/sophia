@@ -1003,7 +1003,7 @@ class SaleFormBuilder
         // 'discount' => 0,
         'discount_allowed' => $product->discount_amount ?? 0,
         'discount_applicable' => $product->discount_applicable === 'Si',
-        'subtotal' => (string)intval($product->sale_price ?? 0),
+        'subtotal' => number_format(round($product->sale_price, 2), 0, ',', '.'),
         'stock' => $product->stock ?? 0,
         'id' => $product->id,
       ]);

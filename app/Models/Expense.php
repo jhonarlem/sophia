@@ -25,6 +25,7 @@ class Expense extends Model
     'due_date',
     'paid_at',
     'payment_method',
+    'box_withdrawal',
     'description',
   ];
 

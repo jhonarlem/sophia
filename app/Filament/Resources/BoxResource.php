@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BoxResource\Pages;
 use App\Filament\Resources\BoxResource\RelationManagers;
 use App\Models\Box;
+use App\Services\Box\BoxInfoListBuilder;
 use Faker\Provider\ar_EG\Text;
 
 use Filament\Tables\Actions\Action;
@@ -232,75 +233,16 @@ class BoxResource extends Resource
       ]);
   }
 
+  /**
+   * Get the infolist for the resource.
+   * 
+   * @param Infolist $infolist
+   * @return Infolist
+   */
   public static function infolist(Infolist $infolist): Infolist
   {
-    return $infolist
-      ->schema([
-        Fieldset::make('')
-          ->schema([
-            TextEntry::make('id')
-              ->label('ID:'),
-            TextEntry::make('name')
-              ->label('Nombre:'),
-            TextEntry::make('resolution.number')
-              ->label('Resolución:'),
-            TextEntry::make('status')
-              ->label('Estado:')
-              ->badge()
-              ->color(fn(string $state): string => match ($state) {
-                'Abierta' => 'success',
-                'Cerrada' => 'warning',
-              }),
-            TextEntry::make('base_amount')
-              ->label('$ Base:')
-              ->numeric(),
-            TextEntry::make('cash_payment')
-              ->label('$ Efectivo:')
-              ->numeric(),
-            TextEntry::make('transfer_payment')
-              ->label('$ Transferencia:')
-              ->numeric(),
-            TextEntry::make('credit_sales')
-              ->label('$ Crédito:')
-              ->numeric(),
-            TextEntry::make('total_sales')
-              ->label('$ Total:')->badge()
-              ->color('success')
-              ->icon('heroicon-s-currency-dollar')
-              ->numeric(),
-            TextEntry::make('real_amount')
-              ->label('$ Real:')
-              ->numeric(),
-            TextEntry::make('difference')
-              ->label('$ Diferencia:')
-              ->badge()
-              ->color('warning')
-              ->icon('heroicon-s-currency-dollar')
-              ->numeric(),
-            TextEntry::make('openedBy.name')
-              ->label('Abierta por:'),
-            TextEntry::make('opened_at')
-              ->label('Fecha apertura:')
-              ->dateTime(),
-            TextEntry::make('closedBy.name')
-              ->label('Cerrada por:'),
-            TextEntry::make('closed_at')
-              ->label('Fecha cierre:')
-              ->dateTime(),
-            TextEntry::make('observations')
-              ->label('Observaciones:'),
-            TextEntry::make('created_at')
-              ->label('Creado:')
-              ->dateTime(),
-            TextEntry::make('updated_at')
-              ->label('Actualizado:')
-              ->dateTime(),
-          ]),
-      ])
-      ->columns(2)
-      ->inlineLabel();
+    return BoxInfoListBuilder::infolist($infolist);
   }
-
 
   public static function getRelations(): array
   {

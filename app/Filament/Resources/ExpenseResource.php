@@ -12,6 +12,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
@@ -19,6 +20,7 @@ use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\MaxWidth;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Actions\Action as ActionsAction;
 use Filament\Tables\Actions\ActionGroup;
@@ -74,16 +76,47 @@ class ExpenseResource extends Resource
             TextInput::make('amount_total')
               ->label('Monto total')
               ->required()
+              ->mask(RawJs::make('$money($input, \',\', \'.\')'))
+              ->stripCharacters('.')
               ->autocomplete(false)
               ->numeric(),
             TextInput::make('amount_paid')
               ->label('Monto pagado')
               ->required()
+              ->mask(RawJs::make('$money($input, \',\', \'.\')'))
+              ->stripCharacters('.')
               ->autocomplete(false)
-              ->numeric(),
+              ->numeric()
+              ->lazy()
+              ->afterStateUpdated(
+                function ($state, callable $set, callable $get) {
+                  // Convertir valores formateados a números
+                  $total = $get('amount_total');
+                  $paid = $state;
+                  // Limpiar formatos antes de convertir a número
+                  $total = str_replace('.', '', $total);  // Quitar separadores de miles
+                  $total = str_replace(',', '.', $total); // Convertir coma a punto para decimales
+                  $paid = str_replace('.', '', $paid);    // Quitar separadores de miles
+                  $paid = str_replace(',', '.', $paid);   // Convertir coma a punto para decimales
+                  // Calcular pendiente y establecer valor
+                  $pending = max(0, (float)$total - (float)$paid);
+                  // Si el saldo pendiente es mayor a 0 establecer payment_status en Pendiente
+                  if ($pending > 0) {
+                    $set('status', 'Pendiente');
+                  } else {
+                    $set('status', 'Pagada');
+                  }
+                  // Formatear saldo pendiente sin decimales y con separadores de miles . 
+                  $pending = number_format($pending, 0, ',', '.');
+                  $set('amount_pending', $pending);
+                }
+              ),
             TextInput::make('amount_pending')
               ->label('Monto pendiente')
               ->required()
+              ->readOnly()
+              ->mask(RawJs::make('$money($input, \',\', \'.\')'))
+              ->stripCharacters('.')
               ->autocomplete(false)
               ->numeric(),
             DatePicker::make('due_date')
@@ -101,7 +134,35 @@ class ExpenseResource extends Resource
               ])
               ->placeholder('Selecciona un estado')
               ->native(false)
-              ->required(),
+              ->required()
+              ->reactive()
+              ->afterStateUpdated(function ($state, $set, $get) {
+                if ($state === 'Pagada') {
+                  $set('box_withdrawal_hidden', false);
+                } else {
+                  $set('box_withdrawal_hidden', true);
+                }
+              }),
+            Toggle::make('box_withdrawal')
+              ->label('Retiro de caja')
+              ->helperText('Indica si este gasto se pagará con dinero de la caja')
+              ->onIcon('heroicon-o-check')
+              ->offIcon('heroicon-o-x-mark')
+              ->inline(false)
+              ->default(false)
+              ->required()
+              ->reactive()
+              ->visible(function (callable $get) {
+                $status = $get('status');
+                // limpiar y convertir el pagado a número
+                $paid = (float) str_replace(
+                  ['.', ','],
+                  ['', '.'],
+                  $get('amount_paid') ?? '0'
+                );
+                return $status === 'Pagada' || $paid > 0;
+              }),
+
             Textarea::make('description')
               ->label('Descripción')
               ->autocomplete(false)

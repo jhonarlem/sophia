@@ -5,12 +5,16 @@ namespace App\Filament\Resources\BoxResource\Pages;
 use App\Filament\Resources\BoxResource;
 use App\Models\Box;
 use App\Models\Resolution;
+use App\Services\Box\BoxFormBuilder;
+use App\Services\Box\BoxManager;
 use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Resources\Pages\ListRecords;
+use Illuminate\Validation\ValidationException;
+use Exception;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +24,7 @@ class ListBoxes extends ListRecords
 {
   protected static string $resource = BoxResource::class;
 
-  protected function getHeaderActions(): array
+  /* protected function getHeaderActions(): array
   {
     $status = Box::latest()->first()?->status;
 
@@ -147,6 +151,90 @@ class ListBoxes extends ListRecords
 
         ])
         ->visible(fn() => true),
+    ];
+  } */
+
+  /**
+   * Get the actions available on the page.
+   *
+   * @return array
+   */
+  protected function getHeaderActions(): array
+  {
+    $status = Box::latest()->first()?->status;
+
+    return [
+      Action::make('Abrir caja')
+        ->label('Abrir caja')
+        ->modalHeading('Apertura de caja')
+        ->modalSubmitActionLabel('Abrir caja')
+        ->form(BoxFormBuilder::openBoxFormSchema())
+        // ->slideOver()
+        ->closeModalByClickingAway(false)
+        ->action(
+          function ($data, $livewire) {
+            try {
+              resolve(BoxManager::class)->openBox($data);
+              Notification::make()
+                ->title('Caja abierta')
+                ->success()
+                ->send();
+              return redirect(BoxResource::getUrl('index'));
+            } catch (ValidationException $e) {
+              Notification::make()
+                ->title('Error de validación')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              $livewire->halt();
+            } catch (Exception $e) {
+              Notification::make()
+                ->title('Error al abrir caja')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              $livewire->halt();
+            }
+          }
+        )
+        ->visible(fn() => true)
+        ->hidden(fn() => $status === 'Abierta'),
+      Action::make('Cerrar caja')
+        ->color('warning')
+        ->label('Cerrar caja')
+        ->modalHeading('Cierre de caja')
+        ->modalSubmitActionLabel('Cerrar caja')
+        ->form(BoxFormBuilder::closedBoxFormSchema())
+        // ->slideOver()
+        ->closeModalByClickingAway(false)
+        ->action(
+          function ($data, $livewire) {
+            try {
+              resolve(BoxManager::class)->closeBox($data);
+              Notification::make()
+                ->title('Caja cerrada')
+                ->success()
+                ->send();
+              return redirect(BoxResource::getUrl('index'));
+            } catch (ValidationException $e) {
+              Notification::make()
+                ->title('Error de validación')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              $livewire->halt();
+            } catch (Exception $e) {
+              Notification::make()
+                ->title('Error al cerrar caja')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+              $livewire->halt();
+            }
+          }
+        )
+        ->visible(fn() => true)
+        ->hidden(fn() => $status === 'Cerrada' || $status === null),
     ];
   }
 }
