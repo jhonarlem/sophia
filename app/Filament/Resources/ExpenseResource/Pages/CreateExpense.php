@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ExpenseResource\Pages;
 
 use App\Filament\Resources\ExpenseResource;
+use App\Models\Box;
 use App\Models\Expense;
 use Filament\Actions;
 use Filament\Notifications\Notification;
@@ -34,16 +35,40 @@ class CreateExpense extends CreateRecord
         'due_date' => 'required|date',
         'status' => 'required',
         'description' => 'nullable|string|max:255',
+        'box_withdrawal' => 'required|boolean',
       ]);
 
       $validatedExpense = $validatorExpense->validate();
 
       // Verificar que el monto total sea igual a la suma de los montos pagado y pendiente
-      if ($validatedExpense['amount_total'] != $validatedExpense['amount_paid'] + $validatedExpense['amount_pending']) {
+      /* if ($validatedExpense['amount_total'] != $validatedExpense['amount_paid'] + $validatedExpense['amount_pending']) {
         // Lanzar una excepción para detener la creación
         throw ValidationException::withMessages([
           'message' => 'El monto total no coincide con la suma de los montos pagado y pendiente',
         ]);
+      } */
+
+      // Verificar si box_withdrawal es true
+      if ($validatedExpense['box_withdrawal']) {
+        // Verificar si hay una caja abierta
+        $openBox = Box::where('status', 'Abierta')->first();
+        if (!$openBox) {
+          throw ValidationException::withMessages([
+            'message' => 'No hay una caja abierta para realizar el retiro',
+          ]);
+        }
+        // Verificar si hay saldo suficiente en la caja
+        // dd(intval($openBox->total_sales), intval($validatedExpense['amount_paid']));
+        if (intval($openBox->total_sales) < intval($validatedExpense['amount_paid'])) {
+          throw ValidationException::withMessages([
+            'message' => 'No hay saldo suficiente en la caja para realizar el retiro',
+          ]);
+        }
+
+        // Registrar el retiro en la caja
+        $openBox->total_expenses += $validatedExpense['amount_paid'];
+        $openBox->total_sales -= $validatedExpense['amount_paid'];
+        $openBox->save();
       }
 
       // Crear el gasto
@@ -56,6 +81,7 @@ class CreateExpense extends CreateRecord
         'amount_pending' => $validatedExpense['amount_pending'],
         'status' => $validatedExpense['status'],
         'due_date' => $validatedExpense['due_date'],
+        'box_withdrawal' => $validatedExpense['box_withdrawal'],
         'description' => $validatedExpense['description'],
       ]);
 
