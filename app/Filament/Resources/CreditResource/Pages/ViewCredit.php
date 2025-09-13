@@ -88,92 +88,88 @@ class ViewCredit extends ViewRecord
             ->reorderable(false),
 
         ])
-        ->action(
-          function ($data) {
-            try {
-              // Validar los metodos de pago
-              $validatorPayments = Validator::make($data, [
-                'payments' => 'required|array|min:1',
-                'payments.*.payment_id' => 'required',
-                'payments.*.amount' => 'required|numeric|min:0',
-                'payments.*.reference' => 'nullable',
+        ->action(function ($data) {
+          try {
+            // 1️⃣ Validar métodos de pago
+            $validatedPayments = Validator::make($data, [
+              'payments' => 'required|array|min:1',
+              'payments.*.payment_id' => 'required',
+              'payments.*.amount' => 'required|numeric|min:0',
+              'payments.*.reference' => 'nullable',
+            ])->validate();
+
+            // 2️⃣ Obtener el crédito
+            $credit = $this->record;
+
+            // 3️⃣ Calcular total pagado
+            $totalPagado = collect($validatedPayments['payments'])->sum('amount');
+
+            // 4️⃣ Validar montos
+            if ($totalPagado > $credit->total_pending) {
+              throw ValidationException::withMessages([
+                'message' => 'El valor pagado es mayor al total del crédito',
               ]);
-
-              $validatedPayments = $validatorPayments->validate();
-
-              // obtener el credito
-              $credit = $this->record;
-
-              // Calcular el total pagado
-              $totalPagado = collect($validatedPayments['payments'])->sum('amount');
-
-              // Verificar si el total pagado es menor al total del credito
-              if ($totalPagado > $credit->total_pending) {
-                throw ValidationException::withMessages([
-                  'message' => 'El valor pagado es mayor al total del crédito',
-                ]);
-              }
-
-              // Verificar si el total pagado es menor que el total del credito
-              if ($totalPagado < $credit->total_pending) {
-                $status = 'Pendiente';
-              } else {
-                $status = 'Pagada';
-                // Actualizar el estado de la venta
-                Sale::where('id', $credit->sale_id)
-                  ->update(['status' => 'Pagada']);
-              }
-
-              // Actualizar el credito
-              $credit->update([
-                'total_paid' => $credit->total_paid + $totalPagado,
-                'total_pending' => $credit->total_pending - $totalPagado,
-                'status' => $status,
-              ]);
-
-              // Crear los pagos
-              foreach ($validatedPayments['payments'] as $payment) {
-                Payment::create([
-                  'sale_id' => $credit->sale_id,
-                  'amount' => $payment['amount'],
-                  'payment_method' => $payment['payment_id'],
-                  'reference' => $payment['reference'] ?? null,
-                  'payment_date' => now(),
-                ]);
-
-                // Actualizar la caja
-                $box = Box::where('status', 'Abierta')->first();
-                if ($payment['payment_id'] == 'Efectivo') {
-                  $cashEntry = $payment['amount'];
-                  $box->increment('cash_payment', $cashEntry);
-                  $box->increment('total_sales', $cashEntry);
-                } elseif ($payment['payment_id'] == 'Transferencia') {
-                  $box->increment('transfer_payment', $payment['amount']);
-                }
-              }
-
-              // Enviar notificación dependiendo del estado del credito
-              if ($status === 'Pagada') {
-                Notification::make()
-                  ->title('Crédito pagado')
-                  ->success()
-                  ->send();
-              } else {
-                Notification::make()
-                  ->title('Pago parcial')
-                  ->info()
-                  ->send();
-              }
-            } catch (\Exception $e) {
-              Notification::make()
-                ->title($e->getMessage())
-                ->danger()
-                ->color('danger')
-                ->send();
-              throw $e;
             }
+
+            // 5️⃣ Determinar estado del crédito
+            $status = $totalPagado < $credit->total_pending ? 'Pendiente' : 'Pagada';
+
+            if ($status === 'Pagada') {
+              // Actualizar estado de la venta
+              Sale::where('id', $credit->sale_id)->update(['status' => 'Pagada']);
+            }
+
+            // 6️⃣ Actualizar el crédito
+            $credit->update([
+              'total_paid'    => $credit->total_paid + $totalPagado,
+              'total_pending' => $credit->total_pending - $totalPagado,
+              'status'        => $status,
+            ]);
+
+            // 7️⃣ Crear los pagos y actualizar caja
+            foreach ($validatedPayments['payments'] as $payment) {
+              Payment::create([
+                'sale_id'        => $credit->sale_id,
+                'amount'         => $payment['amount'],
+                'payment_method' => $payment['payment_id'],
+                'reference'      => $payment['reference'] ?? null,
+                'payment_date'   => now(),
+              ]);
+
+              $box = Box::where('status', 'Abierta')->first();
+
+              if ($payment['payment_id'] === 'Efectivo') {
+                $box->increment('credit_payment', $payment['amount']);
+                $box->increment('total_sales', $payment['amount']);
+              } elseif ($payment['payment_id'] === 'Transferencia') {
+                $box->increment('transfer_payment', $payment['amount']);
+              }
+            }
+
+            // 🔑 8️⃣ Recalcular el "received" real de la venta
+            //     Solo suma pagos en Efectivo y Transferencia
+            $realReceived = Payment::where('sale_id', $credit->sale_id)
+              ->whereIn('payment_method', ['Efectivo', 'Transferencia'])
+              ->sum('amount');
+
+            Sale::where('id', $credit->sale_id)
+              ->update(['received' => $realReceived]);
+
+            // 9️⃣ Notificación
+            Notification::make()
+              ->title($status === 'Pagada' ? 'Crédito pagado' : 'Pago parcial')
+              ->{$status === 'Pagada' ? 'success' : 'info'}()
+              ->send();
+          } catch (\Exception $e) {
+            Notification::make()
+              ->title($e->getMessage())
+              ->danger()
+              ->color('danger')
+              ->send();
+            throw $e;
           }
-        )
+        })
+
         ->visible(fn() => $this->record->status == 'Pendiente' && Box::latest()->first()?->status == 'Abierta' && Gate::allows('pay', $this->record)),
       Action::make('Ver venta')
         ->label('Ver venta')
@@ -214,7 +210,7 @@ class ViewCredit extends ViewRecord
         Section::make('Detalles del crédito')
           ->columns(4)
           ->schema([
-            TextEntry::make('sale.invoice_number')
+            TextEntry::make('sale.full_invoice_number')
               ->label('Factura')
               ->icon('heroicon-o-document-text'),
             TextEntry::make('customer.name')

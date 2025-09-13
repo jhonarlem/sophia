@@ -76,7 +76,7 @@ class BoxManager
         // + $boxToClose->cash_electronic_payment  Efectivo de ventas electrónicas
         + $boxToClose->credit_payment;    // Efectivo recibido por créditos
       // + $boxToClose->total_other_income  Otros ingresos en efectivo
-      // - $boxToClose->total_expenses;      Egresos pagados en efectivo
+      -$boxToClose->total_expenses;     // Egresos pagados en efectivo
 
       $difference = $realAmount - $expectedCash; // Diferencia entre efectivo real y esperado
 

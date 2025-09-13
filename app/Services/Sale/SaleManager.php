@@ -94,8 +94,18 @@ class SaleManager
         ? 'Mixto'
         : ($data['paymentData'][0]['payment_id'] ?? null);
 
+
+      // Total efectivamente recibido (excluyendo créditos)
+      $totalReceivedNow = collect($paymentData)
+        ->reject(fn($p) => $p['payment_id'] === 'Credito')
+        ->sum(function ($p) {
+          return (float) str_replace(['.', ','], '', $p['amount'] ?? 0);
+        });
+
       // Calcular el cambio
       $saleExchangeAmount = $totalPayments - $this->total;
+
+
 
       // Crear la venta
       $sale = Sale::create([
@@ -108,8 +118,8 @@ class SaleManager
         'total_iva' => $this->iva,
         'total_discount' => $this->discount,
         'payment_method' => $salePaymentMethod,
-        'received' => $totalPayments,
-        'exchange' => $saleExchangeAmount,
+        'received'      => $totalReceivedNow,   // 👈 solo lo realmente recibido
+        'exchange'      => $totalReceivedNow - min($this->total, $totalReceivedNow),
         'status' => $isCreditPaymentIncluded ? 'Pendiente' : 'Pagada',
         'sale_date' => now(),
       ]);
