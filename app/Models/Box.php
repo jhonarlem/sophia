@@ -20,6 +20,7 @@ class Box extends Model
     'base_amount',
     'cash_payment',
     'transfer_payment',
+    'credit_payment',
     'credit_sales',
     'total_sales',
     'real_amount',
