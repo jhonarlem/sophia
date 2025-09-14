@@ -82,11 +82,20 @@ class SaleManager
       }
 
       // Validar que si el metodo de pago es 'Transferencia' el monto no sea mayor o menor que el valor total de la venta
-      $transferPayment = collect($data['paymentData'])->firstWhere('payment_id', 'Transferencia');
-      if ($transferPayment && ($transferPayment['amount'] < $this->total || $transferPayment['amount'] > $this->total)) {
-        throw ValidationException::withMessages([
-          'message' => 'El valor de la transferencia debe ser igual al total de la venta',
-        ]);
+      $payments = collect($data['paymentData']);
+      $transferPayment = $payments->firstWhere('payment_id', 'Transferencia');
+
+      if ($transferPayment) {
+        // Verificar si todas las demás formas de pago tienen amount 0 o no existen
+        $soloTransferencia = $payments->every(function ($p) {
+          return $p['payment_id'] === 'Transferencia' || (float) str_replace(['.', ','], '', $p['amount'] ?? 0) == 0;
+        });
+
+        if ($soloTransferencia && (float) str_replace(['.', ','], '', $transferPayment['amount']) != $this->total) {
+          throw ValidationException::withMessages([
+            'message' => 'El valor de la transferencia debe ser igual al total de la venta',
+          ]);
+        }
       }
 
       // Establecer el método de pago dinámicamente
