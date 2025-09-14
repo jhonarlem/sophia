@@ -42,8 +42,8 @@ class PaymentsRelationManager extends RelationManager
     return $table
       ->columns([
         Tables\Columns\TextColumn::make('sale.full_invoice_number')
-          ->label('Factura')
-          ->searchable(),
+          ->label('Factura'),
+        // ->searchable(),
         Tables\Columns\TextColumn::make('payment_method')
           ->label('Método de pago')
           ->searchable(),

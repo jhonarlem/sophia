@@ -61,8 +61,8 @@ class CreditResource extends Resource implements HasShieldPermissions
       ->columns([
         Tables\Columns\TextColumn::make('sale.full_invoice_number')
           ->label('Factura')
-          ->searchable()
-          ->numeric()
+          // ->searchable()
+          // ->numeric()
           ->sortable(),
         Tables\Columns\TextColumn::make('customer.name')
           ->label('Cliente')
