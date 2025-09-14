@@ -35,7 +35,7 @@ class CreateExpense extends CreateRecord
         'due_date' => 'required|date',
         'status' => 'required',
         'description' => 'nullable|string|max:255',
-        'box_withdrawal' => 'required|boolean',
+        'box_withdrawal' => 'boolean',
       ]);
 
       $validatedExpense = $validatorExpense->validate();
@@ -49,7 +49,7 @@ class CreateExpense extends CreateRecord
       } */
 
       // Verificar si box_withdrawal es true
-      if ($validatedExpense['box_withdrawal']) {
+      if ($validatedExpense['box_withdrawal'] ?? false) {
         // Verificar si hay una caja abierta
         $openBox = Box::where('status', 'Abierta')->first();
         if (!$openBox) {
@@ -81,7 +81,7 @@ class CreateExpense extends CreateRecord
         'amount_pending' => $validatedExpense['amount_pending'],
         'status' => $validatedExpense['status'],
         'due_date' => $validatedExpense['due_date'],
-        'box_withdrawal' => $validatedExpense['box_withdrawal'],
+        'box_withdrawal' => $validatedExpense['box_withdrawal'] ?? false,
         'description' => $validatedExpense['description'],
       ]);
 

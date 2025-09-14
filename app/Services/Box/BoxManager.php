@@ -74,12 +74,11 @@ class BoxManager
       $expectedCash = $boxToClose->base_amount         // Efectivo inicial
         + $boxToClose->cash_payment         // Efectivo de ventas (factura estándar)
         // + $boxToClose->cash_electronic_payment  Efectivo de ventas electrónicas
-        + $boxToClose->credit_payment;    // Efectivo recibido por créditos
-      // + $boxToClose->total_other_income  Otros ingresos en efectivo
-      -$boxToClose->total_expenses;     // Egresos pagados en efectivo
+        + $boxToClose->credit_payment    // Efectivo recibido por créditos
+        // + $boxToClose->total_other_income  Otros ingresos en efectivo
+        - $boxToClose->total_expenses;     // Egresos pagados en efectivo
 
       $difference = $realAmount - $expectedCash; // Diferencia entre efectivo real y esperado
-
       // Actualizar campos de cierre de la Box (turno)
       $boxToClose->real_amount = $realAmount;
       $boxToClose->difference = $difference;
