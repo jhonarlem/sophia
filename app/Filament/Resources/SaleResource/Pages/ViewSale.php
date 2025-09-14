@@ -160,7 +160,8 @@ class ViewSale extends ViewRecord
         ->openUrlInNewTab()
         ->visible(fn() => $this->record->status !== 'Anulada'),
       Action::make('Recibo')
-        ->label('Recibo')
+        ->label('Recibo (F10)')
+        ->keyBindings(['f10'])
         ->tooltip('Ver recibo')
         ->color(Color::Lime)
         ->url(route('recibo', $this->record->id))

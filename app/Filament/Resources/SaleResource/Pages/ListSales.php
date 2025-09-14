@@ -13,7 +13,9 @@ class ListSales extends ListRecords
   protected function getHeaderActions(): array
   {
     return [
-      Actions\CreateAction::make(),
+      Actions\CreateAction::make()
+        ->label('Crear venta (F4)')
+        ->keyBindings(['f4']),
     ];
   }
 }

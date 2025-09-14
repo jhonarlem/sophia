@@ -37,7 +37,8 @@ class ViewCredit extends ViewRecord
   {
     return [
       Action::make('Pagar')
-        ->label('Pagar')
+        ->label('Pagar (F2)')
+        ->keyBindings(['f2'])
         ->modalHeading('Pagar crédito')
         ->modalDescription('Ingresa los métodos de pago que utilizarás para pagar el crédito.')
         ->modalSubmitActionLabel('Pagar')
@@ -181,7 +182,8 @@ class ViewCredit extends ViewRecord
         ->color(Color::Emerald)
         ->url(route('filament.dashboard.resources.clientes.view', $this->record->sale->customer_id)),
       Action::make('Recibo')
-        ->label('Recibo')
+        ->label('Recibo (F10)')
+        ->keyBindings(['f10'])
         ->color(Color::Lime)
         ->url(route('recibo-credito', $this->record->id))
         ->openUrlInNewTab(),
