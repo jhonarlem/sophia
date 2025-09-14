@@ -138,6 +138,16 @@ class CreateSale extends CreateRecord
         ->success()
         ->send();
     } */
+    if ($data['invoiceType'] === 'FVE') {
+      Notification::make()
+        ->title('Funcionalidad no disponible')
+        ->body('La creación de facturas electrónicas no está disponible en esta versión del sistema. Para más información, contacta al desarrollador.')
+        ->info()
+        ->color('info')
+        ->send();
+      // Return a dummy Sale model to satisfy the return type
+      return new Sale();
+    }
     $sale = resolve(SaleManager::class)->createSale($data);
     $this->redirect(route('filament.dashboard.resources.ventas.view', [
       'record' => $sale->id,
