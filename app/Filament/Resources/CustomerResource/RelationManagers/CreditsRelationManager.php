@@ -28,7 +28,7 @@ class CreditsRelationManager extends RelationManager
   {
     return $table
       ->columns([
-        Tables\Columns\TextColumn::make('sale.invoice_number')
+        Tables\Columns\TextColumn::make('sale.full_invoice_number')
           ->label('Factura')
           ->searchable()
           ->numeric()
