@@ -54,6 +54,7 @@ class ViewCredit extends ViewRecord
                   'Transferencia' => 'Transferencia',
                 ])
                 ->placeholder('Selecciona un método de pago')
+                ->default('Efectivo')
                 ->native(false)
                 ->required()
                 ->reactive() // Cambiamos a reactive como en la sección de productos
@@ -71,13 +72,14 @@ class ViewCredit extends ViewRecord
                 ->columnSpan(2),
               TextInput::make('amount')
                 ->label('Cantidad')
+                ->autofocus()
                 ->numeric()
                 ->required()
                 ->mask(RawJs::make('$money($input, \',\', \'.\')'))
                 ->stripCharacters('.')
                 // ->default(0)
-                ->disabled(fn($get) => empty($get('payment_id')))
-                ->live(debounce: 700) // Mismo debounce que usas en productos
+                // ->disabled(fn($get) => empty($get('payment_id')))
+                // ->live(debounce: 700) // Mismo debounce que usas en productos
                 ->columnSpan(fn($get) => $get('payment_id') === 'Transferencia' ? 1 : 2),
               TextInput::make('reference')
                 ->label('Referencia')
