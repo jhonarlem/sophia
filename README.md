@@ -7,6 +7,18 @@
 ![Version](https://img.shields.io/badge/Version-1.2.1-blue.svg)
 ![License](https://img.shields.io/badge/License-Proprietary-red.svg)
 
+> [!CAUTION]
+> ## ⚠️ ¡REPOSITORIO DEPRECADO!
+> 
+> **SOPHIA POS** ya no está en desarrollo activo ni recibe mantenimiento.
+> 
+> **El proyecto sucesor y versión mejorada es:**
+> 
+> **✨ SCARLET POS**
+> 
+> Puede encontrar la nueva versión y el desarrollo continuo en el perfil del desarrollador.
+
+
 ## 🎯 Acerca de SOPHIA POS
 
 **SOPHIA POS** (Software for Organized Product Handling and Inventory Administration) es una solución POS avanzada diseñada específicamente para el mercado colombiano. Optimizada para la gestión integral de negocios minoristas, especialmente en el sector de electrodomésticos y productos para el hogar.
