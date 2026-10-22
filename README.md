@@ -14,7 +14,7 @@
 > 
 > **El proyecto sucesor y versión mejorada es:**
 > 
-> **✨ SCARLET POS**
+> **✨ ASTRO POS**
 > 
 > Puede encontrar la nueva versión y el desarrollo continuo en el perfil del desarrollador.
 
