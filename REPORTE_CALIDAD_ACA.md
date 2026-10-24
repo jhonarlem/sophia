@@ -46,6 +46,7 @@
 | `docs/capturas/` | 13 capturas de SonarQube y PhpMetrics (sección 8) |
 | `phpstan.neon` / `sonar-project.properties` | Configuración reproducible del análisis |
 | `GUIA_EJECUCION.md` | Tutorial paso a paso para replicar todo el análisis |
+| `REPORTE_CALIDAD_ACA.docx` | Este mismo informe en formato Word, con portada, numeración y capturas incrustadas |
 
 ---
 
