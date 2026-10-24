@@ -1,0 +1,911 @@
+Note: Using configuration file /home/gosu/Projects/sophia/phpstan.neon.
+Instructions for interpreting errors
+---------
+
+Each error has an associated identifier, like `argument.type`
+or `return.missing`.
+
+Each error identifier has documentation at URL https://phpstan.org/error-identifiers/<identifier>
+This page contains code example, explanation why is this an error
+and instruction how to fix it.
+Before fixing the error, fetch the documentation page for its identifier.
+
+The error usually indicates a real bug or incorrect type in the code. Fix the underlying cause, do not just make the error go away.
+Do not add `@phpstan-ignore` comments, `@phpstan-ignore-next-line` comments, or baseline entries to suppress the error.
+Do not use assert() or inline @var PHPDoc tag to override PHPStan's inferred type.
+Do not add type casts just to silence errors.
+Do not widen parameter or return types just to make the error go away.
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/BoxResource.php                                     
+ ------ ----------------------------------------------------------------------- 
+  109    Match expression does not handle remaining value: string               
+         🪪  match.unhandled                                                    
+  223    Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$id.                               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/BoxResource/Widgets/BoxWidget.php                   
+ ------ ----------------------------------------------------------------------- 
+  18     Using nullsafe property access "?->status" on left side of ?? is       
+         unnecessary. Use -> instead.                                           
+         🪪  nullsafe.neverNull                                                 
+  20     Access to an undefined property App\Models\Box::$openedBy.             
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  20     Using nullsafe property access "?->name" on left side of ?? is         
+         unnecessary. Use -> instead.                                           
+         🪪  nullsafe.neverNull                                                 
+  21     Access to an undefined property App\Models\Box::$closedBy.             
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  21     Using nullsafe property access "?->name" on left side of ?? is         
+         unnecessary. Use -> instead.                                           
+         🪪  nullsafe.neverNull                                                 
+  34     Access to an undefined property App\Models\Box::$sales.                
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  41     Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+ ------ ----------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------- 
+  Line   Filament/Resources/CreditResource.php                    
+ ------ --------------------------------------------------------- 
+  74     Match expression does not handle remaining value: mixed  
+         🪪  match.unhandled                                      
+ ------ --------------------------------------------------------- 
+
+ ------ -------------------------------------------------------- 
+  Line   Filament/Resources/CreditResource/Pages/ViewCredit.php  
+ ------ -------------------------------------------------------- 
+  111    Cannot access property $total_pending on                
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  118    Cannot access property $total_pending on                
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  122    Cannot access property $sale_id on                      
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  127    Cannot access property $total_paid on                   
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  128    Cannot access property $total_pending on                
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  135    Cannot access property $sale_id on                      
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  154    Cannot access property $sale_id on                      
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  158    Cannot access property $sale_id on                      
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  176    Cannot access property $status on                       
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  180    Cannot access property $sale_id on                      
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  185    Cannot access property $sale on                         
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  190    Cannot access property $id on                           
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  199    Cannot access property $sales on                        
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  200    Cannot access property $customer on                     
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+  201    Cannot access property $user on                         
+         Illuminate\Database\Eloquent\Model|int|string.          
+         🪪  property.nonObject                                  
+ ------ -------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/CustomerResource.php                                
+ ------ ----------------------------------------------------------------------- 
+  38     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$name.                             
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  39     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$document_number.                  
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  39     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$document_type.                    
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  40     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$cellphone.                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  41     Call to an undefined method                                            
+         Illuminate\Database\Eloquent\Model::credits().                         
+         🪪  method.notFound                                                    
+  42     Call to an undefined method                                            
+         Illuminate\Database\Eloquent\Model::credits().                         
+         🪪  method.notFound                                                    
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------ 
+  Line   Filament/Resources/CustomerResource/Pages/ViewCustomer.php  
+ ------ ------------------------------------------------------------ 
+  51     Cannot access property $document_type on                    
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+  52     Cannot access property $document_number on                  
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+  53     Cannot access property $name on                             
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+  54     Cannot access property $cellphone on                        
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+  55     Cannot access property $email on                            
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+  56     Cannot access property $street on                           
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+  57     Cannot access property $sales on                            
+         Illuminate\Database\Eloquent\Model|int|string.              
+         🪪  property.nonObject                                      
+ ------ ------------------------------------------------------------ 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/CustomerResource/RelationManagers/CreditsRelationM  
+         anager.php                                                             
+ ------ ----------------------------------------------------------------------- 
+  43     Match expression does not handle remaining value: mixed                
+         🪪  match.unhandled                                                    
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/CustomerResource/RelationManagers/SalesRelationMan  
+         ager.php                                                               
+ ------ ----------------------------------------------------------------------- 
+  45     Match expression does not handle remaining value: mixed                
+         🪪  match.unhandled                                                    
+ ------ ----------------------------------------------------------------------- 
+
+ ------ -------------------------------------------------------------- 
+  Line   Filament/Resources/CustomerResource/Widgets/CustomerInfo.php  
+ ------ -------------------------------------------------------------- 
+  53     Relation 'sale' is not found in App\Models\Credit model.      
+         🪪  larastan.relationExistence                                
+  59     Relation 'sale' is not found in App\Models\Credit model.      
+         🪪  larastan.relationExistence                                
+ ------ -------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------- 
+  Line   Filament/Resources/ExpenseResource.php                    
+ ------ ---------------------------------------------------------- 
+  216    Match expression does not handle remaining value: string  
+         🪪  match.unhandled                                       
+  407    Match expression does not handle remaining value: string  
+         🪪  match.unhandled                                       
+ ------ ---------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/ProductResource.php                                 
+ ------ ----------------------------------------------------------------------- 
+  44     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$sku.                              
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  45     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$name.                             
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  46     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$sale_price.                       
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  47     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$discount_amount.                  
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  48     Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$stock.                            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  275    Match expression does not handle remaining value: string               
+         🪪  match.unhandled                                                    
+  354    Match expression does not handle remaining value: string               
+         🪪  match.unhandled                                                    
+ ------ ----------------------------------------------------------------------- 
+
+ ------ --------------------------------------------------------- 
+  Line   Filament/Resources/SaleResource.php                      
+ ------ --------------------------------------------------------- 
+  473    Match expression does not handle remaining value: mixed  
+         🪪  match.unhandled                                      
+ ------ --------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------- 
+  Line   Filament/Resources/SaleResource/Pages/CreateSale.php            
+ ------ ---------------------------------------------------------------- 
+  113    Parameter #1 $set of static method                              
+         App\Services\Sale\SaleFormBuilder::handleBarcodeScan() expects  
+         Filament\Forms\Set, Closure(mixed, mixed): void given.          
+         🪪  argument.type                                               
+  113    Parameter #2 $get of static method                              
+         App\Services\Sale\SaleFormBuilder::handleBarcodeScan() expects  
+         Filament\Forms\Get, Closure(mixed): mixed given.                
+         🪪  argument.type                                               
+ ------ ---------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------------------- 
+  Line   Filament/Resources/SaleResource/Pages/CreateSaleOld.php               
+ ------ ---------------------------------------------------------------------- 
+  114    Inner named functions are not supported by PHPStan. Consider          
+         refactoring to an anonymous function, class method, or a              
+         top-level-defined function. See issue #165                            
+         (https://github.com/phpstan/phpstan/issues/165) for more details.     
+         🪪  function.inner                                                    
+  159    Function calcularTotales not found.                                   
+         🪪  function.notFound                                                 
+         💡  Learn more at https://phpstan.org/user-guide/discovering-symbols  
+ ------ ---------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------- 
+  Line   Filament/Resources/SaleResource/Pages/ViewSale.php  
+ ------ ---------------------------------------------------- 
+  43     Cannot access property $full_invoice_number on      
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  56     Cannot access property $id on                       
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  68     Cannot access property $id on                       
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  80     Cannot access property $payments on                 
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  83     Cannot access property $exchange on                 
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  106    Cannot access property $full_invoice_number on      
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  113    Cannot access property $status on                   
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  120    Cannot access property $id on                       
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  124    Cannot access property $status on                   
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  130    Cannot access property $full_invoice_number on      
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  138    Cannot access property $id on                       
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  141    Cannot access property $full_invoice_number on      
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  154    Cannot access property $status on                   
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  159    Cannot access property $id on                       
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  161    Cannot access property $status on                   
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  167    Cannot access property $id on                       
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  176    Cannot access property $saleItems on                
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  177    Cannot access property $payments on                 
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  178    Cannot access property $customer on                 
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+  179    Cannot access property $users on                    
+         Illuminate\Database\Eloquent\Model|int|string.      
+         🪪  property.nonObject                              
+ ------ ---------------------------------------------------- 
+
+ ------ --------------------------------------------------------- 
+  Line   Filament/Resources/SaleResource/Widgets/SalesWidget.php  
+ ------ --------------------------------------------------------- 
+  40     Match expression does not handle remaining value: mixed  
+         🪪  match.unhandled                                      
+ ------ --------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Filament/Resources/Shield/RoleResource.php                             
+ ------ ----------------------------------------------------------------------- 
+  78     Parameter #1 $tabs of method Filament\Forms\Components\Tabs::tabs()    
+         expects array<Filament\Forms\Components\Tabs\Tab>|Closure, array{Fila  
+         ment\Forms\Components\Component, Filament\Forms\Components\Component,  
+         Filament\Forms\Components\Component,                                   
+         Filament\Forms\Components\Component} given.                            
+         🪪  argument.type                                                      
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ------------------------------------------------------------- 
+  Line   Filament/Resources/Shield/RoleResource/Pages/CreateRole.php  
+ ------ ------------------------------------------------------------- 
+  36     No error to ignore is reported on line 36.                   
+         🪪  ignore.unmatchedLine (non-ignorable)                     
+  41     Call to an undefined method                                  
+         Illuminate\Database\Eloquent\Model::syncPermissions().       
+         🪪  method.notFound                                          
+ ------ ------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------- 
+  Line   Filament/Resources/Shield/RoleResource/Pages/EditRole.php  
+ ------ ----------------------------------------------------------- 
+  48     Cannot call method syncPermissions() on                    
+         Illuminate\Database\Eloquent\Model|int|string.             
+         🪪  method.nonObject                                       
+ ------ ----------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------- 
+  Line   Filament/Resources/UserResource.php                       
+ ------ ---------------------------------------------------------- 
+  135    Match expression does not handle remaining value: string  
+         🪪  match.unhandled                                       
+  269    Match expression does not handle remaining value: string  
+         🪪  match.unhandled                                       
+ ------ ---------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Http/Controllers/InvoiceController.php                                 
+ ------ ----------------------------------------------------------------------- 
+  114    Access to an undefined property App\Models\Configuration::$address.    
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  122    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  123    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  124    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  125    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  126    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  127    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  132    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$customer.                                                   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  133    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$customer.                                                   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  134    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$customer.                                                   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  135    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$customer.                                                   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  136    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$customer.                                                   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  137    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$customer.                                                   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  143    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$box.                                                        
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  144    Access to an undefined property                                        
+         App\Models\Sale|Illuminate\Database\Eloquent\Collection<int, App\Mode  
+         ls\Sale>::$user.                                                       
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  161    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  162    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  162    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  162    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  162    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  162    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  163    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  167    Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Http/Controllers/ReceiptBoxController.php                              
+ ------ ----------------------------------------------------------------------- 
+  36     Access to an undefined property App\Models\Configuration::$address.    
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  65     Access to an undefined property App\Models\Box::$resolution.           
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  67     Access to an undefined property                                        
+         App\Models\Box::$cash_electronic_payment.                              
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  78     Access to an undefined property App\Models\Box::$openedBy.             
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  92     Access to an undefined property App\Models\Box::$total_other_income.   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  99     Access to an undefined property                                        
+         App\Models\Box::$cash_electronic_payment.                              
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  103    Access to an undefined property App\Models\Box::$total_other_income.   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  112    Access to an undefined property                                        
+         App\Models\Box::$cash_electronic_payment.                              
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  114    Access to an undefined property App\Models\Box::$total_other_income.   
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Http/Controllers/ReceiptController.php                                 
+ ------ ----------------------------------------------------------------------- 
+  40     Access to an undefined property App\Models\Configuration::$address.    
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  48     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  49     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  50     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  51     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  52     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  53     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  58     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  59     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  60     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  61     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  62     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  68     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  69     Access to an undefined property App\Models\Sale::$user.                
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  86     Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  90     Access to an undefined property App\Models\SaleItem::$product.         
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Http/Controllers/ReceiptCreditController.php                           
+ ------ ----------------------------------------------------------------------- 
+  40     Access to an undefined property App\Models\Configuration::$address.    
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  48     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  49     Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  54     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  55     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  56     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  57     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  58     Access to an undefined property App\Models\Sale::$customer.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Mail/InvoiceMail.php                                                   
+ ------ ----------------------------------------------------------------------- 
+  61     Method App\Mail\InvoiceMail::attachments() should return array<int, I  
+         lluminate\Mail\Mailables\Attachment> but returns array<int, Illuminat  
+         e\Mail\Attachment>.                                                    
+         🪪  return.type                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Box.php                                                         
+ ------ ----------------------------------------------------------------------- 
+  18     PHPDoc type array<int, string> of property App\Models\Box::$fillable   
+         is not covariant with PHPDoc type list<string> of overridden property  
+          Illuminate\Database\Eloquent\Model::$fillable.                        
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Configuration.php                                               
+ ------ ----------------------------------------------------------------------- 
+  19     PHPDoc type array<int, string> of property App\Models\Configuration::  
+         $fillable is not covariant with PHPDoc type list<string> of overridde  
+         n property Illuminate\Database\Eloquent\Model::$fillable.              
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+  53     PHPDoc tag @var above a method has no effect.                          
+         🪪  varTag.misplaced                                                   
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Credit.php                                                      
+ ------ ----------------------------------------------------------------------- 
+  17     PHPDoc type array<int, string> of property App\Models\Credit::$fillab  
+         le is not covariant with PHPDoc type list<string> of overridden prope  
+         rty Illuminate\Database\Eloquent\Model::$fillable.                     
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Customer.php                                                    
+ ------ ----------------------------------------------------------------------- 
+  17     PHPDoc type array<int, string> of property App\Models\Customer::$fill  
+         able is not covariant with PHPDoc type list<string> of overridden pro  
+         perty Illuminate\Database\Eloquent\Model::$fillable.                   
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+  32     PHPDoc tag @var above a method has no effect.                          
+         🪪  varTag.misplaced                                                   
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Expense.php                                                     
+ ------ ----------------------------------------------------------------------- 
+  17     PHPDoc type array<int, string> of property App\Models\Expense::$filla  
+         ble is not covariant with PHPDoc type list<string> of overridden prop  
+         erty Illuminate\Database\Eloquent\Model::$fillable.                    
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+  37     PHPDoc tag @var above a method has no effect.                          
+         🪪  varTag.misplaced                                                   
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Loss.php                                                        
+ ------ ----------------------------------------------------------------------- 
+  17     PHPDoc type array<int, string> of property App\Models\Loss::$fillable  
+          is not covariant with PHPDoc type list<string> of overridden propert  
+         y Illuminate\Database\Eloquent\Model::$fillable.                       
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Payment.php                                                     
+ ------ ----------------------------------------------------------------------- 
+  17     PHPDoc type array<int, string> of property App\Models\Payment::$filla  
+         ble is not covariant with PHPDoc type list<string> of overridden prop  
+         erty Illuminate\Database\Eloquent\Model::$fillable.                    
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Product.php                                                     
+ ------ ----------------------------------------------------------------------- 
+  18     PHPDoc type array<int, string> of property App\Models\Product::$filla  
+         ble is not covariant with PHPDoc type list<string> of overridden prop  
+         erty Illuminate\Database\Eloquent\Model::$fillable.                    
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+  45     PHPDoc tag @var above a method has no effect.                          
+         🪪  varTag.misplaced                                                   
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Resolution.php                                                  
+ ------ ----------------------------------------------------------------------- 
+  17     PHPDoc type array<int, string> of property App\Models\Resolution::$fi  
+         llable is not covariant with PHPDoc type list<string> of overridden p  
+         roperty Illuminate\Database\Eloquent\Model::$fillable.                 
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/Sale.php                                                        
+ ------ ----------------------------------------------------------------------- 
+  19     PHPDoc type array<int, string> of property App\Models\Sale::$fillable  
+          is not covariant with PHPDoc type list<string> of overridden propert  
+         y Illuminate\Database\Eloquent\Model::$fillable.                       
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+  45     Access to an undefined property App\Models\Box::$resolution.           
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  52     Relation 'box' is not found in App\Models\Sale model.                  
+         🪪  larastan.relationExistence                                         
+  92     Access to an undefined property App\Models\Box::$resolution.           
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  99     Relation 'box' is not found in App\Models\Sale model.                  
+         🪪  larastan.relationExistence                                         
+  133    Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/SaleItem.php                                                    
+ ------ ----------------------------------------------------------------------- 
+  19     PHPDoc type array<int, string> of property App\Models\SaleItem::$fill  
+         able is not covariant with PHPDoc type list<string> of overridden pro  
+         perty Illuminate\Database\Eloquent\Model::$fillable.                   
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Models/User.php                                                        
+ ------ ----------------------------------------------------------------------- 
+  35     PHPDoc type array<int, string> of property App\Models\User::$fillable  
+          is not covariant with PHPDoc type list<string> of overridden propert  
+         y Illuminate\Database\Eloquent\Model::$fillable.                       
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+  49     PHPDoc tag @var above a method has no effect.                          
+         🪪  varTag.misplaced                                                   
+  64     PHPDoc type array<int, string> of property App\Models\User::$hidden i  
+         s not covariant with PHPDoc type list<string> of overridden property   
+         Illuminate\Database\Eloquent\Model::$hidden.                           
+         🪪  property.phpDocType                                                
+         💡  You can fix 3rd party PHPDoc types with stub files:                
+         💡  https://phpstan.org/user-guide/stub-files                          
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ---------------------------------------------------------- 
+  Line   Services/Box/BoxInfoListBuilder.php                       
+ ------ ---------------------------------------------------------- 
+  39     Match expression does not handle remaining value: string  
+         🪪  match.unhandled                                       
+ ------ ---------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Services/Box/BoxManager.php                                            
+ ------ ----------------------------------------------------------------------- 
+  57     PHPDoc tag @param has invalid value (array<string,): Unexpected token  
+         "@return", expected type at offset 67 on line 5                        
+         🪪  phpDoc.parseError                                                  
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Services/Box/BoxTableBuilder.php                                       
+ ------ ----------------------------------------------------------------------- 
+  200    Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$id.                               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  209    Access to an undefined property                                        
+         Illuminate\Database\Eloquent\Model::$id.                               
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Services/Sale/SaleFormBuilder.php                                      
+ ------ ----------------------------------------------------------------------- 
+  134    Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+  152    Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+  153    Binary operation "/" between (float|int) and (array<string>|string) r  
+         esults in an error.                                                    
+         🪪  binaryOp.invalid                                                   
+  160    Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+  184    Binary operation "/" between (float|int) and (array<string>|string) r  
+         esults in an error.                                                    
+         🪪  binaryOp.invalid                                                   
+  399    Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+  417    Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+  418    Binary operation "/" between (float|int) and (array<string>|string) r  
+         esults in an error.                                                    
+         🪪  binaryOp.invalid                                                   
+  425    Expression on left side of ?? is not nullable.                         
+         🪪  nullCoalesce.expr                                                  
+  449    Binary operation "/" between (float|int) and (array<string>|string) r  
+         esults in an error.                                                    
+         🪪  binaryOp.invalid                                                   
+ ------ ----------------------------------------------------------------------- 
+
+ ------ ----------------------------------------------------------------------- 
+  Line   Services/Sale/SaleManager.php                                          
+ ------ ----------------------------------------------------------------------- 
+  216    Access to an undefined property App\Models\Sale::$box.                 
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+  368    Access to an undefined property App\Models\SaleItem::$sale.            
+         🪪  property.notFound                                                  
+         💡  Learn more: https://phpstan.org/blog/solving-phpstan-access-to-und  
+         efined-property                                                        
+ ------ ----------------------------------------------------------------------- 
+
+ -- ----------------------------------------------------------------------- 
+     Error                                                                  
+ -- ----------------------------------------------------------------------- 
+     Ignored error pattern #Unsafe usage of new static# was not matched in  
+     reported errors.                                                       
+ -- ----------------------------------------------------------------------- 
+
+ [ERROR] Found 180 errors                                                       
+

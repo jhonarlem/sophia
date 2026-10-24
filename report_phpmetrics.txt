@@ -1,0 +1,59 @@
+...............................................................................................Executing system analyzes...
+
+[2KExecuting composer analyzes, requesting https://packagist.org...
+
+[2K
+Deprecated: Creation of dynamic property Hal\Violation\Class_\Blob::$metric is deprecated in /home/gosu/Projects/sophia/vendor/phpmetrics/phpmetrics/src/Hal/Violation/Class_/Blob.php on line 28
+
+Deprecated: Creation of dynamic property Hal\Violation\Class_\ProbablyBugged::$metric is deprecated in /home/gosu/Projects/sophia/vendor/phpmetrics/phpmetrics/src/Hal/Violation/Class_/ProbablyBugged.php on line 28
+
+Deprecated: Creation of dynamic property Hal\Violation\Class_\TooLong::$metric is deprecated in /home/gosu/Projects/sophia/vendor/phpmetrics/phpmetrics/src/Hal/Violation/Class_/TooLong.php on line 28
+
+Deprecated: Creation of dynamic property Hal\Violation\Class_\TooDependent::$metric is deprecated in /home/gosu/Projects/sophia/vendor/phpmetrics/phpmetrics/src/Hal/Violation/Class_/TooDependent.php on line 28
+LOC
+    Lines of code                               5840
+    Logical lines of code                       3853
+    Comment lines of code                       1987
+    Average volume                              631.14
+    Average comment weight                      24.87
+    Average intelligent content                 24.87
+    Logical lines of code by class              41
+    Logical lines of code by method             9
+Object oriented programming
+    Classes                                     95
+    Interface                                   0
+    Methods                                     428
+    Methods by class                            4.51
+    Lack of cohesion of methods                 4.07
+
+Coupling
+    Average afferent coupling                   1.24
+    Average efferent coupling                   5.76
+    Average instability                         0.8
+    Depth of Inheritance Tree                   1.4
+
+Package
+    Packages                                    30
+    Average classes per package                 3.17
+    Average distance                            0.07
+    Average incoming class dependencies         1.83
+    Average outgoing class dependencies         12.13
+    Average incoming package dependencies       1.23
+    Average outgoing package dependencies       7.2
+Complexity
+    Average Cyclomatic complexity by class      4.83
+    Average Weighted method count by class      8.34
+    Average Relative system complexity          1433.85
+    Average Difficulty                          4.47
+
+Bugs
+    Average bugs by class                       0.21
+    Average defects by class (Kan)              0.28
+Violations
+    Critical                                    0
+    Error                                       26
+    Warning                                     20
+    Information                                 8
+
+
+[32mDone[0m

@@ -1,0 +1,564 @@
+{
+    "advisories": {
+        "dompdf/dompdf": [
+            {
+                "advisoryId": "PKSA-cv56-2228-pzr6",
+                "packageName": "dompdf/dompdf",
+                "affectedVersions": "<3.1.6",
+                "title": "Dompdf: Embedded SVG images can leak existence of files and directories within the filesystem",
+                "cve": "CVE-2026-59943",
+                "link": "https://github.com/advisories/GHSA-j8qw-6jw8-r297",
+                "reportedAt": "2026-07-22T22:52:44+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-j8qw-6jw8-r297"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-6r8f-nxsb-67bq",
+                "packageName": "dompdf/dompdf",
+                "affectedVersions": "<3.1.6",
+                "title": "Dompdf: Denial of Service (DoS) via Resource Exhaustion using Oversized Image Bitmaps",
+                "cve": "CVE-2026-59942",
+                "link": "https://github.com/advisories/GHSA-f5gf-2cj8-52g2",
+                "reportedAt": "2026-07-22T22:51:40+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-f5gf-2cj8-52g2"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-gh7h-hhy4-byg7",
+                "packageName": "dompdf/dompdf",
+                "affectedVersions": "<3.1.6",
+                "title": "Dompdf: Uncontrolled resource consumption based on declared BMP dimensions",
+                "cve": "CVE-2026-59941",
+                "link": "https://github.com/advisories/GHSA-8hg6-c449-896m",
+                "reportedAt": "2026-07-22T22:50:34+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-8hg6-c449-896m"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-mwt3-h9tv-kx78",
+                "packageName": "dompdf/dompdf",
+                "affectedVersions": "<3.1.6",
+                "title": "Dompdf: Local file read due to improper file path validation in SVG images encoded as data-URI",
+                "cve": "CVE-2026-56722",
+                "link": "https://github.com/advisories/GHSA-cx96-42px-69fm",
+                "reportedAt": "2026-07-22T21:30:01+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-cx96-42px-69fm"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-hp6n-n4kz-21wk",
+                "packageName": "dompdf/dompdf",
+                "affectedVersions": "<3.1.6",
+                "title": "Dompdf: File existence oracle via font-face stylesheet declaration",
+                "cve": "CVE-2026-55555",
+                "link": "https://github.com/advisories/GHSA-7x2p-4jvh-6384",
+                "reportedAt": "2026-07-22T21:07:07+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-7x2p-4jvh-6384"
+                    }
+                ],
+                "severity": "low"
+            },
+            {
+                "advisoryId": "PKSA-mckv-s5hg-868k",
+                "packageName": "dompdf/dompdf",
+                "affectedVersions": "<3.1.6",
+                "title": "Dompdf: Chroot Validation Bypass",
+                "cve": "CVE-2026-55554",
+                "link": "https://github.com/advisories/GHSA-wvh6-f5jh-8gw4",
+                "reportedAt": "2026-07-22T21:06:48+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-wvh6-f5jh-8gw4"
+                    }
+                ],
+                "severity": "low"
+            }
+        ],
+        "filament/filament": [
+            {
+                "advisoryId": "PKSA-317j-243v-z7tc",
+                "packageName": "filament/filament",
+                "affectedVersions": ">=3.0.0,<=3.3.51|>=5.0.0,<=5.6.4|>=4.0.0,<=4.11.4",
+                "title": "Filament: Unauthenticated temporary file upload on auth pages",
+                "cve": "CVE-2026-48500",
+                "link": "https://github.com/advisories/GHSA-44wp-g8f4-f4v5",
+                "reportedAt": "2026-06-23T22:16:58+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-44wp-g8f4-f4v5"
+                    }
+                ],
+                "severity": "medium"
+            }
+        ],
+        "filament/forms": [
+            {
+                "advisoryId": "PKSA-n7tx-gkfb-14yj",
+                "packageName": "filament/forms",
+                "affectedVersions": ">=3.0.0,<=3.3.52",
+                "title": "Filament: Disabled RichEditor field state can be used for XSS",
+                "cve": "CVE-2026-55409",
+                "link": "https://github.com/advisories/GHSA-m9cv-24rx-8mv7",
+                "reportedAt": "2026-06-17T18:41:12+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-m9cv-24rx-8mv7"
+                    }
+                ],
+                "severity": "high"
+            }
+        ],
+        "filament/tables": [
+            {
+                "advisoryId": "PKSA-w941-zhwq-2wbm",
+                "packageName": "filament/tables",
+                "affectedVersions": ">=3.0.0,<=3.3.50",
+                "title": "Filament has inconsistent scope enforcement for its AttachAction and AssociateAction Select fields",
+                "cve": "CVE-2026-48067",
+                "link": "https://github.com/advisories/GHSA-7q3w-xqjw-g3cr",
+                "reportedAt": "2026-06-11T20:26:07+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-7q3w-xqjw-g3cr"
+                    }
+                ],
+                "severity": "medium"
+            }
+        ],
+        "laravel/framework": [
+            {
+                "advisoryId": "PKSA-b41t-wbzk-9q51",
+                "packageName": "laravel/framework",
+                "affectedVersions": "<12.68.0|>=13.0.0,<13.29.0",
+                "title": "Laravel TokenGuard authentication bypass through non-string API credentials",
+                "cve": "CVE-2026-114509",
+                "link": "https://github.com/advisories/GHSA-f9x3-7vq9-cph6",
+                "reportedAt": "2026-10-23T21:50:27+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-f9x3-7vq9-cph6"
+                    }
+                ],
+                "severity": "critical"
+            },
+            {
+                "advisoryId": "PKSA-d5tc-s1qs-h781",
+                "packageName": "laravel/framework",
+                "affectedVersions": ">=13.0.0,<13.30.0|<12.69.0",
+                "title": "Laravel: XSS in Debug Page Information",
+                "cve": "CVE-2026-102279",
+                "link": "https://github.com/advisories/GHSA-jh5r-qr3c-85q8",
+                "reportedAt": "2026-09-29T18:24:25+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-jh5r-qr3c-85q8"
+                    }
+                ],
+                "severity": "low"
+            },
+            {
+                "advisoryId": "PKSA-m5cs-t1y6-qpcs",
+                "packageName": "laravel/framework",
+                "affectedVersions": "<12.61.1|>=13.0.0,<13.12.0",
+                "title": "Laravel Framework: Temporary Signed URL Path Confusion",
+                "cve": null,
+                "link": "https://github.com/advisories/GHSA-crmm-hgp2-wgrp",
+                "reportedAt": "2026-06-17T13:54:13+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-crmm-hgp2-wgrp"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-3r5d-mb8f-1qw9",
+                "packageName": "laravel/framework",
+                "affectedVersions": "<12.60.0|>=13.0.0,<=13.9.0",
+                "title": "Laravel Framework: CRLF injection in default email rule ",
+                "cve": null,
+                "link": "https://github.com/advisories/GHSA-5vg9-5847-vvmq",
+                "reportedAt": "2026-06-17T13:53:44+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-5vg9-5847-vvmq"
+                    }
+                ],
+                "severity": "high"
+            },
+            {
+                "advisoryId": "PKSA-mdq4-51ck-6kdq",
+                "packageName": "laravel/framework",
+                "affectedVersions": ">=9.0.0,<10.0.0|>=10.0.0,<11.0.0|>=11.0.0,<12.0.0|>=12.0.0,<12.60.0|>=13.0.0,<13.10.0",
+                "title": "Laravel CRLF injection in default email rule",
+                "cve": "CVE-2026-48019",
+                "link": "https://github.com/laravel/framework/security/advisories/GHSA-5vg9-5847-vvmq",
+                "reportedAt": "2026-05-19T18:13:00+00:00",
+                "sources": [
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "laravel/framework/CVE-2026-48019.yaml"
+                    }
+                ],
+                "severity": null
+            }
+        ],
+        "livewire/livewire": [
+            {
+                "advisoryId": "PKSA-bgw4-5zmg-2njg",
+                "packageName": "livewire/livewire",
+                "affectedVersions": ">=4.0.0-beta.1,<=4.3.3|>=3.0.0-beta.1,<=3.8.2",
+                "title": "Livewire DOM-based cross-site scripting during client-side state handling",
+                "cve": "CVE-2026-81887",
+                "link": "https://github.com/advisories/GHSA-g3hc-697w-wm82",
+                "reportedAt": "2026-09-02T14:38:58+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-g3hc-697w-wm82"
+                    }
+                ],
+                "severity": "medium"
+            }
+        ],
+        "maatwebsite/excel": [
+            {
+                "advisoryId": "PKSA-xgss-dh88-nswy",
+                "packageName": "maatwebsite/excel",
+                "affectedVersions": ">=3.1.8,<3.1.70",
+                "title": "Laravel Excel writes exports outside the configured filesystem disk when given a caller-controlled path",
+                "cve": "CVE-2026-84374",
+                "link": "https://github.com/advisories/GHSA-c7r6-vx3h-w5g2",
+                "reportedAt": "2026-09-08T20:40:47+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-c7r6-vx3h-w5g2"
+                    }
+                ],
+                "severity": "high"
+            }
+        ],
+        "phpoffice/phpspreadsheet": [
+            {
+                "advisoryId": "PKSA-r22k-87hv-mfk4",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.5|>=2.0.0,<=2.1.17|>=2.2.0,<=2.4.6|>=3.3.0,<=3.10.6|>=4.0.0,<=5.8.0",
+                "title": "PHPSpreadsheet: XLS/OLE sector-chain self-loop causes memory exhaustion",
+                "cve": "CVE-2026-59933",
+                "link": "https://github.com/advisories/GHSA-xh5m-36r6-47m3",
+                "reportedAt": "2026-07-23T15:01:50+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-xh5m-36r6-47m3"
+                    }
+                ],
+                "severity": "high"
+            },
+            {
+                "advisoryId": "PKSA-m9cr-9614-rsf7",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.5|>=2.0.0,<=2.1.17|>=2.2.0,<=2.4.6|>=3.3.0,<=3.10.6|>=4.0.0,<=5.8.0",
+                "title": "PHPSpreadsheet: Gnumeric reader unbounded gzip expansion causes memory exhaustion",
+                "cve": "CVE-2026-59932",
+                "link": "https://github.com/advisories/GHSA-2mrg-gjxq-2gvr",
+                "reportedAt": "2026-07-23T15:00:17+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-2mrg-gjxq-2gvr"
+                    }
+                ],
+                "severity": "high"
+            },
+            {
+                "advisoryId": "PKSA-dqzt-yst9-1w9y",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.5|>=2.0.0,<=2.1.17|>=2.2.0,<=2.4.6|>=3.3.0,<=3.10.6|>=4.0.0,<=5.8.0",
+                "title": "PHPSpreadsheet: SSRF bypass via HTTP redirect in WEBSERVICE() domain whitelist",
+                "cve": "CVE-2026-59931",
+                "link": "https://github.com/advisories/GHSA-6hq5-7373-42rg",
+                "reportedAt": "2026-07-23T14:55:48+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-6hq5-7373-42rg"
+                    }
+                ],
+                "severity": "high"
+            },
+            {
+                "advisoryId": "PKSA-x678-4z45-v3d5",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.4",
+                "title": "PHPSpreadsheet has a patch bypass for CVE-2026-34084 ",
+                "cve": "CVE-2026-45034",
+                "link": "https://github.com/advisories/GHSA-87m4-826x-3crx",
+                "reportedAt": "2026-06-08T23:00:14+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-87m4-826x-3crx"
+                    }
+                ],
+                "severity": "critical"
+            },
+            {
+                "advisoryId": "PKSA-gz3f-3cz3-3wsw",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.3|>=2.0.0,<=2.1.15|>=2.2.0,<=2.4.4|>=3.3.0,<=3.10.4|>=4.0.0,<=5.6.0",
+                "title": "PhpSpreadsheet has CPU Denial of Service via Unbounded Row Number in XLSX Row Dimensions",
+                "cve": "CVE-2026-40902",
+                "link": "https://github.com/advisories/GHSA-7c6m-4442-2x6m",
+                "reportedAt": "2026-04-29T20:24:13+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-7c6m-4442-2x6m"
+                    }
+                ],
+                "severity": "high"
+            },
+            {
+                "advisoryId": "PKSA-x13r-n4wc-4gcr",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.3|>=2.0.0,<=2.1.15|>=2.2.0,<=2.4.4|>=3.3.0,<=3.10.4|>=4.0.0,<=5.6.0",
+                "title": "PhpSpreadsheet has CPU Denial of Service via Unbounded Row Index in SpreadsheetML XML Reader",
+                "cve": "CVE-2026-40863",
+                "link": "https://github.com/advisories/GHSA-84wq-86v6-x5j6",
+                "reportedAt": "2026-04-29T20:23:27+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-84wq-86v6-x5j6"
+                    }
+                ],
+                "severity": "high"
+            },
+            {
+                "advisoryId": "PKSA-8cfg-tzhf-fr83",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.2|>=2.0.0,<=2.1.14|>=2.2.0,<=2.4.3|>=3.3.0,<=3.10.3|>=4.0.0,<=5.5.0",
+                "title": "PhpSpreadsheet has SSRF/RCE in IOFactory::load when $filename is user controlled",
+                "cve": "CVE-2026-34084",
+                "link": "https://github.com/advisories/GHSA-q4q6-r8wh-5cgh",
+                "reportedAt": "2026-04-29T20:22:30+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-q4q6-r8wh-5cgh"
+                    }
+                ],
+                "severity": "critical"
+            },
+            {
+                "advisoryId": "PKSA-hznc-gbby-6w16",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.3|>=2.0.0,<=2.1.15|>=2.2.0,<=2.4.4|>=3.3.0,<=3.10.4|>=4.0.0,<=5.6.0",
+                "title": "PhpSpreadsheet has XSS via number format code with @ text placeholder bypasses htmlspecialchars in HTML writer",
+                "cve": "CVE-2026-40296",
+                "link": "https://github.com/advisories/GHSA-hrmw-qprp-wgmc",
+                "reportedAt": "2026-04-28T22:57:13+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-hrmw-qprp-wgmc"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-jtdk-dcr5-f11n",
+                "packageName": "phpoffice/phpspreadsheet",
+                "affectedVersions": "<=1.30.3|>=2.0.0,<=2.1.15|>=2.2.0,<=2.4.4|>=3.3.0,<=3.10.4|>=4.0.0,<=5.6.0",
+                "title": "PhpSpreadsheet has XSS via NumberFormat @ Text Substitution in HTML Writer",
+                "cve": "CVE-2026-35453",
+                "link": "https://github.com/advisories/GHSA-6wpp-88cp-7q68",
+                "reportedAt": "2026-04-28T22:50:31+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-6wpp-88cp-7q68"
+                    }
+                ],
+                "severity": "medium"
+            }
+        ],
+        "phpunit/phpunit": [
+            {
+                "advisoryId": "PKSA-z3gr-8qht-p93v",
+                "packageName": "phpunit/phpunit",
+                "affectedVersions": ">=0,<8.5.52|>=9.0.0,<9.6.33|>=10.0.0,<10.5.62|>=11.0.0,<11.5.50|>=12.0.0,<12.5.8",
+                "title": "Unsafe Deserialization in PHPT Code Coverage Handling",
+                "cve": "CVE-2026-24765",
+                "link": "https://github.com/sebastianbergmann/phpunit/security/advisories/GHSA-vvj3-c3rp-c85p",
+                "reportedAt": "2026-01-27T05:21:14+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-vvj3-c3rp-c85p"
+                    },
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "phpunit/phpunit/CVE-2026-24765.yaml"
+                    }
+                ],
+                "severity": "high"
+            }
+        ],
+        "psy/psysh": [
+            {
+                "advisoryId": "PKSA-4s4z-t146-6123",
+                "packageName": "psy/psysh",
+                "affectedVersions": "<=0.11.22|>=0.12.0,<=0.12.18",
+                "title": "PsySH has Local Privilege Escalation via CWD .psysh.php auto-load",
+                "cve": "CVE-2026-25129",
+                "link": "https://github.com/advisories/GHSA-4486-gxhx-5mg7",
+                "reportedAt": "2026-01-30T21:28:44+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-4486-gxhx-5mg7"
+                    }
+                ],
+                "severity": "medium"
+            }
+        ],
+        "symfony/html-sanitizer": [
+            {
+                "advisoryId": "PKSA-3d8r-4bff-vcj1",
+                "packageName": "symfony/html-sanitizer",
+                "affectedVersions": ">=6.1.0,<6.2.0|>=6.2.0,<6.3.0|>=6.3.0,<6.4.0|>=6.4.0,<6.4.41|>=7.0.0,<7.1.0|>=7.1.0,<7.2.0|>=7.2.0,<7.3.0|>=7.3.0,<7.4.0|>=7.4.0,<7.4.13|>=8.0.0,<8.0.13",
+                "title": "CVE-2026-48761: HtmlSanitizer UrlAttributeSanitizer Misses URL Attributes on <object>, <applet>, <iframe>, <img> and the URL Inside <meta http-equiv=\"refresh\"> content",
+                "cve": "CVE-2026-48761",
+                "link": "https://symfony.com/cve-2026-48761",
+                "reportedAt": "2026-05-26T08:00:00+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-x5qj-865h-mgvm"
+                    },
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "symfony/html-sanitizer/CVE-2026-48761.yaml"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-bvdf-tk8n-sbsf",
+                "packageName": "symfony/html-sanitizer",
+                "affectedVersions": ">=6.1.0,<6.2.0|>=6.2.0,<6.3.0|>=6.3.0,<6.4.0|>=6.4.0,<6.4.41|>=7.0.0,<7.1.0|>=7.1.0,<7.2.0|>=7.2.0,<7.3.0|>=7.3.0,<7.4.0|>=7.4.0,<7.4.13|>=8.0.0,<8.0.13",
+                "title": "CVE-2026-48760: HtmlSanitizer URL Parser Deny Gates Underinclusive: Percent-Encoded BiDi Marks and Unicode Whitespace Bypass Visual-Spoofing Defense",
+                "cve": "CVE-2026-48760",
+                "link": "https://symfony.com/cve-2026-48760",
+                "reportedAt": "2026-05-26T08:00:00+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-v3wm-qf9p-c549"
+                    },
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "symfony/html-sanitizer/CVE-2026-48760.yaml"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-q2wy-m7mz-kg58",
+                "packageName": "symfony/html-sanitizer",
+                "affectedVersions": ">=6.1.0,<6.2.0|>=6.2.0,<6.3.0|>=6.3.0,<6.4.0|>=6.4.0,<6.4.40|>=7.0.0,<7.1.0|>=7.1.0,<7.2.0|>=7.2.0,<7.3.0|>=7.3.0,<7.4.0|>=7.4.0,<7.4.12|>=8.0.0,<8.0.12",
+                "title": "CVE-2026-45753: HtmlSanitizer UrlAttributeSanitizer Omits action/formaction/poster/cite: javascript: URI Survives Sanitization (XSS)",
+                "cve": "CVE-2026-45753",
+                "link": "https://symfony.com/cve-2026-45753",
+                "reportedAt": "2026-05-20T08:00:00+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-hhg7-c65m-h7ff"
+                    },
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "symfony/html-sanitizer/CVE-2026-45753.yaml"
+                    }
+                ],
+                "severity": "low"
+            },
+            {
+                "advisoryId": "PKSA-jwvg-gphd-brbz",
+                "packageName": "symfony/html-sanitizer",
+                "affectedVersions": ">=6.1.0,<6.2.0|>=6.2.0,<6.3.0|>=6.3.0,<6.4.0|>=6.4.0,<6.4.40|>=7.0.0,<7.1.0|>=7.1.0,<7.2.0|>=7.2.0,<7.3.0|>=7.3.0,<7.4.0|>=7.4.0,<7.4.12|>=8.0.0,<8.0.12",
+                "title": "CVE-2026-45066: HtmlSanitizer allowLinkHosts() / allowMediaHosts() Bypass via URL-Parser Differentials and <area> Misclassification",
+                "cve": "CVE-2026-45066",
+                "link": "https://symfony.com/cve-2026-45066",
+                "reportedAt": "2026-05-20T08:00:00+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-qc95-4862-92fh"
+                    },
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "symfony/html-sanitizer/CVE-2026-45066.yaml"
+                    }
+                ],
+                "severity": "medium"
+            },
+            {
+                "advisoryId": "PKSA-4fc7-y875-17k3",
+                "packageName": "symfony/html-sanitizer",
+                "affectedVersions": ">=6.1.0,<6.2.0|>=6.2.0,<6.3.0|>=6.3.0,<6.4.0|>=6.4.0,<6.4.40|>=7.0.0,<7.1.0|>=7.1.0,<7.2.0|>=7.2.0,<7.3.0|>=7.3.0,<7.4.0|>=7.4.0,<7.4.12|>=8.0.0,<8.0.12",
+                "title": "CVE-2026-45064: HtmlSanitizer URL Attributes Pass Through BiDi Override Characters → Visual href Spoofing",
+                "cve": "CVE-2026-45064",
+                "link": "https://symfony.com/cve-2026-45064",
+                "reportedAt": "2026-05-20T08:00:00+00:00",
+                "sources": [
+                    {
+                        "name": "GitHub",
+                        "remoteId": "GHSA-h5vq-qfcg-4m6p"
+                    },
+                    {
+                        "name": "FriendsOfPHP/security-advisories",
+                        "remoteId": "symfony/html-sanitizer/CVE-2026-45064.yaml"
+                    }
+                ],
+                "severity": "medium"
+            }
+        ]
+    },
+    "abandoned": [],
+    "filter": []
+}
